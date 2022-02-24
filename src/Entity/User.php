@@ -6,6 +6,7 @@ use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
@@ -38,16 +39,25 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
+
      */
     private $email;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Unique(message="L'adresse mail saisie a déjà été renseigné. Merci d'en choisir une nouvelle")
      */
     private $emailpro;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Length(
+     *     min=5,
+     *     max=255,
+     *     minMessage="Votre mot de passe doit contenir au minimum {{ limit }} caractére",
+     *     maxMessage="Votre mot de passe doit contenir au maximum {{ limit }} caractére",
+     *     normalizer="trim"
+     * )
      */
     private $password;
 
