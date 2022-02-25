@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -115,6 +117,49 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\Column(type="json")
      */
     private $roles = [];
+
+    /**
+     * @ORM\OneToMany(targetEntity=Contract::class, mappedBy="user")
+     */
+    private $contracts;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Documentation::class, inversedBy="users")
+     */
+    private $documentations;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Job::class, inversedBy="users")
+     */
+    private $job;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Permission::class, inversedBy="users")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $permission;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=PlannedWorkDays::class, inversedBy="users")
+     */
+    private $plannedWorkDays;
+
+    /**
+     * @ORM\OneToOne(targetEntity=EffectiveWorkDays::class, inversedBy="user", cascade={"persist", "remove"})
+     */
+    private $effectiveWorkDays;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Payslip::class, mappedBy="user")
+     */
+    private $payslips;
+
+    public function __construct()
+    {
+        $this->contracts = new ArrayCollection();
+        $this->documentations = new ArrayCollection();
+        $this->payslips = new ArrayCollection();
+    }
 
     public function getLastname(): ?string
     {
@@ -334,5 +379,137 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function __call($name, $arguments)
     {
         // TODO: Implement @method string getUserIdentifier()
+    }
+
+    /**
+     * @return Collection<int, Contract>
+     */
+    public function getContracts(): Collection
+    {
+        return $this->contracts;
+    }
+
+    public function addContract(Contract $contract): self
+    {
+        if (!$this->contracts->contains($contract)) {
+            $this->contracts[] = $contract;
+            $contract->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeContract(Contract $contract): self
+    {
+        if ($this->contracts->removeElement($contract)) {
+            // set the owning side to null (unless already changed)
+            if ($contract->getUser() === $this) {
+                $contract->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Documentation>
+     */
+    public function getDocumentations(): Collection
+    {
+        return $this->documentations;
+    }
+
+    public function addDocumentation(Documentation $documentation): self
+    {
+        if (!$this->documentations->contains($documentation)) {
+            $this->documentations[] = $documentation;
+        }
+
+        return $this;
+    }
+
+    public function removeDocumentation(Documentation $documentation): self
+    {
+        $this->documentations->removeElement($documentation);
+
+        return $this;
+    }
+
+    public function getJob(): ?Job
+    {
+        return $this->job;
+    }
+
+    public function setJob(?Job $job): self
+    {
+        $this->job = $job;
+
+        return $this;
+    }
+
+    public function getPermission(): ?Permission
+    {
+        return $this->permission;
+    }
+
+    public function setPermission(?Permission $permission): self
+    {
+        $this->permission = $permission;
+
+        return $this;
+    }
+
+    public function getPlannedWorkDays(): ?PlannedWorkDays
+    {
+        return $this->plannedWorkDays;
+    }
+
+    public function setPlannedWorkDays(?PlannedWorkDays $plannedWorkDays): self
+    {
+        $this->plannedWorkDays = $plannedWorkDays;
+
+        return $this;
+    }
+
+    public function getEffectiveWorkDays(): ?EffectiveWorkDays
+    {
+        return $this->effectiveWorkDays;
+    }
+
+    public function setEffectiveWorkDays(?EffectiveWorkDays $effectiveWorkDays): self
+    {
+        $this->effectiveWorkDays = $effectiveWorkDays;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Payslip>
+     */
+    public function getPayslips(): Collection
+    {
+        return $this->payslips;
+    }
+
+    public function addPayslip(Payslip $payslip): self
+    {
+        if (!$this->payslips->contains($payslip)) {
+            $this->payslips[] = $payslip;
+            $payslip->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removePayslip(Payslip $payslip): self
+    {
+        if ($this->payslips->removeElement($payslip)) {
+            // set the owning side to null (unless already changed)
+            if ($payslip->getUser() === $this) {
+                $payslip->setUser(null);
+            }
+        }
+
+        return $this;
     }
 }
