@@ -3,13 +3,19 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
  * @ORM\Table(name="`user`")
+ * @method string getUserIdentifier()
  */
-class User
+class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     /**
      * @ORM\Id
@@ -35,16 +41,25 @@ class User
 
     /**
      * @ORM\Column(type="string", length=255)
+
      */
     private $email;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Unique(message="L'adresse mail saisie a déjà été renseigné. Merci d'en choisir une nouvelle")
      */
     private $emailpro;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Length(
+     *     min=5,
+     *     max=255,
+     *     minMessage="Votre mot de passe doit contenir au minimum {{ limit }} caractére",
+     *     maxMessage="Votre mot de passe doit contenir au maximum {{ limit }} caractére",
+     *     normalizer="trim"
+     * )
      */
     private $password;
 
@@ -96,6 +111,54 @@ class User
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    /**
+     * @ORM\Column(type="json")
+     */
+    private $roles = [];
+
+    /**
+     * @ORM\OneToMany(targetEntity=Contract::class, mappedBy="user")
+     */
+    private $contracts;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Documentation::class, inversedBy="users")
+     */
+    private $documentations;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Job::class, inversedBy="users")
+     */
+    private $job;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Permission::class, inversedBy="users")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $permission;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=PlannedWorkDays::class, inversedBy="users")
+     */
+    private $plannedWorkDays;
+
+    /**
+     * @ORM\OneToOne(targetEntity=EffectiveWorkDays::class, inversedBy="user", cascade={"persist", "remove"})
+     */
+    private $effectiveWorkDays;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Payslip::class, mappedBy="user")
+     */
+    private $payslips;
+
+    public function __construct()
+    {
+        $this->contracts = new ArrayCollection();
+        $this->documentations = new ArrayCollection();
+        $this->payslips = new ArrayCollection();
     }
 
     public function getLastname(): ?string
@@ -274,6 +337,178 @@ class User
     public function setUpdatedAt(?\DateTimeInterface $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    /**
+     * Retourne le role de l'utilisateur
+     * @return array|string[]
+     */
+    public function getRoles(): array
+    {
+        $roles = $this->roles;
+
+        $roles[] = 'ROLE_USER';
+
+        return array_unique($roles);
+    }
+
+    public function setRoles(array $roles): self
+    {
+        $this->roles = $roles;
+
+        return $this;
+    }
+
+    public function getSalt()
+    {
+        // TODO: Implement getSalt() method.
+    }
+
+    public function eraseCredentials()
+    {
+        // TODO: Implement eraseCredentials() method.
+    }
+
+    public function getUsername()
+    {
+        // TODO: Implement getUsername() method.
+    }
+
+    public function __call($name, $arguments)
+    {
+        // TODO: Implement @method string getUserIdentifier()
+    }
+
+    /**
+     * @return Collection<int, Contract>
+     */
+    public function getContracts(): Collection
+    {
+        return $this->contracts;
+    }
+
+    public function addContract(Contract $contract): self
+    {
+        if (!$this->contracts->contains($contract)) {
+            $this->contracts[] = $contract;
+            $contract->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeContract(Contract $contract): self
+    {
+        if ($this->contracts->removeElement($contract)) {
+            // set the owning side to null (unless already changed)
+            if ($contract->getUser() === $this) {
+                $contract->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Documentation>
+     */
+    public function getDocumentations(): Collection
+    {
+        return $this->documentations;
+    }
+
+    public function addDocumentation(Documentation $documentation): self
+    {
+        if (!$this->documentations->contains($documentation)) {
+            $this->documentations[] = $documentation;
+        }
+
+        return $this;
+    }
+
+    public function removeDocumentation(Documentation $documentation): self
+    {
+        $this->documentations->removeElement($documentation);
+
+        return $this;
+    }
+
+    public function getJob(): ?Job
+    {
+        return $this->job;
+    }
+
+    public function setJob(?Job $job): self
+    {
+        $this->job = $job;
+
+        return $this;
+    }
+
+    public function getPermission(): ?Permission
+    {
+        return $this->permission;
+    }
+
+    public function setPermission(?Permission $permission): self
+    {
+        $this->permission = $permission;
+
+        return $this;
+    }
+
+    public function getPlannedWorkDays(): ?PlannedWorkDays
+    {
+        return $this->plannedWorkDays;
+    }
+
+    public function setPlannedWorkDays(?PlannedWorkDays $plannedWorkDays): self
+    {
+        $this->plannedWorkDays = $plannedWorkDays;
+
+        return $this;
+    }
+
+    public function getEffectiveWorkDays(): ?EffectiveWorkDays
+    {
+        return $this->effectiveWorkDays;
+    }
+
+    public function setEffectiveWorkDays(?EffectiveWorkDays $effectiveWorkDays): self
+    {
+        $this->effectiveWorkDays = $effectiveWorkDays;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Payslip>
+     */
+    public function getPayslips(): Collection
+    {
+        return $this->payslips;
+    }
+
+    public function addPayslip(Payslip $payslip): self
+    {
+        if (!$this->payslips->contains($payslip)) {
+            $this->payslips[] = $payslip;
+            $payslip->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removePayslip(Payslip $payslip): self
+    {
+        if ($this->payslips->removeElement($payslip)) {
+            // set the owning side to null (unless already changed)
+            if ($payslip->getUser() === $this) {
+                $payslip->setUser(null);
+            }
+        }
 
         return $this;
     }

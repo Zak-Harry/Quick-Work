@@ -2,15 +2,15 @@
 
 namespace App\Entity;
 
-use App\Repository\DocumentationRepository;
+use App\Repository\PermissionRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=DocumentationRepository::class)
+ * @ORM\Entity(repositoryClass=PermissionRepository::class)
  */
-class Documentation
+class Permission
 {
     /**
      * @ORM\Id
@@ -22,7 +22,7 @@ class Documentation
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $link;
+    private $name;
 
     /**
      * @ORM\Column(type="datetime")
@@ -35,7 +35,7 @@ class Documentation
     private $updatedAt;
 
     /**
-     * @ORM\ManyToMany(targetEntity=User::class, mappedBy="documentations")
+     * @ORM\OneToMany(targetEntity=User::class, mappedBy="permission")
      */
     private $users;
 
@@ -49,14 +49,14 @@ class Documentation
         return $this->id;
     }
 
-    public function getLink(): ?string
+    public function getName(): ?string
     {
-        return $this->link;
+        return $this->name;
     }
 
-    public function setLink(string $link): self
+    public function setName(string $name): self
     {
-        $this->link = $link;
+        $this->name = $name;
 
         return $this;
     }
@@ -97,7 +97,7 @@ class Documentation
     {
         if (!$this->users->contains($user)) {
             $this->users[] = $user;
-            $user->addDocumentation($this);
+            $user->setPermission($this);
         }
 
         return $this;
@@ -106,7 +106,10 @@ class Documentation
     public function removeUser(User $user): self
     {
         if ($this->users->removeElement($user)) {
-            $user->removeDocumentation($this);
+            // set the owning side to null (unless already changed)
+            if ($user->getPermission() === $this) {
+                $user->setPermission(null);
+            }
         }
 
         return $this;

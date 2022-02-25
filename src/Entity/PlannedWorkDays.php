@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\PlannedWorkDaysRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -51,6 +53,16 @@ class PlannedWorkDays
      * @ORM\Column(type="datetime", nullable=false)
      */
     private $updadedAt;
+
+    /**
+     * @ORM\OneToMany(targetEntity=User::class, mappedBy="plannedWorkDay")
+     */
+    private $users;
+
+    public function __construct()
+    {
+        $this->users = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -137,6 +149,36 @@ class PlannedWorkDays
     public function setUpdadedAt(?\DateTimeInterface $updadedAt): self
     {
         $this->updadedAt = $updadedAt;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, User>
+     */
+    public function getUsers(): Collection
+    {
+        return $this->users;
+    }
+
+    public function addUser(User $user): self
+    {
+        if (!$this->users->contains($user)) {
+            $this->users[] = $user;
+            $user->setPlannedWorkDay($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUser(User $user): self
+    {
+        if ($this->users->removeElement($user)) {
+            // set the owning side to null (unless already changed)
+            if ($user->getPlannedWorkDay() === $this) {
+                $user->setPlannedWorkDay(null);
+            }
+        }
 
         return $this;
     }
