@@ -21,38 +21,38 @@ class DepartementJob
      * @ORM\ManyToOne(targetEntity=Job::class, inversedBy="departementJobs")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $job_id;
+    private $job;
 
     /**
      * @ORM\ManyToOne(targetEntity=Departement::class, inversedBy="departementJobs")
      */
-    private $departement_id;
+    private $departement;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getJobId(): ?Job
+    public function getJob(): ?Job
     {
-        return $this->job_id;
+        return $this->job;
     }
 
-    public function setJobId(?Job $job_id): self
+    public function setJob(?Job $job): self
     {
-        $this->job_id = $job_id;
+        $this->job = $job;
 
         return $this;
     }
 
-    public function getDepartementId(): ?Departement
+    public function getDepartement(): ?Departement
     {
-        return $this->departement_id;
+        return $this->departement;
     }
 
-    public function setDepartementId(?Departement $departement_id): self
+    public function setDepartement(?Departement $departement): self
     {
-        $this->departement_id = $departement_id;
+        $this->departement = $departement;
 
         return $this;
     }
