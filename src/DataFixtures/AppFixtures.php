@@ -10,7 +10,7 @@ use App\Entity\Documentation;
 use App\Entity\EffectiveWorkDays;
 use App\Entity\Job;
 use App\Entity\Payslip;
-use App\Entity\Permission;
+use App\Entity\Role;
 use App\Entity\PlannedWorkDays;
 use App\Entity\User;
 use DateTime;
@@ -21,13 +21,11 @@ use Doctrine\DBAL\Connection;
 
 class AppFixtures extends Fixture
 {
-
     private $connexion;
 
     public function __construct(Connection $connexion)
     {
         $this->connexion = $connexion;
-
     }
     
     // On sépare un peu notre code
@@ -45,23 +43,23 @@ class AppFixtures extends Fixture
         $this->connexion->executeQuery('TRUNCATE TABLE effective_work_days');
         $this->connexion->executeQuery('TRUNCATE TABLE job');
         $this->connexion->executeQuery('TRUNCATE TABLE payslip');
-        $this->connexion->executeQuery('TRUNCATE TABLE permission');
+        $this->connexion->executeQuery('TRUNCATE TABLE role');
         $this->connexion->executeQuery('TRUNCATE TABLE planned_work_days');
         $this->connexion->executeQuery('TRUNCATE TABLE user');
-        
     }
 
     public function load(ObjectManager $manager): void
     {
         
          // on vide les tables avant de commencer
-         $this->truncate();
+        $this->truncate();
         
         // mis en place de faker
         $faker = Faker::create('fr_FR');
 
-         // fonction pour générer une heure aléatoire :
-         function randHours($minHour, $maxHour) {
+        // fonction pour générer une heure aléatoire :
+        function randHours($minHour, $maxHour)
+        {
             $firstHour = strtotime($minHour);
             $secondHour = strtotime($maxHour);
             return date('h:i', rand($firstHour, $secondHour));
@@ -100,7 +98,7 @@ class AppFixtures extends Fixture
         /************* Job *************/
         $allJob = [];
         $grade = ['Cadre', 'Agent de maitrise', 'autre'];
-        for ($i = 1; $i<= 20; $i++){    
+        for ($i = 1; $i<= 20; $i++) {
             $newJob = new Job();
             $newJob->setName($faker->jobTitle());
             $newJob->setGrade($grade[rand(0, count($grade)-1)]);
@@ -112,7 +110,7 @@ class AppFixtures extends Fixture
         /************* Departement *************/
         $allDepartement = [];
         $departement = ['Ressources Humaines', 'Comptabilité', 'Marketing', 'Informatique', 'Financier'];
-        foreach ($departement as $departementName){    
+        foreach ($departement as $departementName) {
             $newDepartement = new Departement();
             $newDepartement->setName($departementName);
             $newDepartement->setCreatedAt(new DateTime('now'));
@@ -176,21 +174,20 @@ class AppFixtures extends Fixture
         }
        
 
-        /************* Permission *************/
-        $permission = ['ROLE_USER', 'ROLE_RH', 'ROLE_MANAGER'];
-        $allPermission =[];
+        /************* Role *************/
+        $role = ['ROLE_USER', 'ROLE_RH', 'ROLE_MANAGER'];
+        $allRole =[];
         
-        foreach ($permission as $permissionName) {
-        $newPermission = new Permission();
-        $newPermission->setName($permissionName);
-        $newPermission->setCreatedAt(new DateTime('now'));
-        $allPermission[] = $newPermission;
-        $manager->persist($newPermission);
+        foreach ($role as $roleName) {
+            $newRole = new Role();
+            $newRole->setName($roleName);
+            $newRole->setCreatedAt(new DateTime('now'));
+            $allRole[] = $newRole;
+            $manager->persist($newRole);
         }
 
         /************* User *************/
-        for ($i = 0; $i<= 20; $i++)
-        {
+        for ($i = 0; $i<= 20; $i++) {
             $newUser = new User();
             $newUser->setFirstname($faker->firstName());
             $newUser->setLastname($faker->lastName());
@@ -208,31 +205,31 @@ class AppFixtures extends Fixture
             $newUser->setDateOfBirth($faker->dateTimeBetween('-60years', '-20years'));
             $newUser->setCreatedAt(new DateTime('now'));
 
-            /*****Ajout de la permission *****/
-            $randomPermission = $allPermission[rand(0, count($allPermission) -1)];
-            $newUser->setPermission($randomPermission);
+            /*****Ajout du role *****/
+            $randomRole = $allRole[rand(0, count($allRole) -1)];
+            $newUser->setRole($randomRole);
 
             /*****Ajout du contrat *****/
             // On ajoute de 1 à 3 contrats au hasard pour chaque user
             for ($g = 1; $g <= mt_rand(1, 3); $g++) {
                 $randomContract = $allContract[rand(0, count($allContract) -1)];
                 $newUser->addContract($randomContract);
-             }
+            }
              
 
             /*****Ajout des fiches de paie*****/
             // On ajoute de 1 à 24 fiche de paie au hasard pour chaque user
             for ($g = 1; $g <= mt_rand(1, 24); $g++) {
                 $randomPayslip = $allPayslip[rand(0, count($allPayslip) -1)];
-                $newUser->addPayslip($randomPayslip);    
-             }
+                $newUser->addPayslip($randomPayslip);
+            }
 
             /*****Ajout des documentations*****/
             // On ajoute de 1 à 24 documents au hasard pour chaque user
             for ($g = 1; $g <= mt_rand(1, 24); $g++) {
                 $randomDocumentation = $allDocumentation[rand(0, count($allDocumentation) -1)];
-                $newUser->addDocumentation($randomDocumentation);    
-             }
+                $newUser->addDocumentation($randomDocumentation);
+            }
              
         
             /*****Ajout de l'emploi*****/
@@ -247,26 +244,12 @@ class AppFixtures extends Fixture
             $randomPlanned = $allPlanned[rand(0, count($allPlanned) -1)];
             $newUser->setPlannedWorkDays($randomPlanned);
 
-             /*****Ajout du planning effectué*****/
-             $newUser->setEffectiveWorkDays($allEffective[$i]);
+            /*****Ajout du planning effectué*****/
+            $newUser->setEffectiveWorkDays($allEffective[$i]);
 
     
             $manager->persist($newUser);
-
         }
-
-        
-use Doctrine\Bundle\FixturesBundle\Fixture;
-use Doctrine\Persistence\ObjectManager;
-
-class AppFixtures extends Fixture
-{
-    public function load(ObjectManager $manager): void
-    {
-        // $product = new Product();
-        // $manager->persist($product);
-
-
-        $manager->flush();
     }
 }
+        

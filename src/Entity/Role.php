@@ -2,15 +2,15 @@
 
 namespace App\Entity;
 
-use App\Repository\PermissionRepository;
+use App\Repository\RoleRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=PermissionRepository::class)
+ * @ORM\Entity(repositoryClass=RoleRepository::class)
  */
-class Permission
+class Role
 {
     /**
      * @ORM\Id
@@ -25,6 +25,11 @@ class Permission
     private $name;
 
     /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $roleString;
+
+    /**
      * @ORM\Column(type="datetime")
      */
     private $createdAt;
@@ -35,7 +40,7 @@ class Permission
     private $updatedAt;
 
     /**
-     * @ORM\OneToMany(targetEntity=User::class, mappedBy="permission")
+     * @ORM\OneToMany(targetEntity=User::class, mappedBy="role")
      */
     private $users;
 
@@ -97,7 +102,7 @@ class Permission
     {
         if (!$this->users->contains($user)) {
             $this->users[] = $user;
-            $user->setPermission($this);
+            $user->setRole($this);
         }
 
         return $this;
@@ -107,10 +112,27 @@ class Permission
     {
         if ($this->users->removeElement($user)) {
             // set the owning side to null (unless already changed)
-            if ($user->getPermission() === $this) {
-                $user->setPermission(null);
+            if ($user->getRole() === $this) {
+                $user->setRole(null);
             }
         }
+
+        return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->name;
+    }
+
+    public function getRoleString(): ?string
+    {
+        return $this->roleString;
+    }
+
+    public function setRoleString(string $roleString): self
+    {
+        $this->roleString = $roleString;
 
         return $this;
     }

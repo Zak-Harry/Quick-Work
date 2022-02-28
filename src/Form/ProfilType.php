@@ -5,8 +5,8 @@ namespace App\Form;
 use App\Entity\Documentation;
 use App\Entity\EffectiveWorkDays;
 use App\Entity\Job;
-use App\Entity\Permission;
 use App\Entity\PlannedWorkDays;
+use App\Entity\Role;
 use App\Entity\User;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -105,8 +105,8 @@ class ProfilType extends AbstractType
                 'expanded' => true,
                 'placeholder' => 'Veuillez un métier'
             ])
-            ->add('permission', EntityType::class, [
-                'class' => Permission::class
+            ->add('role', EntityType::class, [
+                'class' => Role::class
             ])
             ->add('plannedWorkDays', EntityType::class, [
                 'class' => PlannedWorkDays::class
