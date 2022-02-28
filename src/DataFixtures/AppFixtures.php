@@ -121,19 +121,19 @@ class AppFixtures extends Fixture
 
         /************* DepartementJob *************/
         $allDepartementJob = [];
-        for ($i = 1; $i<= count($allJob); $i++) {
-            $newDepartementJob = new DepartementJob;
-            $randomJob = $allJob[rand(0, count($allJob) -1)];
-            $randomDepartement = $allDepartement[rand(0, count($allDepartement) -1)];
-            
-            $newDepartementJob->setJob($randomJob);
-            $newDepartementJob->setDepartement($randomDepartement);
-            $allDepartementJob[] = $newDepartementJob;
-            $manager->persist($newDepartementJob);
+        foreach ($allJob as $job) {
+            for ($i = 1; $i<= count($allJob); $i++) {
+                $newDepartementJob = new DepartementJob;
+                $randomJob = $allJob[rand(0, count($allJob) -1)];
+                $randomDepartement = $allDepartement[rand(0, count($allDepartement) -1)];
+                
+                $newDepartementJob->setJob($randomJob);
+                $newDepartementJob->setDepartement($randomDepartement);
+                $allDepartementJob[] = $newDepartementJob;
+                $manager->persist($newDepartementJob);
+            }
         }
-       
-
-        
+         
         /************* PlannedWorkDays *************/
         $allPlanned = [];
         for ($i = 1; $i<= 20; $i++) {
