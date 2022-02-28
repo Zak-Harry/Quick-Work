@@ -18,3 +18,7 @@
 /phpunit.xml
 .phpunit.result.cache
 ###< phpunit/phpunit ###
+
+###> Tailwind/nodeJs ###
+/nodes_modules/
+###< Tailwind/nodeJs ###
