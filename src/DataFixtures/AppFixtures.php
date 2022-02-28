@@ -18,14 +18,17 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Factory as Faker;
 use Doctrine\DBAL\Connection;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class AppFixtures extends Fixture
 {
     private $connexion;
+    private $hasher;
 
-    public function __construct(Connection $connexion)
+    public function __construct(Connection $connexion, UserPasswordHasherInterface $hasher)
     {
         $this->connexion = $connexion;
+        $this->hasher = $hasher;
     }
     
     // On sépare un peu notre code
@@ -63,6 +66,13 @@ class AppFixtures extends Fixture
             $firstHour = strtotime($minHour);
             $secondHour = strtotime($maxHour);
             return date('h:i', rand($firstHour, $secondHour));
+        }
+ 
+        // fonction pour supprimer les accents, enlever les espaces et mettre tout en minuscule
+        function formatString($string) {
+            $search  = array('À', 'Á', 'Â', 'Ã', 'Ä', 'Å', 'Ç', 'È', 'É', 'Ê', 'Ë', 'Ì', 'Í', 'Î', 'Ï', 'Ò', 'Ó', 'Ô', 'Õ', 'Ö', 'Ù', 'Ú', 'Û', 'Ü', 'Ý', 'à', 'á', 'â', 'ã', 'ä', 'å', 'ç', 'è', 'é', 'ê', 'ë', 'ì', 'í', 'î', 'ï', 'ð', 'ò', 'ó', 'ô', 'õ', 'ö', 'ù', 'ú', 'û', 'ü', 'ý', 'ÿ');
+            $replace = array('A', 'A', 'A', 'A', 'A', 'A', 'C', 'E', 'E', 'E', 'E', 'I', 'I', 'I', 'I', 'O', 'O', 'O', 'O', 'O', 'U', 'U', 'U', 'U', 'Y', 'a', 'a', 'a', 'a', 'a', 'a', 'c', 'e', 'e', 'e', 'e', 'i', 'i', 'i', 'i', 'o', 'o', 'o', 'o', 'o', 'o', 'u', 'u', 'u', 'u', 'y', 'y');
+            return strtolower(str_replace(' ','',str_replace($search, $replace, $string)));
         }
 
         /************* Payslip *************/
@@ -193,10 +203,9 @@ class AppFixtures extends Fixture
             $newUser->setLastname($faker->lastName());
             $newUser->setPicture('https://boredhumans.b-cdn.net/faces2/'. rand(100, 400).'.jpg');
             $newUser->setEmail($faker->freeEmail());
-            $newUser->setEmailpro(strtolower(trim($newUser->getFirstname() .'.'. $newUser->getLastname() . '@oclock.io')));
+            $newUser->setEmailpro(formatString(($newUser->getFirstname() .'.'. $newUser->getLastname() . '@oclock.io')));
             $newUser->setPhonenumber($faker->mobileNumber());
             $newUser->setPhonenumberpro($faker->phoneNumber());
-            $newUser->setPassword($newUser->getFirstname());
             $newUser->setAddress($faker->Address());
             $newUser->setZipcode($faker->postcode());
             $newUser->setCity($faker->city());
@@ -204,6 +213,11 @@ class AppFixtures extends Fixture
             $newUser->setStatus(true);
             $newUser->setDateOfBirth($faker->dateTimeBetween('-60years', '-20years'));
             $newUser->setCreatedAt(new DateTime('now'));
+
+            //hashage du password
+            // le mdp est le prénom en minuscule sans accent
+            $hashedPassword = $this->hasher->hashPassword($newUser,formatString($newUser->getFirstname()));
+            $newUser->setPassword($hashedPassword);
 
             /*****Ajout du role *****/
             $randomRole = $allRole[rand(0, count($allRole) -1)];
