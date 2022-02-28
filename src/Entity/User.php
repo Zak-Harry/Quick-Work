@@ -94,7 +94,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $rib;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", options = {"default" = true})
      */
     private $status;
 
@@ -153,6 +153,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\OneToMany(targetEntity=Payslip::class, mappedBy="user")
      */
     private $payslips;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $dateOfBirth;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Departement::class, inversedBy="users")
+     */
+    private $departement;
 
     public function __construct()
     {
@@ -509,6 +519,30 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $payslip->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getDateOfBirth(): ?\DateTimeInterface
+    {
+        return $this->dateOfBirth;
+    }
+
+    public function setDateOfBirth(?\DateTimeInterface $dateOfBirth): self
+    {
+        $this->dateOfBirth = $dateOfBirth;
+
+        return $this;
+    }
+
+    public function getDepartement(): ?Departement
+    {
+        return $this->departement;
+    }
+
+    public function setDepartement(?Departement $departement): self
+    {
+        $this->departement = $departement;
 
         return $this;
     }
