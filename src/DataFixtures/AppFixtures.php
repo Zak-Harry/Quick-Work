@@ -193,9 +193,7 @@ class AppFixtures extends Fixture
             $newUser = new User();
             $newUser->setFirstname($faker->firstName());
             $newUser->setLastname($faker->lastName());
-            $newUser->setPicture('https://picsum.photos/id/'.mt_rand(1, 100).'/200/324');
-            // version avec des photos de personnes aléatoires à tester
-            //$newUser->setPicture('https://this-person-does-not-exist.com/fr');
+            $newUser->setPicture('https://boredhumans.b-cdn.net/faces2/'. rand(100, 400).'.jpg');
             $newUser->setEmail($faker->freeEmail());
             $newUser->setEmailpro(strtolower(trim($newUser->getFirstname() .'.'. $newUser->getLastname() . '@oclock.io')));
             $newUser->setPhonenumber($faker->mobileNumber());

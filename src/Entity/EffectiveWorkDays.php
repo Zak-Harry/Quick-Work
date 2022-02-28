@@ -38,7 +38,7 @@ class EffectiveWorkDays
     private $endlog;
 
     /**
-     * @ORM\Column(type="datetime", nullable=true)
+     * @ORM\Column(type="time", nullable=true)
      */
     private $hoursworked;
 

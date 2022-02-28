@@ -40,7 +40,7 @@ class PlannedWorkDays
     private $endlunch;
 
     /**
-     * @ORM\Column(type="datetime", nullable=false)
+     * @ORM\Column(type="time", nullable=false)
      */
     private $hoursplanned;
 
