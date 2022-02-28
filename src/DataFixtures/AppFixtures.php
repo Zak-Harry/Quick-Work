@@ -250,6 +250,8 @@ class AppFixtures extends Fixture
     
             $manager->persist($newUser);
         }
+        $manager-> flush();
     }
+    
 }
         
