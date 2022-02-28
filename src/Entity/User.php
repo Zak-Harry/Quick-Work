@@ -183,10 +183,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->emailpro = $emailpro;
         return $this;
     }
-    public function getPassword(): ?string
+     /**
+     * @see PasswordAuthenticatedUserInterface
+     */
+    public function getPassword(): string
     {
         return $this->password;
     }
+
     public function setPassword(string $password): self
     {
         $this->password = $password;
@@ -304,7 +308,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function getUsername()
     {
-        // TODO: Implement getUsername() method.
+        return $this->emailpro;
     }
 
     public function __call($name, $arguments)
