@@ -19,6 +19,9 @@
 .phpunit.result.cache
 ###< phpunit/phpunit ###
 
-###> Tailwind/nodeJs ###
-/nodes_modules/
-###< Tailwind/nodeJs ###
+###> symfony/webpack-encore-bundle ###
+/node_modules/
+/public/build/
+npm-debug.log
+yarn-error.log
+###< symfony/webpack-encore-bundle ###
