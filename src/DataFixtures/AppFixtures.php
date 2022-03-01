@@ -14,6 +14,7 @@ use App\Entity\Role;
 use App\Entity\PlannedWorkDays;
 use App\Entity\User;
 use DateTime;
+use DateTimeZone;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Factory as Faker;

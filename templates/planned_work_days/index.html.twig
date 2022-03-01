@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}PlannedWorkDays index{% endblock %}
+
+{% block body %}
+    <h1>Planning de {{ user.firstname }} </h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Startshift</th>
+                <th>Startlunch</th>
+                <th>Endlunch</th>
+                <th>Endshift</th>
+                <th>Hoursplanned</th>
+                <th>CreatedAt</th>
+                <th>UpdadedAt</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        
+            <tr>
+                <td>{{ user.plannedWorkDays.startshift ? user.plannedWorkDays.startshift|date('l-d-m-Y') : '' }}</td>
+                <td>{{ user.plannedWorkDays.startshift ? user.plannedWorkDays.startshift|date('H:i') : '' }}</td>
+                <td>{{ user.plannedWorkDays.startlunch ? user.plannedWorkDays.startlunch|date('H:i') : '' }}</td>
+                <td>{{ user.plannedWorkDays.endlunch ? user.plannedWorkDays.endlunch|date('H:i') : '' }}</td>
+                <td>{{ user.plannedWorkDays.endshift ? user.plannedWorkDays.endshift|format_datetime('none', 'short', locale='fr') : '' }}</td>
+                <td>{{ user.plannedWorkDays.hoursplanned ? user.plannedWorkDays.hoursplanned|date('H:i') : '' }}</td>
+                <td>{{ user.plannedWorkDays.createdAt ? user.plannedWorkDays.createdAt|date('d-m-y H:i') : '' }}</td>
+                <td>{{ user.plannedWorkDays.updadedAt ? user.plannedWorkDays.updadedAt|date('H:i') : '' }}</td>
+                <td>
+                    <a href="{{ path('planned_work_days_show', {'id': user.id}) }}">show</a>
+                    <a href="{{ path('planned_work_days_edit', {'id': user.id}) }}">edit</a>
+                </td>
+            </tr>
+        
+            <tr>
+                <td colspan="9">no records found</td>
+            </tr>
+       
+        </tbody>
+    </table>
+
+    <a href="{{ path('planned_work_days_new') }}">Create new</a>
+{% endblock %}
