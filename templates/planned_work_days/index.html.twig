@@ -20,22 +20,22 @@
             </tr>
         </thead>
         <tbody>
-        
+        {% for user in user.plannedWorkDays %} 
             <tr>
-                <td>{{ user.plannedWorkDays.startshift ? user.plannedWorkDays.startshift|date('l-d-m-Y') : '' }}</td>
-                <td>{{ user.plannedWorkDays.startshift ? user.plannedWorkDays.startshift|date('H:i') : '' }}</td>
-                <td>{{ user.plannedWorkDays.startlunch ? user.plannedWorkDays.startlunch|date('H:i') : '' }}</td>
-                <td>{{ user.plannedWorkDays.endlunch ? user.plannedWorkDays.endlunch|date('H:i') : '' }}</td>
-                <td>{{ user.plannedWorkDays.endshift ? user.plannedWorkDays.endshift|format_datetime('none', 'short', locale='fr') : '' }}</td>
-                <td>{{ user.plannedWorkDays.hoursplanned ? user.plannedWorkDays.hoursplanned|date('H:i') : '' }}</td>
-                <td>{{ user.plannedWorkDays.createdAt ? user.plannedWorkDays.createdAt|date('d-m-y H:i') : '' }}</td>
-                <td>{{ user.plannedWorkDays.updadedAt ? user.plannedWorkDays.updadedAt|date('H:i') : '' }}</td>
+                <td>{{ user.startshift ? user.startshift|date('l-d-m-Y') : '' }}</td>
+                <td>{{ user.startshift ? user.startshift|date('H:i') : '' }}</td>
+                <td>{{ user.startlunch ? user.startlunch|date('H:i') : '' }}</td>
+                <td>{{ user.endlunch ? user.endlunch|date('H:i') : '' }}</td>
+                <td>{{ user.endshift ? user.endshift|format_datetime('none', 'short', locale='fr') : '' }}</td>
+                <td>{{ user.hoursplanned ? user.hoursplanned|date('H:i') : '' }}</td>
+                <td>{{ user.createdAt ? user.createdAt|date('d-m-y H:i') : '' }}</td>
+                <td>{{ user.updadedAt ? user.updadedAt|date('H:i') : '' }}</td>
                 <td>
                     <a href="{{ path('planned_work_days_show', {'id': user.id}) }}">show</a>
                     <a href="{{ path('planned_work_days_edit', {'id': user.id}) }}">edit</a>
                 </td>
             </tr>
-        
+        {% endfor %}
             <tr>
                 <td colspan="9">no records found</td>
             </tr>
