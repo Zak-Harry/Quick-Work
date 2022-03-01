@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New PlannedWorkDays{% endblock %}
+
+{% block body %}
+    <h1>Create new PlannedWorkDays</h1>
+
+    {{ include('planned_work_days/_form.html.twig') }}
+
+    <a href="{{ path('planned_work_days_index') }}">back to list</a>
+{% endblock %}

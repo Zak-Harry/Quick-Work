@@ -14,6 +14,7 @@ use App\Entity\Role;
 use App\Entity\PlannedWorkDays;
 use App\Entity\User;
 use DateTime;
+use DateTimeZone;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Factory as Faker;
@@ -65,7 +66,7 @@ class AppFixtures extends Fixture
         {
             $firstHour = strtotime($minHour);
             $secondHour = strtotime($maxHour);
-            return date('h:i', rand($firstHour, $secondHour));
+            return date('H:i', rand($firstHour, $secondHour));
         }
  
         // fonction pour supprimer les accents, enlever les espaces et mettre tout en minuscule
@@ -145,7 +146,7 @@ class AppFixtures extends Fixture
          
         /************* PlannedWorkDays *************/
         $allPlanned = [];
-        for ($i = 1; $i<= 20; $i++) {
+        for ($i = 1; $i<= 200; $i++) {
             $newPlanned = new PlannedWorkDays;
             $newPlanned->setStartshift(new DateTime(randHours('08:00', '10:00')));
             $newPlanned->setStartlunch(new DateTime(randHours('12:00', '12:30')));
@@ -165,7 +166,7 @@ class AppFixtures extends Fixture
 
         /************* EffetiveWorkDays *************/
         $allEffective = [];
-        for ($i = 0; $i<= 20; $i++) {
+        for ($i = 0; $i<= 200; $i++) {
             $newEffective = new EffectiveWorkDays;
             $newEffective->setStartlog(new DateTime(randHours('08:00', '10:00')));
             $newEffective->setStartlunch(new DateTime(randHours('12:00', '12:30')));
@@ -255,13 +256,17 @@ class AppFixtures extends Fixture
             $newUser->setDepartement($randomDepartement);
 
             /*****Ajout du planning prévu *****/
-            $randomPlanned = $allPlanned[rand(0, count($allPlanned) -1)];
-            $newUser->setPlannedWorkDays($randomPlanned);
+            // On ajoute de 5 plannings au hasard pour chaque user
+            for ($g = 0; $g <= 5; $g++) {
+                $newUser->addPlannedWorkDay($allPlanned[$g]);
+            }
+            
+             /*****Ajout du planning effectué *****/
+            // On ajoute de 5 plannings au hasard pour chaque user
+            for ($g = 0; $g <= 5; $g++) {
+                $newUser->addEffectiveWorkDay($allEffective[$g]);
+            }
 
-            /*****Ajout du planning effectué*****/
-            $newUser->setEffectiveWorkDays($allEffective[$i]);
-
-    
             $manager->persist($newUser);
         }
         $manager-> flush();

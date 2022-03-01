@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit PlannedWorkDays{% endblock %}
+
+{% block body %}
+    <h1>Edit PlannedWorkDays</h1>
+
+    {{ include('planned_work_days/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('planned_work_days_index') }}">back to list</a>
+
+    {{ include('planned_work_days/_delete_form.html.twig') }}
+{% endblock %}
