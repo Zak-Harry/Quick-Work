@@ -3,7 +3,8 @@
 {% block title %}PlannedWorkDays index{% endblock %}
 
 {% block body %}
-    <h1>Planning de {{ user.firstname }} </h1>
+    <h1>Planning de {{ user.firstname}} {{ user.lastname}} </h1>
+    {{ dump(app.user) }}
 
     <table class="table">
         <thead>

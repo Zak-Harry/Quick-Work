@@ -66,7 +66,7 @@ class AppFixtures extends Fixture
         {
             $firstHour = strtotime($minHour);
             $secondHour = strtotime($maxHour);
-            return date('h:i', rand($firstHour, $secondHour));
+            return date('H:i', rand($firstHour, $secondHour));
         }
  
         // fonction pour supprimer les accents, enlever les espaces et mettre tout en minuscule
