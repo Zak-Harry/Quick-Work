@@ -110,15 +110,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\ManyToOne(targetEntity=Job::class, inversedBy="users")
      */
     private $job;
-  
-    /**
-     * @ORM\ManyToOne(targetEntity=PlannedWorkDays::class, inversedBy="users")
-     */
-    private $plannedWorkDays;
-    /**
-     * @ORM\OneToOne(targetEntity=EffectiveWorkDays::class, inversedBy="user", cascade={"persist", "remove"})
-     */
-    private $effectiveWorkDays;
     /**
      * @ORM\OneToMany(targetEntity=Payslip::class, mappedBy="user")
      */
@@ -132,11 +123,23 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $departement;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=PlannedWorkDays::class, inversedBy="users")
+     */
+    private $plannedWorkDays;
+
+    /**
+     * @ORM\OneToMany(targetEntity=EffectiveWorkDays::class, mappedBy="user")
+     */
+    private $effectiveWorkDays;
+
     public function __construct()
     {
         $this->contracts = new ArrayCollection();
         $this->documentations = new ArrayCollection();
         $this->payslips = new ArrayCollection();
+        $this->plannedWorkDays = new ArrayCollection();
+        $this->effectiveWorkDays = new ArrayCollection();
     }
     public function getLastname(): ?string
     {
@@ -370,24 +373,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
    
-    public function getPlannedWorkDays(): ?PlannedWorkDays
-    {
-        return $this->plannedWorkDays;
-    }
-    public function setPlannedWorkDays(?PlannedWorkDays $plannedWorkDays): self
-    {
-        $this->plannedWorkDays = $plannedWorkDays;
-        return $this;
-    }
-    public function getEffectiveWorkDays(): ?EffectiveWorkDays
-    {
-        return $this->effectiveWorkDays;
-    }
-    public function setEffectiveWorkDays(?EffectiveWorkDays $effectiveWorkDays): self
-    {
-        $this->effectiveWorkDays = $effectiveWorkDays;
-        return $this;
-    }
     /**
      * @return Collection<int, Payslip>
      */
@@ -429,6 +414,60 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setDepartement(?Departement $departement): self
     {
         $this->departement = $departement;
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, PlannedWorkDays>
+     */
+    public function getPlannedWorkDays(): Collection
+    {
+        return $this->plannedWorkDays;
+    }
+
+    public function addPlannedWorkDay(PlannedWorkDays $plannedWorkDay): self
+    {
+        if (!$this->plannedWorkDays->contains($plannedWorkDay)) {
+            $this->plannedWorkDays[] = $plannedWorkDay;
+        }
+
+        return $this;
+    }
+
+    public function removePlannedWorkDay(PlannedWorkDays $plannedWorkDay): self
+    {
+        $this->plannedWorkDays->removeElement($plannedWorkDay);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, EffectiveWorkDays>
+     */
+    public function getEffectiveWorkDays(): Collection
+    {
+        return $this->effectiveWorkDays;
+    }
+
+    public function addEffectiveWorkDay(EffectiveWorkDays $effectiveWorkDay): self
+    {
+        if (!$this->effectiveWorkDays->contains($effectiveWorkDay)) {
+            $this->effectiveWorkDays[] = $effectiveWorkDay;
+            $effectiveWorkDay->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEffectiveWorkDay(EffectiveWorkDays $effectiveWorkDay): self
+    {
+        if ($this->effectiveWorkDays->removeElement($effectiveWorkDay)) {
+            // set the owning side to null (unless already changed)
+            if ($effectiveWorkDay->getUser() === $this) {
+                $effectiveWorkDay->setUser(null);
+            }
+        }
+
         return $this;
     }
 }

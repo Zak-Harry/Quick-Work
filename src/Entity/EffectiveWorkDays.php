@@ -53,10 +53,11 @@ class EffectiveWorkDays
     private $updatedAt;
 
     /**
-     * @ORM\OneToOne(targetEntity=User::class, mappedBy="effectiveWorkDays", cascade={"persist", "remove"})
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="effectiveWorkDays")
      */
     private $user;
 
+    
     public function getId(): ?int
     {
         return $this->id;
