@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}PlannedWorkDays{% endblock %}
+
+{% block body %}
+    <h1>PlannedWorkDays</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ planned_work_day.id }}</td>
+            </tr>
+            <tr>
+                <th>Startshift</th>
+                <td>{{ planned_work_day.startshift ? planned_work_day.startshift|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Endshift</th>
+                <td>{{ planned_work_day.endshift ? planned_work_day.endshift|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Startlunch</th>
+                <td>{{ planned_work_day.startlunch ? planned_work_day.startlunch|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Endlunch</th>
+                <td>{{ planned_work_day.endlunch ? planned_work_day.endlunch|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Hoursplanned</th>
+                <td>{{ planned_work_day.hoursplanned ? planned_work_day.hoursplanned|date('H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>CreatedAt</th>
+                <td>{{ planned_work_day.createdAt ? planned_work_day.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>UpdadedAt</th>
+                <td>{{ planned_work_day.updadedAt ? planned_work_day.updadedAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('planned_work_days_index') }}">back to list</a>
+
+    <a href="{{ path('planned_work_days_edit', {'id': planned_work_day.id}) }}">edit</a>
+
+    {{ include('planned_work_days/_delete_form.html.twig') }}
+{% endblock %}
