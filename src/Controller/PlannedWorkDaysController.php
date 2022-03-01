@@ -18,13 +18,13 @@ use Symfony\Component\Routing\Annotation\Route;
 class PlannedWorkDaysController extends AbstractController
 {
     /**
-     * @Route("/{id}", name="planned_work_days_index", methods={"GET"}, requirements={"id": "\d+"})
+     * @Route("/", name="planned_work_days_index", methods={"GET"})
      */
-    public function index(User $user, PlannedWorkDays $plannedWorkDays): Response
+    public function index(): Response
     {
+        $userLogged = $this->getUser();
         return $this->render('planned_work_days/index.html.twig', [
-            'user' => $user,
-            'plannedWorkDays' => $plannedWorkDays,
+            'user' => $userLogged,
 
         ]);
     }
