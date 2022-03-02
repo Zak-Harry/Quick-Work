@@ -16,7 +16,6 @@ use App\Entity\User;
 use DateTime;
 use DateTimeZone;
 use Doctrine\Bundle\FixturesBundle\Fixture;
-use Doctrine\DBAL\Exception;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Factory as Faker;
 use Doctrine\DBAL\Connection;
@@ -34,10 +33,6 @@ class AppFixtures extends Fixture
     }
     
     // On sépare un peu notre code
-
-    /**
-     * @throws Exception
-     */
     private function truncate()
     {
         //  on désactive la vérification des FK
@@ -57,9 +52,6 @@ class AppFixtures extends Fixture
         $this->connexion->executeQuery('TRUNCATE TABLE user');
     }
 
-    /**
-     * @throws Exception
-     */
     public function load(ObjectManager $manager): void
     {
         
@@ -68,6 +60,16 @@ class AppFixtures extends Fixture
         
         // mis en place de faker
         $faker = Faker::create('fr_FR');
+
+        // fonction pour traduire les jours en mois et jours
+        function dateToFrench($date, $format) 
+        {
+            $english_days = array('Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday');
+            $french_days = array('lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi', 'dimanche');
+            $english_months = array('January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December');
+            $french_months = array('janvier', 'février', 'mars', 'avril', 'mai', 'juin', 'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre');
+            return str_replace($english_months, $french_months, str_replace($english_days, $french_days, date($format, strtotime($date) ) ) );
+        }
 
         // fonction pour générer une heure aléatoire :
         function randHours($minHour, $maxHour)
@@ -78,8 +80,7 @@ class AppFixtures extends Fixture
         }
  
         // fonction pour supprimer les accents, enlever les espaces et mettre tout en minuscule
-        function formatString($string): string
-        {
+        function formatString($string) {
             $search  = array('À', 'Á', 'Â', 'Ã', 'Ä', 'Å', 'Ç', 'È', 'É', 'Ê', 'Ë', 'Ì', 'Í', 'Î', 'Ï', 'Ò', 'Ó', 'Ô', 'Õ', 'Ö', 'Ù', 'Ú', 'Û', 'Ü', 'Ý', 'à', 'á', 'â', 'ã', 'ä', 'å', 'ç', 'è', 'é', 'ê', 'ë', 'ì', 'í', 'î', 'ï', 'ð', 'ò', 'ó', 'ô', 'õ', 'ö', 'ù', 'ú', 'û', 'ü', 'ý', 'ÿ');
             $replace = array('A', 'A', 'A', 'A', 'A', 'A', 'C', 'E', 'E', 'E', 'E', 'I', 'I', 'I', 'I', 'O', 'O', 'O', 'O', 'O', 'U', 'U', 'U', 'U', 'Y', 'a', 'a', 'a', 'a', 'a', 'a', 'c', 'e', 'e', 'e', 'e', 'i', 'i', 'i', 'i', 'o', 'o', 'o', 'o', 'o', 'o', 'u', 'u', 'u', 'u', 'y', 'y');
             return strtolower(str_replace(' ','',str_replace($search, $replace, $string)));
@@ -193,7 +194,6 @@ class AppFixtures extends Fixture
             $manager->persist($newEffective);
         }
        
-
         /************* Role *************/
         $role = ['ROLE_USER', 'ROLE_RH', 'ROLE_MANAGER'];
         $allRole =[];
@@ -240,7 +240,6 @@ class AppFixtures extends Fixture
                 $newUser->addContract($randomContract);
             }
              
-
             /*****Ajout des fiches de paie*****/
             // On ajoute de 1 à 24 fiche de paie au hasard pour chaque user
             for ($g = 1; $g <= mt_rand(1, 24); $g++) {
@@ -255,7 +254,6 @@ class AppFixtures extends Fixture
                 $newUser->addDocumentation($randomDocumentation);
             }
              
-        
             /*****Ajout de l'emploi*****/
             $randomJob = $allJob[rand(0, count($allJob) -1)];
             $newUser->setJob($randomJob);
@@ -267,7 +265,7 @@ class AppFixtures extends Fixture
             /*****Ajout du planning prévu *****/
             // On ajoute de 5 plannings au hasard pour chaque user
             for ($g = 0; $g <= 5; $g++) {
-                $newUser->addPlannedWorkDay($allPlanned[$g]);
+                $newUser->addPlannedWorkDay($allPlanned[rand(0, count($allPlanned) -1)]);
             }
             
              /*****Ajout du planning effectué *****/
