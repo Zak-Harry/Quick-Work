@@ -23,24 +23,24 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $lastname;
+    private ?string $lastname;
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $firstname;
+    private ?string $firstname;
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $picture;
+    private ?string $picture;
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $email;
+    private ?string $email;
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\Unique(message="L'adresse mail saisie a déjà été renseigné. Merci d'en choisir une nouvelle")
      */
-    private $emailpro;
+    private ?string $emailpro;
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\Length(
@@ -51,43 +51,43 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      *     normalizer="trim"
      * )
      */
-    private $password;
+    private string $password;
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $phonenumber;
+    private ?string $phonenumber;
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $phonenumberpro;
+    private ?string $phonenumberpro;
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $address;
+    private ?string $address;
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $city;
+    private ?string $city;
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $zipcode;
+    private ?string $zipcode;
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $rib;
+    private ?string $rib;
     /**
      * @ORM\Column(type="boolean", options = {"default" = true})
      */
-    private $status;
+    private ?bool $status;
     /**
      * @ORM\Column(type="datetime")
      */
-    private $createdAt;
+    private ?\DateTimeInterface $createdAt;
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
-    private $updatedAt;
+    private ?\DateTimeInterface $updatedAt;
 
     public function getId(): ?int
     {
@@ -97,41 +97,41 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\ManyToOne(targetEntity="Role")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $role;
+    private ?Role $role;
     /**
      * @ORM\OneToMany(targetEntity=Contract::class, mappedBy="user")
      */
-    private $contracts;
+    private Collection $contracts;
     /**
      * @ORM\ManyToMany(targetEntity=Documentation::class, inversedBy="users")
      */
-    private $documentations;
+    private Collection $documentations;
     /**
      * @ORM\ManyToOne(targetEntity=Job::class, inversedBy="users")
      */
-    private $job;
+    private ?Job $job;
     /**
      * @ORM\OneToMany(targetEntity=Payslip::class, mappedBy="user")
      */
-    private $payslips;
+    private Collection $payslips;
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
-    private $dateOfBirth;
+    private ?\DateTimeInterface $dateOfBirth;
     /**
      * @ORM\ManyToOne(targetEntity=Departement::class, inversedBy="users")
      */
-    private $departement;
+    private ?Departement $departement;
 
     /**
      * @ORM\ManyToMany(targetEntity=PlannedWorkDays::class, inversedBy="users")
      */
-    private $plannedWorkDays;
+    private Collection $plannedWorkDays;
 
     /**
      * @ORM\OneToMany(targetEntity=EffectiveWorkDays::class, mappedBy="user")
      */
-    private $effectiveWorkDays;
+    private Collection $effectiveWorkDays;
 
     public function __construct()
     {
