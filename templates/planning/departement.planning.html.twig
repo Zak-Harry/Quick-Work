@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}PlannedWorkDays index{% endblock %}
+
+{% block body %}
+    <h1>Planning du département {{ dpt.name}}</h1>
+   
+        {% for user in dptUser %} 
+        <table class="table">
+        <thead>
+            <tr>    
+                <th>Prénom</th>
+                <th>Nom</th>   
+            </tr>
+        </thead>
+
+        <tbody>   
+          <tr>
+                <td>{{ user.firstname }}</td>
+                <td>{{ user.lastname }}</td>
+          </tr>
+        </tbody>
+    </table>
+    {# {% for i in 0..3 %} #}
+          <table class="table">
+        <thead>
+            <tr>
+                <th>Début de journée</th>
+                <th>Début pause déjeuner</th>
+                <th>Fin pause déjeunée</th>
+                <th>Fin de journée</th>
+                <th>Nombre d'heures</th>   
+            </tr>
+        </thead>
+
+        <tbody>
+        
+        {% for user in dptUser[0].plannedWorkDays %} 
+            <tr>
+                <td>{{ user.startshift ? user.startshift|date('H:i') : '' }}</td>
+                <td>{{ user.startlunch ? user.startlunch|date('H:i') : '' }}</td>
+                <td>{{ user.endlunch ? user.endlunch|date('H:i') : '' }}</td>
+                <td>{{ user.endshift ? user.endshift|date('H:i') : '' }}</td>
+                <td>{{ user.hoursplanned ? user.hoursplanned|date('H:i') : '' }}</td> 
+            </tr>
+            {% endfor %}
+          
+        </tbody>
+
+    </table>
+        {# {% endfor %} #}
+        
+        {% endfor %}
+           
+{% endblock %}

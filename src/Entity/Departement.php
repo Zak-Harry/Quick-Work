@@ -22,22 +22,22 @@ class Departement
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private ?string $name;
+    private $name;
 
     /**
      * @ORM\Column(type="datetime")
      */
-    private ?\DateTimeInterface $createdAt;
+    private $createdAt;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
-    private ?\DateTimeInterface $updatedAt;
+    private $updatedAt;
 
     /**
      * @ORM\OneToMany(targetEntity=User::class, mappedBy="departement")
      */
-    private Collection $users;
+    private $users;
 
     public function __construct()
     {
