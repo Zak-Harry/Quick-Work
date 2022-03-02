@@ -20,6 +20,7 @@
         <!-- Installation du plugin tailwind/form via https://github.com/tailwindlabs/tailwindcss-forms -->
         <form class="text-center bg-white bg-opacity-30 p-4 -mt-6 pt-6 z-0 rounded-md" action="#" method="POST">
 
+            {#
             {% if error %}
                 <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
             {% endif %}
@@ -29,7 +30,8 @@
                     You are logged in as {{ app.user.username }}, <a href="{{ path('app_logout') }}">Logout</a>
                 </div>
             {% endif %}
-
+            #}
+            
             <h1 class="text-white font-bold text-2xl my-3">Connexion</h1>
             <input type="email" value="{{ last_username }}" name="email" id="inputEmail" autocomplete="email" autofocus class="inputLoginMail" placeholder="Entrer votre adresse mail" required>
             <input type="password" name="password" id="inputPassword" autocomplete="current-password" class="inputLoginPassWord" placeholder="Entrer votre mot de passe" required>
