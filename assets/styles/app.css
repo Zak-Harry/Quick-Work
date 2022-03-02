@@ -1,0 +1,18 @@
+@tailwind base;
+
+@tailwind components;
+
+@tailwind utilities;
+
+/* Components for templates/login/index.html.twig */
+.inputLoginMail {
+    @apply mx-auto my-2 w-52 rounded-md bg-gray-100 border-transparent focus:border-gray-600 focus:bg-white focus:ring-0
+}
+
+.inputLoginPassWord {
+    @apply my-2 w-52 rounded-md bg-gray-100 border-transparent focus:border-gray-600 focus:bg-white focus:ring-0
+}
+
+.buttonLoginValidate {
+    @apply my-2 w-52 h-10 rounded-md font-bold text-white bg-blue-900 hover:bg-gradient-to-r from-indigo-900 via-teal-600 to-green-400 hover:scale-110 ease-in-out duration-300
+}

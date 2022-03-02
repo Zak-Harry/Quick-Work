@@ -38,7 +38,7 @@ class EffectiveWorkDays
     private $endlog;
 
     /**
-     * @ORM\Column(type="datetime", nullable=true)
+     * @ORM\Column(type="time", nullable=true)
      */
     private $hoursworked;
 
@@ -53,10 +53,11 @@ class EffectiveWorkDays
     private $updatedAt;
 
     /**
-     * @ORM\OneToOne(targetEntity=User::class, mappedBy="effectiveWorkDays", cascade={"persist", "remove"})
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="effectiveWorkDays")
      */
     private $user;
 
+    
     public function getId(): ?int
     {
         return $this->id;

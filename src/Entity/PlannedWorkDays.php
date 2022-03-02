@@ -40,7 +40,7 @@ class PlannedWorkDays
     private $endlunch;
 
     /**
-     * @ORM\Column(type="datetime", nullable=false)
+     * @ORM\Column(type="time", nullable=false)
      */
     private $hoursplanned;
 
@@ -50,14 +50,16 @@ class PlannedWorkDays
     private $createdAt;
 
     /**
-     * @ORM\Column(type="datetime", nullable=false)
+     * @ORM\Column(type="datetime", nullable=true)
      */
     private $updadedAt;
 
     /**
-     * @ORM\OneToMany(targetEntity=User::class, mappedBy="plannedWorkDay")
+     * @ORM\ManyToMany(targetEntity=User::class, mappedBy="plannedWorkDays")
      */
     private $users;
+
+    
 
     public function __construct()
     {
@@ -165,7 +167,7 @@ class PlannedWorkDays
     {
         if (!$this->users->contains($user)) {
             $this->users[] = $user;
-            $user->setPlannedWorkDay($this);
+            $user->addPlannedWorkDay($this);
         }
 
         return $this;
@@ -174,12 +176,11 @@ class PlannedWorkDays
     public function removeUser(User $user): self
     {
         if ($this->users->removeElement($user)) {
-            // set the owning side to null (unless already changed)
-            if ($user->getPlannedWorkDay() === $this) {
-                $user->setPlannedWorkDay(null);
-            }
+            $user->removePlannedWorkDay($this);
         }
 
         return $this;
     }
+
+   
 }
