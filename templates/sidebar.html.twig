@@ -147,12 +147,12 @@
       <ul class="flex flex-col py-4 space-y-2">
           <!-- Firstname / Lastname -->
           <li>
-            <p class="ml-2 text-lg font-semibold tracking-wide truncate">Bob l'éponge</p>
+            <p class="ml-2 text-lg font-semibold tracking-wide truncate">{{app.user.lastname}} {{app.user.firstname}}</p>
           </li>
 
           <!-- Info user (email ? job / departement ?)-->
           <li>
-            <p class="ml-2 text-slate-500 tracking-wide truncate">bob.eponge@oclock.io</p>
+            <p class="ml-2 text-slate-500 tracking-wide truncate">{{app.user.job.name}}</p>
           </li>
 
           <!-- Settings Dark Mode / Colors -->
