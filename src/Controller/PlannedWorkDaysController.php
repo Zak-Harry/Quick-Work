@@ -38,11 +38,13 @@ class PlannedWorkDaysController extends AbstractController
         return str_replace($english_months, $french_months, str_replace($english_days, $french_days, date($format, strtotime($date) ) ) );
         }
         
-        $date = dateToFrench('02-03-2022', "l m F Y");
+        $date = ('07-03-2022');
         $userLogged = $this->getUser();
+
+
         return $this->render('planning/user.planning.html.twig', [
             'user' => $userLogged,
-            'date' => $date,
+            'datem' => $date,
         ]);
     }
     /**

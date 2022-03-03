@@ -20,10 +20,13 @@
                 <th>actions</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody> 
+        {% set weekDay = ['lundi 7/03/22', 'mardi 08/03/22', 'mercredi 09/03/22', 'jeudi 10/03/22', 'vendredi 10/03/22'] %}
+       
         {% for user in user.plannedWorkDays %} 
+         
             <tr>
-                <td>{{ user.startshift ? user.startshift|date('l-d-m-Y') : '' }}</td>
+                <td>{{ cycle(weekDay, loop.index -1 )}}</td>
                 <td>{{ user.startshift ? user.startshift|date('H:i') : '' }}</td>
                 <td>{{ user.startlunch ? user.startlunch|date('H:i') : '' }}</td>
                 <td>{{ user.endlunch ? user.endlunch|date('H:i') : '' }}</td>
@@ -37,6 +40,10 @@
                 </td>
             </tr>
         {% endfor %}
+        
+    
+        
+
             <tr>
                 <td colspan="9">no records found</td>
             </tr>
