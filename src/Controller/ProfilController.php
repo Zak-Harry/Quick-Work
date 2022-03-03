@@ -17,24 +17,13 @@ class ProfilController extends AbstractController
     /**
      * Affiche la page profil de l'utilisateur actuellement connecté
      * @Route("/profil", name="profil")
-     * @param EntityManagerInterface $manager
      * @return Response
      */
-    public function showProfil(EntityManagerInterface $manager): Response
+    public function showProfil(): Response
     {
-        // Si utilisateur est USER ou MANAGER alors affiche son profil, bloque CREATE et peut EDIT uniquement son profil
-
-        $profilForm = $this->createForm(ProfilType::class, $this->getUser());
-
-        if($profilForm->isSubmitted() && $profilForm->isValid())
-        {
-            $manager->persist($this->getUser());
-            $manager->flush();
-
-            return $this->redirectToRoute('profil', [], Response::HTTP_SEE_OTHER);
-        }
-
-        return $this->renderForm('profil/index.html.twig',['profil' => $profilForm]);
+        return $this->render('profil/index.html.twig', [
+            'user' => $this->getUser()
+        ]);
     }
 
 
@@ -69,6 +58,6 @@ class ProfilController extends AbstractController
             return $this->redirectToRoute('profil', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('profil/index.html.twig',['profil' => $profilForm]);
+        return $this->renderForm('profil/profilform.html.twig',['profil' => $profilForm]);
     }
 }
