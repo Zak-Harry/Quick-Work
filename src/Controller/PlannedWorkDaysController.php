@@ -48,19 +48,21 @@ class PlannedWorkDaysController extends AbstractController
         ]);
     }
     /**
-     * @Route("/departement/{id}", name="planned_departement", methods={"GET"}, requirements={"id": "\d+"})
+     * @Route("/departement", name="planned_departement", methods={"GET"})
      */
-    public function departement(UserRepository $user, DepartementRepository $departement, int $id): Response
+    public function departement(UserRepository $user, DepartementRepository $departement): Response
     {
 
-        $dpt = $departement->find($id);
-
-        $departementUser = $user->findBy(['departement' => $dpt]);
-        
         $userLogged = $this->getUser();
+        $departementId = $userLogged->getDepartement()->getId();
+        $dpt = $departement->find($departementId);
+        $departementUser = $user->findBy(['departement' => $dpt]);
+        $nbUser = (count($departementUser)-1);
+        
         return $this->render('planning/departement.planning.html.twig', [
             'dpt' => $dpt,
             'dptUser' => $departementUser,
+            'nbUser' => $nbUser,
         ]);
     }
 
