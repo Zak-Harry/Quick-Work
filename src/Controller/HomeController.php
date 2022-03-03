@@ -4,6 +4,8 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Repository\UserRepository;
+use DateTime;
+use DateTimeZone;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -23,9 +25,14 @@ class HomeController extends AbstractController
         // Je récupère l'utilisateur connecté
         $user = $this->getUser();
 
+        // Envoie de la date du jour en français
+        setlocale (LC_TIME, 'fr_FR.utf8','fra'); 
+        $today = strftime("%A %d %B %Y");        
+
         // Je retourne à la vue l'utilisateur connecté
         return $this->render('home/index.html.twig', [
             'user' => $user,
+            'today' => $today
         ]);
     }
 }

@@ -2,15 +2,14 @@
 
 {% block content %}
     
-      <!-- !Sidebar responsive TEST-->
-<div class="fixed flex flex-col w-14 hover:w-64 md:w-64  bg-slate-200 h-full  transition-all duration-300 border-none z-10 sidebar">
-<!-- DARK MODE -->
-<!-- <div class="fixed flex flex-col w-14 hover:w-64 md:w-64  bg-slate-200 h-full  transition-all duration-300 border-none z-10 sidebar dark:bg-slate-900 dark:text-white"> -->
-
+<!-- !Sidebar responsive TEST-->
+<div class="fixed flex flex-col w-14 hover:w-64 md:w-64  bg-slate-200 h-full  transition-all duration-300 border-none z-10 sidebar dark:bg-slate-900 dark:text-white">
+    
   <div class="xl:flex justify-start p-10 items-center space-x-3 ">
     <p class="text-2xl leading-6 ">QuickWork</p>
   </div>
 
+  <!-- Liste des liens de navigation -->
   <div class="px-2 w-full">  
     <ul class="flex flex-col py-4 space-y-4">
     <!-- PROFIL-->
@@ -136,85 +135,83 @@
 
     </ul>
   </div>
-  
-  
+    
+  <!-- Partie utilisateur connecté -->
   <div class="flex flex-col justify-between items-center h-full pb-6  w-full ">
     
-    <div class="bg-transparent">  
-    </div>
+    <!-- Espacement -->
+    <div class="bg-transparent"></div>
 
-<!-- INFO USER-->    
-<div class="px-2 w-full">  
-  <ul class="flex flex-col py-4 space-y-2">
-    
-      <!-- Firstname / Lastname -->
-      <li>
-        <p class="ml-2 text-lg font-semibold tracking-wide truncate">  {{app.user.lastname}} {{app.user.firstname}}</p>
-      </li>
 
-      <!-- Info user (email ? job / departement ?)-->
-      <li>
-        <p class="ml-2 text-slate-500 tracking-wide truncate">{{app.user.job.name}}</p>
-      </li>
+    <!-- Espace user-->    
+    <div class="px-2 w-full">  
+      <ul class="flex flex-col py-4 space-y-2">
+          <!-- Firstname / Lastname -->
+          <li>
+            <p class="ml-2 text-lg font-semibold tracking-wide truncate">{{app.user.lastname}} {{app.user.firstname}}</p>
+          </li>
 
-      <!-- Settings Dark Mode / Colors -->
-      <li>
-        <a href="#" class="flex justify-start items-center 
-                                group 
-                                rounded                                     
-                                border-transparent 
-                                hover:shadow-md
-                                hover:font-semibold
-                                hover:text-white
-                                hover:bg-blue-600
-                                focus:bg-gradient-to-r from-blue-600 via-purple-500 to-pink-600
-                                focus:text-white
-                                relative flex-row h-11 focus:outline-none
-                                py-4">
-          <span class="inline-flex justify-center items-center">
-            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"
-                class="h-10 w-10 text-blue-500 group-hover:stroke-white group-focus:stroke-white inline-flex justify-center items-center">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-            </svg>
-          </span>
-          <span class="ml-2 text-base tracking-wide truncate">Paramètres</span>
-        </a>
-      </li>
+          <!-- Info user (email ? job / departement ?)-->
+          <li>
+            <p class="ml-2 text-slate-500 tracking-wide truncate">{{app.user.job.name}}</p>
+          </li>
 
-      <!-- Log Out-->
-      <li>
-        <a href="#" class="flex justify-start items-center 
-                                group 
-                                rounded                                     
-                                border-transparent 
-                                hover:shadow-md
-                                hover:font-semibold
-                                hover:text-white
-                                hover:bg-blue-600
-                                focus:bg-gradient-to-r from-blue-600 via-purple-500 to-pink-600
-                                focus:text-white
-                                relative flex-row h-11 focus:outline-none
-                                py-4">
-          <span class="inline-flex justify-center items-center">
-            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"
-                class="h-10 w-10 text-blue-500 group-hover:stroke-white group-focus:stroke-white inline-flex justify-center items-center">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
-            </svg>
-            
-          </span>
-          <span class="ml-2 text-base tracking-wide truncate">Déconnexion</span>
-        </a>
-      </li>
 
-    </ul>      
+          <!-- Settings Dark Mode / Colors -->
+          <li>
+            <a href="#" class="flex justify-start items-center 
+                                    group 
+                                    rounded                                     
+                                    border-transparent 
+                                    hover:shadow-md
+                                    hover:font-semibold
+                                    hover:text-white
+                                    hover:bg-blue-600
+                                    focus:bg-gradient-to-r from-blue-600 via-purple-500 to-pink-600
+                                    focus:text-white
+                                    relative flex-row h-11 focus:outline-none
+                                    py-4">
+              <span class="inline-flex justify-center items-center">
+                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                    class="h-10 w-10 text-blue-500 group-hover:stroke-white group-focus:stroke-white inline-flex justify-center items-center">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+              </span>
+              <span class="ml-2 text-base tracking-wide truncate">Paramètres</span>
+            </a>
+          </li>
+
+          <!-- Log Out-->
+          <li>
+            <a href="#" class="flex justify-start items-center 
+                                    group 
+                                    rounded                                     
+                                    border-transparent 
+                                    hover:shadow-md
+                                    hover:font-semibold
+                                    hover:text-white
+                                    hover:bg-blue-600
+                                    focus:bg-gradient-to-r from-blue-600 via-purple-500 to-pink-600
+                                    focus:text-white
+                                    relative flex-row h-11 focus:outline-none
+                                    py-4">
+              <span class="inline-flex justify-center items-center">
+                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                    class="h-10 w-10 text-blue-500 group-hover:stroke-white group-focus:stroke-white inline-flex justify-center items-center">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                </svg>
+                
+              </span>
+              <span class="ml-2 text-base tracking-wide truncate">Déconnexion</span>
+            </a>
+          </li>          
+        </ul>     
     </div>
       
   </div>
       
-
 </div>
-<!-- fin sidebar.html.twig -->
 
     {% block page_contents %}{% endblock %}
 {% endblock %}
