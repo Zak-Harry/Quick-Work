@@ -37,7 +37,7 @@
         <tbody>
         
         {% for user in dptUser[i].plannedWorkDays %} 
-        {% set weekDay = ['lundi 7/03/22', 'mardi 08/03/22', 'mercredi 09/03/22', 'jeudi 10/03/22', 'vendredi 10/03/22'] %}
+        {% set weekDay = ['lundi 07/03/22', 'mardi 08/03/22', 'mercredi 09/03/22', 'jeudi 10/03/22', 'vendredi 10/03/22'] %}
             <tr>
                 <td>{{ cycle(weekDay, loop.index -1 )}}</td>
                 <td>{{ user.startshift ? user.startshift|date('H:i') : '' }}</td>
