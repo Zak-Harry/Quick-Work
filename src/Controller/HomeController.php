@@ -24,8 +24,8 @@ class HomeController extends AbstractController
 
         // Je récupère l'utilisateur connecté
         $user = $this->getUser();
-        // $today = new DateTime('now' , new DateTimeZone('Europe/Paris'));
 
+        // Envoie de la date du jour en français
         setlocale (LC_TIME, 'fr_FR.utf8','fra'); 
         $today = strftime("%A %d %B %Y");        
 
