@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Page de profil{% endblock %}
+
+{% block body %}
+   Edition d'un profil
+
+    {{ form_start(profil) }}
+        <div class="font-bold">Nom du salarié : </div>
+
+
+    {{ form_row(profil.lastname, {
+        row_class: 'mt-2 px-3 ...',
+        label_class: 'font-semibold text-gray-600 ...',
+        error_item_class: 'text-red-700 ...',
+        widget_class: 'inputLoginMail',
+        widget_disabled_class: 'border-dashed text-gray-200 ...',
+        widget_errors_class: 'border-double border-red-500 bg-red-50 ...',
+    }) }}
+
+        {{ form_widget(profil.firstname) }}
+        {{ form_widget(profil.dateOfBirth) }}
+        {{ form_widget(profil.picture) }}
+        {{ form_widget(profil.email) }}
+        {{ form_widget(profil.emailpro) }}
+        {{ form_widget(profil.rib) }}
+        {{ form_widget(profil.phonenumber) }}
+        {{ form_widget(profil.phonenumberpro) }}
+        {{ form_widget(profil.address) }}
+        {{ form_widget(profil.zipcode) }}
+        {{ form_widget(profil.city) }}
+
+        {{ form_widget(profil.password) }}
+        {{ form_widget(profil.status)}}
+        {{ form_widget(profil.role) }}
+        {{ form_widget(profil.job) }}
+    <a href="">Modification mot de passe </a>
+    <button>Enregistrer</button>
+    {{ form_end(profil) }}
+
+{% endblock %}
