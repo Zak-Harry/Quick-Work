@@ -264,7 +264,7 @@ class AppFixtures extends Fixture
 
             /*****Ajout du planning prévu *****/
             // On ajoute de 5 plannings au hasard pour chaque user
-            for ($g = 0; $g <= 5; $g++) {
+            for ($g = 0; $g <= 4; $g++) {
                 $newUser->addPlannedWorkDay($allPlanned[rand(0, count($allPlanned) -1)]);
             }
             

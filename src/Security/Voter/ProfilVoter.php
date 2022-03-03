@@ -2,6 +2,8 @@
 
 namespace App\Security\Voter;
 
+use App\Entity\User;
+use App\Form\ProfilType;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 use Symfony\Component\Security\Core\Security;
@@ -32,6 +34,7 @@ class ProfilVoter extends Voter
 
     protected function voteOnAttribute(string $attribute, $subject, TokenInterface $token): bool
     {
+
         $user = $token->getUser();
         // if the user is anonymous, do not grant access
         if (!$user instanceof UserInterface) {
@@ -40,6 +43,8 @@ class ProfilVoter extends Voter
         // ... (check conditions and return true to grant permission) ...
         switch ($attribute) {
             case self::EDIT:
+                if($subject->getviewData()->getid() === $user->getid()){ return true;};
+                break;
             case self::CREATE:
                 if($this->security->isGranted('ROLE_RH')){ return true;};
                 break;

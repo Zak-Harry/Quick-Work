@@ -17,28 +17,20 @@ class ProfilController extends AbstractController
     /**
      * Affiche la page profil de l'utilisateur actuellement connecté
      * @Route("/profil", name="profil")
-     * @param EntityManagerInterface $manager
      * @return Response
      */
-    public function showProfil(EntityManagerInterface $manager): Response
+    public function showProfil(): Response
     {
-        // Si utilisateur est USER ou MANAGER alors affiche son profil, bloque CREATE et peut EDIT uniquement son profil
-
-        $profilForm = $this->createForm(ProfilType::class, $this->getUser());
-
-        if($profilForm->isSubmitted() && $profilForm->isValid())
-        {
-            $manager->persist($this->getUser());
-            $manager->flush();
-
-            return $this->redirectToRoute('profil', [], Response::HTTP_SEE_OTHER);
-        }
-
-        return $this->renderForm('profil/index.html.twig',['profil' => $profilForm]);
+        // Le rendu de cette page se fait sur le template Twig : profil/index.html.twig
+        return $this->render('profil/index.html.twig', [
+            'user' => $this->getUser()
+        ]);
     }
 
 
     /**
+     * Cette méthode permet de créer ou d'éditer une page de profil
+     * Le rendu de cette page se fait sur le template Twig : profil/profilform.html.twig
      * @Route("/profil/new", name="profil_new")
      * @Route("/profil/edit/{id}", name="profil_edit")
      * @param EntityManagerInterface $manager
@@ -47,19 +39,17 @@ class ProfilController extends AbstractController
      */
     public function formProfil(EntityManagerInterface $manager, User $user = NULL): Response
     {
-
-        // dd($this->getUser(), $user);
-        // Si utilisateur est RH alors il peut EDIT CREATE
-
         // Si pas de USER alors crée un USER, ceci pour l'ajout d'un salarié
         if(!$user)
         {
+            // Si utilisateur est RH alors il peut CREATE
+            $this->denyAccessUnlessGranted('PROFIL_CREATE');
             $user = new User();
         }
 
         $profilForm = $this->createForm(ProfilType::class, $user);
-
-        $this->denyAccessUnlessGranted('PROFIL_CREATE', $profilForm);
+        // Si utilisateur est RH ou utilisateur connecte = page de profil demandé alors il peut EDIT
+        $this->denyAccessUnlessGranted('PROFIL_EDIT', $profilForm);
 
         if($profilForm->isSubmitted() && $profilForm->isValid())
         {
@@ -68,7 +58,6 @@ class ProfilController extends AbstractController
 
             return $this->redirectToRoute('profil', [], Response::HTTP_SEE_OTHER);
         }
-
-        return $this->renderForm('profil/index.html.twig',['profil' => $profilForm]);
+        return $this->renderForm('profil/profilform.html.twig',['profil' => $profilForm]);
     }
 }

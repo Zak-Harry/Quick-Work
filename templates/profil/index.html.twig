@@ -5,26 +5,19 @@
 {% block body %}
     Page de profil
 
-    {{ form_start(profil) }}
-    {{ form_row(profil.lastname) }}
-    {{ form_row(profil.firstname) }}
-    {{ form_row(profil.dateOfBirth) }}
-    {{ form_row(profil.picture) }}
-    {{ form_row(profil.email) }}
-    {{ form_row(profil.emailpro) }}
-    {{ form_row(profil.rib) }}
-    {{ form_row(profil.phonenumber) }}
-    {{ form_row(profil.phonenumberpro) }}
-    {{ form_row(profil.address) }}
-    {{ form_row(profil.zipcode) }}
-    {{ form_row(profil.city) }}
+    {{ user.lastname}}
+    {{ user.firstname}}
+    {{ user.picture}}
+    {{ user.rib}}
+    {{ user.email}}
+    {{ user.emailpro}}
+    {{ user.phonenumber}}
+    {{ user.phonenumberpro}}
+    {{ user.address}}
+    {{ user.zipcode}}
+    {{ user.city}}
 
-    {{ form_row(profil.password) }}
-    {{ form_row(profil.status)}}
-    {{ form_row(profil.role) }}
-    {{ form_row(profil.job) }}
     <a href="">Modification mot de passe </a>
     <button>Enregistrer</button>
-    {{ form_end(profil) }}
 
 {% endblock %}
