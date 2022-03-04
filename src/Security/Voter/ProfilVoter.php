@@ -11,16 +11,25 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 class ProfilVoter extends Voter
 {
-    public const EDIT = 'PROFIL_EDIT';
-    public const VIEW = 'PROFIL_VIEW';
-    public const CREATE = 'PROFIL_CREATE';
+    public const EDIT = 'EDIT';
+    public const VIEW = 'VIEW';
+    public const CREATE = 'CREATE';
 
     private Security $security;
 
+    /**
+     * @param Security $security
+     */
     public function __construct(Security $security)
     {
         $this->security = $security;
     }
+
+    /**
+     * @param string $attribute
+     * @param $subject
+     * @return bool
+     */
     protected function supports(string $attribute, $subject): bool
     {
         // replace with your own logic
@@ -32,6 +41,12 @@ class ProfilVoter extends Voter
         return false;
     }
 
+    /**
+     * @param string $attribute
+     * @param $subject
+     * @param TokenInterface $token
+     * @return bool
+     */
     protected function voteOnAttribute(string $attribute, $subject, TokenInterface $token): bool
     {
 
@@ -49,11 +64,10 @@ class ProfilVoter extends Voter
                 if($this->security->isGranted('ROLE_RH')){ return true;};
                 break;
             case self::VIEW:
-                // logic to determine if the user can VIEW
+                if($subject->getviewData()->getid() === $user->getid()){ return true;};
                 return true;
                 break;
         }
-
         return false;
     }
 }

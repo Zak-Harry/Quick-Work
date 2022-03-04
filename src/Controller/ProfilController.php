@@ -21,6 +21,7 @@ class ProfilController extends AbstractController
      */
     public function showProfil(): Response
     {
+        $this->denyAccessUnlessGranted('VIEW');
         // Le rendu de cette page se fait sur le template Twig : profil/index.html.twig
         return $this->render('profil/index.html.twig', [
             'user' => $this->getUser()
@@ -43,13 +44,13 @@ class ProfilController extends AbstractController
         if(!$user)
         {
             // Si utilisateur est RH alors il peut CREATE
-            $this->denyAccessUnlessGranted('PROFIL_CREATE');
+            $this->denyAccessUnlessGranted('CREATE');
             $user = new User();
         }
 
         $profilForm = $this->createForm(ProfilType::class, $user);
         // Si utilisateur est RH ou utilisateur connecte = page de profil demandé alors il peut EDIT
-        $this->denyAccessUnlessGranted('PROFIL_EDIT', $profilForm);
+        $this->denyAccessUnlessGranted('EDIT', $profilForm);
 
         if($profilForm->isSubmitted() && $profilForm->isValid())
         {
