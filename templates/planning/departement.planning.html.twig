@@ -1,58 +1,80 @@
-{% extends 'base.html.twig' %}
+{% extends 'sidebar.html.twig' %}
 
-{% block title %}PlannedWorkDays index{% endblock %}
+{% block title %}QuickWork - Planning du département : {{ dpt.name}}{% endblock %}
 
-{% block body %}
-    <h1>Planning du département {{ dpt.name}}</h1>
+{% block page_contents %}
 
-   {% for i in 0..nbUser %}
-        <table class="table">
-        <thead>
-            <tr>    
-                <th>Prénom</th>
-                <th>Nom</th>   
-            </tr>
-        </thead>
+<!--  !PARTIE CENTRALE-->
+<div class="fixed flex flex-col h-full w-full ml-14 mb-10 md:ml-64 bg-slate-100 dark:bg-slate-800 dark:text-white overflow-auto">
 
-        <tbody>   
-          <tr>
-                <td>{{ dptUser[i].firstname }}</td>
-                <td>{{ dptUser[i].lastname }}</td>
-          </tr>
-        </tbody>
-    </table>
-    
-          <table class="table">
-        <thead>
-            <tr>
-                <th>Jour</th>
-                <th>Début de journée</th>
-                <th>Début pause déjeuner</th>
-                <th>Fin pause déjeunée</th>
-                <th>Fin de journée</th>
-                <th>Nombre d'heures</th>   
-            </tr>
-        </thead>
+  <!-- Title (accueil) -->
+  <div class="pl-24 py-14 pt-24">
+      <p class="text-4xl">Planning du département :</p>
+      <p class="text-2xl indent-8">Ressources Humaines</p>
+  </div>
 
-        <tbody>
+
+  <!-- Liste des users du département -->
+   <div class="py-4 md:py-7 px-4 md:px-8 xl:px-14">
+
+    <!-- Boutons de filtre -->
+    <!--<div class="sm:flex items-center justify-between">
+        <div class="flex items-center">
+            <a class="rounded-full focus:outline-none focus:ring-2  focus:bg-indigo-50 focus:ring-indigo-800" href=" javascript:void(0)">
+                <div class="py-2 px-8 bg-indigo-100 text-indigo-700 rounded-full">
+                    <p>Tous</p>
+                </div>
+            </a>
+            <a class="rounded-full focus:outline-none focus:ring-2 focus:bg-indigo-50 focus:ring-indigo-800 ml-4 sm:ml-8" href="javascript:void(0)">
+                <div class="py-2 px-8  hover:text-indigo-700 hover:bg-indigo-100 rounded-full ">
+                    <p>Absents</p>
+                </div>
+            </a>
+            <a class="rounded-full focus:outline-none focus:ring-2 focus:bg-indigo-50 focus:ring-indigo-800 ml-4 sm:ml-8" href="javascript:void(0)">
+                <div class="py-2 px-8  hover:text-indigo-700 hover:bg-indigo-100 rounded-full ">
+                    <p>Congés</p>
+                </div>
+            </a>
+        </div>
+    </div> -->
+
+    {% for i in 0..nbUser %}
+    <div class="mt-7">
+
+        <div class="ml-7 border-b-0 border-l-4 border-blue-500 rounded-t-lg text-center bg-gradient-to-br from-blue-600 max-w-max py-2 px-10">
+            <p class="font-semibold text-xl">{{ dptUser[i].firstname }} {{ dptUser[i].lastname }}</p>
+        </div>
         
-        {% for user in dptUser[i].plannedWorkDays %} 
-        {% set weekDay = ['lundi 07/03/22', 'mardi 08/03/22', 'mercredi 09/03/22', 'jeudi 10/03/22', 'vendredi 10/03/22'] %}
-            <tr>
-                <td>{{ cycle(weekDay, loop.index -1 )}}</td>
-                <td>{{ user.startshift ? user.startshift|date('H:i') : '' }}</td>
-                <td>{{ user.startshift ? user.startshift|date('H:i') : '' }}</td>
-                <td>{{ user.startlunch ? user.startlunch|date('H:i') : '' }}</td>
-                <td>{{ user.endlunch ? user.endlunch|date('H:i') : '' }}</td>
-                <td>{{ user.endshift ? user.endshift|date('H:i') : '' }}</td>
-                <td>{{ user.hoursplanned ? user.hoursplanned|date('H:i') : '' }}</td> 
-            </tr>
-            {% endfor %}
-          
-        </tbody>
+        
+        <table class="mb-14 border-collapse table-auto text-sm border-2 text-center">
+            <thead>    
+                <tr class="bg-slate-500 dark:bg-opacity-20 text-center">
+                    <th class="h-16 border-l border-t rounded-tl-lg rounded p-4 pl-8 text-slate-400 dark:text-slate-200">Date</th>
+                    <th class="border-t p-4 pl-8 text-slate-400 dark:text-slate-200">Début de journée</th>
+                    <th class="border-t p-4 pl-8 text-slate-400 dark:text-slate-200">Début de pause repas</th>
+                    <th class="border-t p-4 pl-8 text-slate-400 dark:text-slate-200">Fin de pause repas</th>
+                    <th class="border-t p-4 pl-8 text-slate-400 dark:text-slate-200">Fin de journée</th>
+                    <th class="border-r border-t p-4 pl-8 pr-8 text-slate-400 dark:text-slate-200">Heures planifiées</th>
+                </tr>
+            </thead>
+            <tbody class="bg-white dark:bg-slate-800">
 
-    </table>
-       
-       {% endfor %}
-           
+                {% for user in dptUser[i].plannedWorkDays %} 
+                    {% set weekDay = ['lundi 07/03/22', 'mardi 08/03/22', 'mercredi 09/03/22', 'jeudi 10/03/22', 'vendredi 10/03/22'] %}
+                <tr class="h-16 border border-gray-100 rounded text-center hover:bg-slate-600 hover:bg-opacity-70 hover:text-white">  
+                    <td class="border-b border-slate-100 dark:border-slate-700 p-4 pl-8 dark:text-slate-200">{{ cycle(weekDay, loop.index -1 )}}</td>
+                    <td class="border-b border-slate-100 dark:border-slate-700 p-4 pl-8 dark:text-slate-200">{{ user.startshift ? user.startshift|date('H:i') : '' }}</td>
+                    <td class="border-b border-slate-100 dark:border-slate-700 p-4 pl-8 dark:text-slate-200">{{ user.startlunch ? user.startlunch|date('H:i') : '' }}</td>
+                    <td class="border-b border-slate-100 dark:border-slate-700 p-4 pl-8 dark:text-slate-200">{{ user.endlunch ? user.endlunch|date('H:i') : '' }}</td>
+                    <td class="border-b border-slate-100 dark:border-slate-700 p-4 pl-8 dark:text-slate-200">{{ user.endshift ? user.endshift|date('H:i') : '' }}</td>
+                    <td class="border-b border-slate-100 dark:border-slate-700 p-4 pl-8 dark:text-slate-200">{{ user.hoursplanned ? user.hoursplanned|date('H:i') : '' }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+            </table>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
 {% endblock %}
