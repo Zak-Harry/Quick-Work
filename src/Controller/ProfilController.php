@@ -27,7 +27,7 @@ class ProfilController extends AbstractController
      */
     public function showProfil(): Response
     {
-        // $this->denyAccessUnlessGranted('VIEW');
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         // Le rendu de cette page se fait sur le template Twig : profil/index.html.twig
         return $this->render('profil/index.html.twig', [
             'user' => $this->getUser()
@@ -107,7 +107,6 @@ class ProfilController extends AbstractController
      * Show all profil by team user
      * Redirige vers la page profil/profilteam.html.twig
      * @Route("/profil/myteam", name="profil_my_team")
-     * @IsGranted ("ROLE_MANAGER")
      * @return void
      */
     public function profilByTeam(UserRepository $userRepository): Response
