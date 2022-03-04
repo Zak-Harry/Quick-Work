@@ -8,16 +8,6 @@
     {{ form_start(profil) }}
         <div class="font-bold">Nom du salarié : </div>
 
-
-    {{ form_row(profil.lastname, {
-        row_class: 'mt-2 px-3 ...',
-        label_class: 'font-semibold text-gray-600 ...',
-        error_item_class: 'text-red-700 ...',
-        widget_class: 'inputLoginMail',
-        widget_disabled_class: 'border-dashed text-gray-200 ...',
-        widget_errors_class: 'border-double border-red-500 bg-red-50 ...',
-    }) }}
-
         {{ form_widget(profil.firstname) }}
         {{ form_widget(profil.dateOfBirth) }}
         {{ form_widget(profil.picture) }}

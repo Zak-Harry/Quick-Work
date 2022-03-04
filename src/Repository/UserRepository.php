@@ -19,6 +19,19 @@ class UserRepository extends ServiceEntityRepository
         parent::__construct($registry, User::class);
     }
 
+    /**
+     * @param int $departement_id
+     * @return float|int|mixed|string
+     */
+    public function findByTeamDQL(int $departement_id)
+    {
+        return $this->createQueryBuilder('u')
+            ->where('u.departement = ?1')
+            ->setParameter(1, $departement_id)
+            ->getQuery()
+            ->getResult();
+    }
+
 
 
     // /**

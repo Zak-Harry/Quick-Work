@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Page de profil{% endblock %}
+
+{% block body %}
+   Edition d'un profil
+
+    {{ form_start(search) }}
+
+        {{ form_row(search.salarie) }}
+        {{ form_row(search.job) }}
+        {{ form_row(search.departement) }}
+
+    <button type="submit">Rechercher</button>
+    {{ form_end(search) }}
+
+{% endblock %}
