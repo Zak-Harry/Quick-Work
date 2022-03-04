@@ -64,8 +64,7 @@ class ProfilVoter extends Voter
                 if($this->security->isGranted('ROLE_RH')){ return true;};
                 break;
             case self::VIEW:
-                if($subject->getviewData()->getid() === $user->getid()){ return true;};
-                return true;
+                if($this->security->isGranted('ROLE_USER')){ return true;};
                 break;
         }
         return false;

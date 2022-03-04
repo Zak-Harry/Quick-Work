@@ -28,4 +28,22 @@ class HomeController extends AbstractController
             'user' => $user,
         ]);
     }
+
+    /**
+     * @Route("/hourly_score/start_shift", name="start_shift")
+     * @Route("/hourly_score/start_lunch", name="start_lunch")
+     * @Route("/hourly_score/end_lunch", name="end_lunch")
+     * @Route("/hourly_score/end_shift", name="end_shift")
+     * @return void
+     */
+    public function hourlyScore()
+    {
+        // récupérer jour et heure du pointage
+        // confirmer que le pointage envoyé est bien celui de l'User Co
+        // Si start lunch, vérifié que start shift est présent
+        // Si end lunch, vérifié que start shift est présent et start lunch aussi
+        // si en shift, vérifié que start shift est présent
+        // réactiver les boutons le jour suivant
+        // envoyer cette DATA en BDD
+    }
 }
