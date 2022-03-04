@@ -58,10 +58,10 @@ class ProfilVoter extends Voter
         // ... (check conditions and return true to grant permission) ...
         switch ($attribute) {
             case self::EDIT:
-                if($subject->getviewData()->getid() === $user->getid()){ return true;};
+                if($subject->getviewData()->getid() === $user->getid() || $this->security->isGranted("ROLE_RH")){ return true;};
                 break;
             case self::CREATE:
-                if($this->security->isGranted('ROLE_RH')){ return true;};
+                if($this->security->isGranted("ROLE_RH")){ return true;};
                 break;
             case self::VIEW:
                 if($this->security->isGranted('ROLE_USER')){ return true;};
