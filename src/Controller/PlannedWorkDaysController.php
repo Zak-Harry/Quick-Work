@@ -30,9 +30,39 @@ class PlannedWorkDaysController extends AbstractController
      */
     public function userPlanning(): Response
     {
-        $userLogged = $this->getUser();
+        
+        // function pour calculer le total de heures de la semaine
+        function hoursToSeconds($duree){
+            $array_duree=explode(":",$duree);
+            $secondes=3600*$array_duree[0]+60*$array_duree[1];
+            return $secondes;
+        }
 
-       
+        function totalHours($secondes){
+            $s=$secondes % 60; //reste de la division en minutes => secondes
+            $m1=($secondes-$s) / 60; //minutes totales
+            $m=$m1 % 60;//reste de la division en heures => minutes
+            $h=($m1-$m) / 60; //heures
+            $resultat=$h.":".$m;
+            return $resultat;
+        }
+
+
+        $userLogged = $this->getUser();
+        // on récupère tout les totaux d'heures par jour
+        foreach($userLogged->getPlannedWorkDays() as $user) {
+            $workHours[] =$user->getHoursplanned();
+        }
+
+        // on transforme les heures en secondes puis on additionne toutes les secondes et on les retransforme en heures et minutes.
+        for($i = 0; $i<count($workHours); $i++) {
+            $arraySecond[] = hoursToSeconds($workHours[$i]->format('H:i'));
+            $totalHoursWeek = totalHours(array_sum($arraySecond));
+        } 
+
+        dump($totalHoursWeek);
+
+        
        // Call to 'PLANNING_VIEW' from PlanningVoter
        // A user must be logged in to be able to access this page
        // All User Roles can access this page
@@ -41,8 +71,10 @@ class PlannedWorkDaysController extends AbstractController
 
         return $this->render('planning/user.planning.html.twig', [
             'user' => $userLogged,
+            'totalHoursWeek' => $totalHoursWeek,
         ]);
     }
+
     /**
      * @Route("/departement", name="planned_departement", methods={"GET"})
      */
