@@ -10,7 +10,9 @@ use App\Entity\Role;
 use App\Entity\User;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\ChoiceList\ChoiceList;
 use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
@@ -80,8 +82,11 @@ class ProfilType extends AbstractType
             ])
             ->add('status')
             ->add('role', EntityType::class, [
-                'class' => Role::class
-            ])
+                'class' => Role::class,
+                'multiple' => false,
+                'expanded' => false,
+                ]
+            )
             /**
             ->add('createdAt', DateTimeType::class, [
             ])
@@ -94,7 +99,7 @@ class ProfilType extends AbstractType
                 'class' => Job::class,
                 'choice_label' => 'name',
                 'multiple' => false,
-                'expanded' => true,
+                'expanded' => false,
             ])
             /**
             ->add('plannedWorkDays', EntityType::class, [
