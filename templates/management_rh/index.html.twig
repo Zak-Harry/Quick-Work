@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Page de profil{% endblock %}
+
+{% block body %}
+   Gestion Ressources Humaines </br></br></br>
+
+    <form method="post" action="{{ path('managementrh_search') }}">
+        <label>Recherche d'un salarié :
+            <input class="" type="text" name="salarie" placeholder="Nom et Prénom du Salarié">
+        </label></br></br></br>
+        <button type="submit">Rechercher</button>
+    </form>
+
+
+    {# Affiche de tous les départements et du manager (nom/prenom) par département #}
+    {% for user in users %}
+        </br></br></br>
+        Nom de département {{ user.departement.name }}</br>
+        Manager du département : {{ user.lastname }} {{ user.firstname }}
+    {% endfor %}
+
+
+{% endblock %}

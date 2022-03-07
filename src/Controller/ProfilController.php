@@ -71,37 +71,7 @@ class ProfilController extends AbstractController
             ]);
     }
 
-    /**
-     * @Route("/profil/search", name="profil_search")
-     * @IsGranted("ROLE_RH")
-     * @param UserRepository $userRepository
-     * @param Request $request
-     * @return Response
-     */
-    public function searchProfil(UserRepository $userRepository, Request $request): Response
-    {
-        $formSearch = $this->createForm(SearchProfilType::class);
-        $formSearch->handleRequest($request);
 
-        if($formSearch->isSubmitted() && $formSearch->isValid())
-        {
-            $salarie = $request->request->all()["search_profil"]["salarie"];
-            $username = explode(' ', $salarie);
-            $firstname = $username[0];
-            $lastname = $username[1];
-            $query = $userRepository->findBy(array("firstname" => $firstname, "lastname" => $lastname));
-            dump($query);
-            if(empty($query))
-            {
-                dd($query = $userRepository->findBy(array("firstname" => $lastname, "lastname" => $firstname)));
-            }
-        }
-
-        return $this->renderForm('profil/profilsearch.html.twig',
-            [
-                "search" => $formSearch
-            ]);
-    }
 
     /**
      * Show all profil by team user
