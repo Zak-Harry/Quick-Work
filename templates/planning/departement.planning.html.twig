@@ -10,7 +10,9 @@
   <!-- Title (accueil) -->
   <div class="pl-24 py-14 pt-24">
       <p class="text-4xl">Planning du département :</p>
-      <p class="text-2xl indent-8">Ressources Humaines</p>
+      <p class="text-2xl indent-8">{{dpt.name}}</p>
+      <a class="ml-7 border-b-0 border-l-4 border-blue-500 rounded-t-lg text-center bg-gradient-to-br from-blue-600 max-w-max py-2 px-10" href="{{ path('planned_work_days_new')}}">Nouveau planning</a>
+        
   </div>
 
 
@@ -38,13 +40,13 @@
         </div>
     </div> -->
 
+    
     {% for i in 0..nbUser %}
     <div class="mt-7">
-
+    
         <div class="ml-7 border-b-0 border-l-4 border-blue-500 rounded-t-lg text-center bg-gradient-to-br from-blue-600 max-w-max py-2 px-10">
             <p class="font-semibold text-xl">{{ dptUser[i].firstname }} {{ dptUser[i].lastname }}</p>
         </div>
-        
         
         <table class="mb-14 border-collapse table-auto text-sm border-2 text-center">
             <thead>    
@@ -54,7 +56,8 @@
                     <th class="border-t p-4 pl-8 text-slate-400 dark:text-slate-200">Début de pause repas</th>
                     <th class="border-t p-4 pl-8 text-slate-400 dark:text-slate-200">Fin de pause repas</th>
                     <th class="border-t p-4 pl-8 text-slate-400 dark:text-slate-200">Fin de journée</th>
-                    <th class="border-r border-t p-4 pl-8 pr-8 text-slate-400 dark:text-slate-200">Heures planifiées</th>
+                    <th class="border-t p-4 pl-8 text-slate-400 dark:text-slate-200">Heures planifiées</th>
+                    <th class="border-r border-t p-4 pl-8 pr-8 text-slate-400 dark:text-slate-200">Modifier</th>
                 </tr>
             </thead>
             <tbody class="bg-white dark:bg-slate-800">
@@ -68,6 +71,8 @@
                     <td class="border-b border-slate-100 dark:border-slate-700 p-4 pl-8 dark:text-slate-200">{{ user.endlunch ? user.endlunch|date('H:i') : '' }}</td>
                     <td class="border-b border-slate-100 dark:border-slate-700 p-4 pl-8 dark:text-slate-200">{{ user.endshift ? user.endshift|date('H:i') : '' }}</td>
                     <td class="border-b border-slate-100 dark:border-slate-700 p-4 pl-8 dark:text-slate-200">{{ user.hoursplanned ? user.hoursplanned|date('H:i') : '' }}</td>
+                     {# Ajout du bouton edit #}
+                    <td class="border-b border-slate-100 dark:border-slate-700 p-4 pl-8 dark:text-slate-200"><a href="{{ path('planned_work_days_edit', {'id': user.id}) }}">&#9998;</a></td>
                 </tr>
                 {% endfor %}
             </tbody>

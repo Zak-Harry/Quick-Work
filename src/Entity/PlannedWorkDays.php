@@ -3,12 +3,14 @@
 namespace App\Entity;
 
 use App\Repository\PlannedWorkDaysRepository;
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=PlannedWorkDaysRepository::class)
+ * @ORM\HasLifecycleCallbacks()
  */
 class PlannedWorkDays
 {
@@ -52,7 +54,7 @@ class PlannedWorkDays
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
-    private $updadedAt;
+    private $updatedAt;
 
     /**
      * @ORM\ManyToMany(targetEntity=User::class, mappedBy="plannedWorkDays")
@@ -143,14 +145,14 @@ class PlannedWorkDays
         return $this;
     }
 
-    public function getUpdadedAt(): ?\DateTimeInterface
+    public function getUpdatedAt(): ?\DateTimeInterface
     {
-        return $this->updadedAt;
+        return $this->updatedAt;
     }
 
-    public function setUpdadedAt(?\DateTimeInterface $updadedAt): self
+    public function setUpdatedAt(?\DateTimeInterface $updatedAt): self
     {
-        $this->updadedAt = $updadedAt;
+        $this->updatedAt = $updatedAt;
 
         return $this;
     }
@@ -180,6 +182,44 @@ class PlannedWorkDays
         }
 
         return $this;
+    }
+
+    /**
+     * @ORM\PreUpdate
+     */
+    public function setValuesOnPreUpdate(): void
+    {
+        // cette function sera appelle avant chaque update
+
+        $this->updatedAt = new DateTime('now');
+        // calcul de la pause déjeuner
+        $lunchBreak = new DateTime($this->getStartlunch()->diff($this->getEndlunch())->format('%h:%i'));
+        //calcul de la journée de travail
+        $workDay = new DateTime($this->getStartshift()->diff($this->getEndshift())->format('%h:%i'));
+        //on peux donc obentir maintenant le nombre d'ehures travaillée dans la journée sans la pause déjeuner
+        $this->setHoursplanned(new DateTime(($workDay)->diff($lunchBreak)->format('%h:%i')));
+        // et autre ...
+        // eg : re-calcul du rating en fonction des critiques
+        // enregistrer l'utilisateur qui a fait la modif, plus compliqué car on a pas de User ici
+    }
+
+     /**
+     * @ORM\PrePersist
+     */
+    public function setValuesOnPrePersist(): void
+    {
+        // cette function sera appelle avant chaque update
+
+        $this->createdAt = new DateTime('now');
+        // calcul de la pause déjeuner
+        $lunchBreak = new DateTime($this->getStartlunch()->diff($this->getEndlunch())->format('%h:%i'));
+        //calcul de la journée de travail
+        $workDay = new DateTime($this->getStartshift()->diff($this->getEndshift())->format('%h:%i'));
+        //on peux donc obentir maintenant le nombre d'ehures travaillée dans la journée sans la pause déjeuner
+        $this->setHoursplanned(new DateTime(($workDay)->diff($lunchBreak)->format('%h:%i')));
+        // et autre ...
+        // eg : re-calcul du rating en fonction des critiques
+        // enregistrer l'utilisateur qui a fait la modif, plus compliqué car on a pas de User ici
     }
 
    
