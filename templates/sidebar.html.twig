@@ -6,7 +6,7 @@
 <div class="fixed flex flex-col w-14 hover:w-64 md:w-64  bg-slate-200 h-full  transition-all duration-300 border-none z-10 sidebar dark:bg-slate-900 dark:text-white">
     
   <div class="xl:flex justify-start p-10 items-center space-x-3 ">
-    <p class="text-2xl leading-6 ">QuickWork</p>
+    <a class="text-2xl leading-6 " href="{{ path('home') }}">QuickWork</a>
   </div>
 
   <!-- Liste des liens de navigation -->
@@ -90,7 +90,7 @@
       {# This button in the sidebar should only be accessible to the ROLE_MANAGER, but not the ROLE-RH that would normally inherit#}
       {% if is_granted('ROLE_MANAGER') and not is_granted('ROLE_RH') %}
       <li>
-        <a href="#" class="flex justify-start items-center 
+        <a href="{{ path('view_team') }}" class="flex justify-start items-center 
                                 group                             
                                 rounded                                     
                                 border-transparent 
