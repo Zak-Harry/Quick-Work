@@ -32,6 +32,17 @@ class UserRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    /**
+     * @return float|int|mixed|string
+     */
+    public function findByJob()
+    {
+        return $this->createQueryBuilder('u')
+            ->where('u.role = 3')
+            ->getQuery()
+            ->getResult();
+    }
+
 
 
     // /**
