@@ -118,7 +118,7 @@
       {# This button in the sidebar should only be accessible to the ROLE_RH#}
       {% if is_granted('ROLE_RH') %}
       <li>
-        <a href="#" class="flex justify-start items-center 
+        <a href="{{ path('managementrh') }}" class="flex justify-start items-center 
                                 group                             
                                 rounded                                     
                                 border-transparent 
