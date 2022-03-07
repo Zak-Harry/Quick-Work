@@ -23,14 +23,21 @@ class ProfilController extends AbstractController
     /**
      * Affiche la page profil de l'utilisateur actuellement connecté
      * @Route("/profil", name="profil")
+     * @Route("/profil/{id}", name="profil_id", requirements={"id"="\d+"})
+     * @param User|null $user
      * @return Response
      */
-    public function showProfil(): Response
+    public function showProfil(User $user = NULL): Response
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         // Le rendu de cette page se fait sur le template Twig : profil/index.html.twig
+        if(is_null($user))
+        {
+            $user = $this->getUser();
+        }
+
         return $this->render('profil/index.html.twig', [
-            'user' => $this->getUser()
+            'user' => $user
         ]);
     }
 
@@ -65,6 +72,7 @@ class ProfilController extends AbstractController
 
             return $this->redirectToRoute('profil', [], Response::HTTP_SEE_OTHER);
         }
+
         return $this->renderForm('profil/profilform.html.twig',
             [
                 'profil' => $profilForm
