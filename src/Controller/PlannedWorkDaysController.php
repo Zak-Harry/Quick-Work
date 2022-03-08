@@ -10,6 +10,7 @@ use App\Form\NewPlannedWorkDaysType;
 use App\Repository\DepartementRepository;
 use App\Repository\PlannedWorkDaysRepository;
 use App\Repository\UserRepository;
+use App\Service\HoursPerWeek;
 use DateTime;
 use DateTimeZone;
 use Doctrine\ORM\EntityManagerInterface;
@@ -28,39 +29,19 @@ class PlannedWorkDaysController extends AbstractController
     /**
      * @Route("/", name="planned_user", methods={"GET"})
      */
-    public function userPlanning(): Response
+    public function userPlanning(HoursPerWeek $hpw): Response
     {
         
-        // function pour calculer le total de heures de la semaine
-        function hoursToSeconds($duree){
-            $array_duree=explode(":",$duree);
-            $secondes=3600*$array_duree[0]+60*$array_duree[1];
-            return $secondes;
-        }
-
-        function totalHours($secondes){
-            $s=$secondes % 60; //reste de la division en minutes => secondes
-            $m1=($secondes-$s) / 60; //minutes totales
-            $m=$m1 % 60;//reste de la division en heures => minutes
-            $h=($m1-$m) / 60; //heures
-            $resultat=$h.":".$m;
-            return $resultat;
-        }
-
-
         $userLogged = $this->getUser();
-        // on récupère tout les totaux d'heures par jour
-        foreach($userLogged->getPlannedWorkDays() as $user) {
-            $workHours[] =$user->getHoursplanned();
-        }
+        
+        $thw = $hpw->hoursPerWeek($userLogged);
+        dump($thw);
 
-        // on transforme les heures en secondes puis on additionne toutes les secondes et on les retransforme en heures et minutes.
-        for($i = 0; $i<count($workHours); $i++) {
-            $arraySecond[] = hoursToSeconds($workHours[$i]->format('H:i'));
-            $totalHoursWeek = totalHours(array_sum($arraySecond));
-        } 
+        // la méthode hoursperWeek sert à calculer les heures d'une semaine
+        // on la retrouve dans l'entité User
+        //$totalHoursWeek = $userLogged->hoursPerWeek();
 
-        dump($totalHoursWeek);
+        //dump($totalHoursWeek);
 
         
        // Call to 'PLANNING_VIEW' from PlanningVoter
@@ -71,17 +52,22 @@ class PlannedWorkDaysController extends AbstractController
 
         return $this->render('planning/user.planning.html.twig', [
             'user' => $userLogged,
-            'totalHoursWeek' => $totalHoursWeek,
+            /* 'totalHoursWeek' => $totalHoursWeek, */
         ]);
     }
 
     /**
      * @Route("/departement", name="planned_departement", methods={"GET"})
      */
-    public function departementPlanning(UserRepository $user, DepartementRepository $departement): Response
+    public function departementPlanning(UserRepository $user, DepartementRepository $departement, HoursPerWeek $hpw): Response
     {
 
         $userLogged = $this->getUser();
+
+         // la méthode hoursperWeek sert à calculer les heures d'une semaine
+        // on la retrouve dans l'entité User
+        //$totalHoursWeek = $userLogged->hoursPerWeek();
+        //dump($totalHoursWeek);
         
          // Call to 'PLANNING_VIEWTEAM' from PlanningVoter
        // A user must be logged in to be able to access this page
@@ -97,6 +83,7 @@ class PlannedWorkDaysController extends AbstractController
             'dpt' => $dpt,
             'dptUser' => $departementUser,
             'nbUser' => $nbUser,
+            'hpw' => $hpw,
         ]);
     }
 
