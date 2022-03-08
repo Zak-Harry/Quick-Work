@@ -47,7 +47,10 @@ class ManagementRHController extends AbstractController
         $firstname = $username[0];
         $lastname = $username[1];
         $user = $userRepository->findOneBy(array("firstname" => $firstname, "lastname" => $lastname));
-
+        if(is_null($user))
+        {
+            $user = $userRepository->findOneBy(array("firstname" => $lastname, "lastname" => $firstname));
+        }
         return $this->redirectToRoute('profil_id', [
             'id' => $user->getId()
         ]);
