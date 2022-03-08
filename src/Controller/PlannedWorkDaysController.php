@@ -35,8 +35,7 @@ class PlannedWorkDaysController extends AbstractController
         $userLogged = $this->getUser();
         
         $thw = $hpw->hoursPerWeek($userLogged);
-        dump($thw);
-
+        
         // la méthode hoursperWeek sert à calculer les heures d'une semaine
         // on la retrouve dans l'entité User
         //$totalHoursWeek = $userLogged->hoursPerWeek();
@@ -52,7 +51,7 @@ class PlannedWorkDaysController extends AbstractController
 
         return $this->render('planning/user.planning.html.twig', [
             'user' => $userLogged,
-            /* 'totalHoursWeek' => $totalHoursWeek, */
+            'totalHoursWeek' => $thw,
         ]);
     }
 
