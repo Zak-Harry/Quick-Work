@@ -68,7 +68,7 @@ class ProfilController extends AbstractController
         $profilForm->handleRequest($request);
         if($profilForm->isSubmitted() && !$profilForm->isValid())
         {
-            // dd($profilForm);
+
             $manager->persist($user);
             $manager->flush();
 

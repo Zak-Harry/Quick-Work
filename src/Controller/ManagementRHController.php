@@ -41,7 +41,7 @@ class ManagementRHController extends AbstractController
      */
     public function SearchSalarie(Request $request, UserRepository $userRepository): Response
     {
-        // dd($request->request->all()["salarie"]);
+
         $salarie = $request->request->all()["salarie"];
         $username = explode(' ', $salarie);
         $firstname = $username[0];
