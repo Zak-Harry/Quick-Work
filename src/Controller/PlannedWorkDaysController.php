@@ -31,23 +31,17 @@ class PlannedWorkDaysController extends AbstractController
      */
     public function userPlanning(HoursPerWeek $hpw): Response
     {
-        
-        $userLogged = $this->getUser();
-        
-        $thw = $hpw->hoursPerWeek($userLogged);
+       // on recupère l'utilisateur connecté
+       $userLogged = $this->getUser();
         
         // la méthode hoursperWeek sert à calculer les heures d'une semaine
-        // on la retrouve dans l'entité User
-        //$totalHoursWeek = $userLogged->hoursPerWeek();
-
-        //dump($totalHoursWeek);
-
+        // on la retrouve dans le service User
+        $thw = $hpw->hoursPerWeek($userLogged);
         
        // Call to 'PLANNING_VIEW' from PlanningVoter
        // A user must be logged in to be able to access this page
        // All User Roles can access this page
         $this->denyAccessUnlessGranted('PLANNING_VIEW', $userLogged);
-
 
         return $this->render('planning/user.planning.html.twig', [
             'user' => $userLogged,
@@ -60,15 +54,10 @@ class PlannedWorkDaysController extends AbstractController
      */
     public function departementPlanning(UserRepository $user, DepartementRepository $departement, HoursPerWeek $hpw): Response
     {
-
+        // on recupère l'utilisateur connecté
         $userLogged = $this->getUser();
 
-         // la méthode hoursperWeek sert à calculer les heures d'une semaine
-        // on la retrouve dans l'entité User
-        //$totalHoursWeek = $userLogged->hoursPerWeek();
-        //dump($totalHoursWeek);
-        
-         // Call to 'PLANNING_VIEWTEAM' from PlanningVoter
+       // Call to 'PLANNING_VIEWTEAM' from PlanningVoter
        // A user must be logged in to be able to access this page
        // Only Managers and RH Roles can access this page
        $this->denyAccessUnlessGranted('PLANNING_VIEWTEAM', $userLogged);
