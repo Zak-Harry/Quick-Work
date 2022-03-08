@@ -26,27 +26,27 @@ class ProfilType extends AbstractType
 {
     private Security $security;
 
-    private $is_granted;
+    private bool $is_granted;
 
     public function __construct(Security $security)
     {
         $this->security =  $security;
-        $user = $this->security->getUser()->getRoles();
-        if ($user != 'ROLE_RH')
+        $user = $this->security->getUser()->getRoles()[0];
+
+        if ($user === "ROLE_RH")
         {
-            $this->is_granted = true;
+            $this->is_granted = false;
         }
-        dump($this->is_granted);
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('lastname', TextType::class, [
-                'disabled' => $this->is_granted,
                 'label' => 'Nom du salarié',
                 'trim' => true,
-                'required' => true
+                'required' => true,
+                'disabled' => $this->is_granted
             ])
             ->add('firstname', TextType::class,
                 [
@@ -105,6 +105,10 @@ class ProfilType extends AbstractType
             ])
             ->add('status', ChoiceType::class, [
                 'disabled' => $this->is_granted,
+                'choices' => [
+                    'Inactif' => 0,
+                    'Actif' => 1
+                ]
             ])
             ->add('role', EntityType::class, [
                 'class' => Role::class,

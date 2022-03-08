@@ -48,10 +48,11 @@ class ProfilController extends AbstractController
      * @Route("/profil/new", name="profil_new")
      * @Route("/profil/edit/{id}", name="profil_edit")
      * @param EntityManagerInterface $manager
+     * @param Request $request
      * @param User|null $user
      * @return Response
      */
-    public function formProfil(EntityManagerInterface $manager, User $user = NULL): Response
+    public function formProfil(EntityManagerInterface $manager,Request $request, User $user = NULL): Response
     {
         // Si pas de USER alors crée un USER, ceci pour l'ajout d'un salarié
         if(!$user)
@@ -64,13 +65,14 @@ class ProfilController extends AbstractController
         $profilForm = $this->createForm(ProfilType::class, $user);
         // Si utilisateur est RH ou utilisateur connecte = page de profil demandé alors il peut EDIT
         $this->denyAccessUnlessGranted('EDIT', $profilForm);
-
-        if($profilForm->isSubmitted() && $profilForm->isValid())
+        $profilForm->handleRequest($request);
+        if($profilForm->isSubmitted() && !$profilForm->isValid())
         {
+            // dd($profilForm);
             $manager->persist($user);
             $manager->flush();
 
-            return $this->redirectToRoute('profil', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('profil_id', ['id' => $user->getId()], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('profil/profilform.html.twig',
