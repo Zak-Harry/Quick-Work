@@ -26,7 +26,7 @@ class ProfilType extends AbstractType
 {
     private Security $security;
 
-    private bool $is_granted;
+    private bool $is_granted = true;
 
     public function __construct(Security $security)
     {
