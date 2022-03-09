@@ -5,16 +5,16 @@ const app = {
      */
     init: function() {
         console.log("init");
-        const startShiftElement = document.getElementById('#startShift');
+        const startShiftElement = document.getElementById('startShift');
         startShiftElement.addEventListener('click', app.handleStartShift);
 
-        const startLunchElement = document.getElementById('#startLunch');
+        const startLunchElement = document.getElementById('startLunch');
         startLunchElement.addEventListener('click', app.handleStartLunch);
 
-        const endLunchElement = document.getElementById('#endLunch');
+        const endLunchElement = document.getElementById('endLunch');
         endLunchElement.addEventListener('click', app.handleEndLunch);
 
-        const endShiftElement = document.getElementById('#endShift');
+        const endShiftElement = document.getElementById('endShift');
         endShiftElement.addEventListener('click', app.handleEndShift);
         
     },
@@ -131,7 +131,7 @@ const app = {
     },
 
      // handle END SHIFT
-     handleStartShift: function(evt) {
+     handleEndShift: function(evt) {
 
         console.log('bouton cliqué - fin journée');
 
