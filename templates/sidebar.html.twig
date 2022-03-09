@@ -6,7 +6,7 @@
 <div class="fixed flex flex-col w-14 hover:w-64 md:w-64  bg-slate-200 h-full  transition-all duration-300 border-none z-10 sidebar dark:bg-slate-900 dark:text-white">
     
   <div class="xl:flex justify-start p-10 items-center space-x-3 ">
-    <a class="text-2xl leading-6 " href="{{ path('home') }}">QuickWork</a>
+    <p class="text-2xl leading-6 ">QuickWork</p>
   </div>
 
   <!-- Liste des liens de navigation -->
@@ -59,9 +59,8 @@
           <span class="ml-2 text-base tracking-wide truncate">Planning</span>
         </a>
       </li>
+
     <!-- DOCUMENTATION RH -->
-      
-      
       <li>
         <a href="#" class="flex justify-start items-center 
                                 group                             
@@ -84,16 +83,14 @@
           <span class="ml-2 text-base tracking-wide truncate">Documentation RH</span>
         </a>
       </li>
-     
-    
-    <!-- Gestion équipe -->
-      {# This button in the sidebar should only be accessible to the ROLE_MANAGER, but not the ROLE-RH that would normally inherit#}
-      {% if is_granted('ROLE_MANAGER') and not is_granted('ROLE_RH') %}
+
+    {% if is_granted('ROLE_RH') %}
+      <!-- GESTION RH -->
       <li>
-        <a href="{{ path('view_team') }}" class="flex justify-start items-center 
-                                group                             
-                                rounded                                     
-                                border-transparent 
+        <a href="{{ path("managementrh") }}" class="flex justify-start items-center
+                                group
+                                rounded
+                                border-transparent
                                 hover:shadow-md
                                 hover:font-semibold
                                 hover:text-white
@@ -104,46 +101,14 @@
                                 py-4">
           <span class="inline-flex justify-center items-center">
             <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"
-                class="h-10 w-10 text-blue-500 group-hover:stroke-white group-focus:stroke-white inline-flex justify-center items-center">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-            </svg>
-          </span>
-          <span class="ml-2 text-base tracking-wide truncate">Gestion équipe</span>
-        </a>
-      </li>
-      {% endif %} 
-
-
-    <!-- Gestion RH -->
-      {# This button in the sidebar should only be accessible to the ROLE_RH#}
-      {% if is_granted('ROLE_RH') %}
-      <li>
-        <a href="{{ path('managementrh') }}" class="flex justify-start items-center 
-                                group                             
-                                rounded                                     
-                                border-transparent 
-
-                                hover:shadow-md
-                                hover:font-semibold
-                                hover:text-white
-                                hover:bg-blue-600
-                                focus:bg-gradient-to-r from-blue-600 via-purple-500 to-pink-600
-                                focus:text-white
-                                relative flex-row h-11 focus:outline-none
-                                py-4">
-          <span class="inline-flex justify-center items-center">
-            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"
-
-                class="h-10 w-10 text-blue-500 group-hover:stroke-white group-focus:stroke-white inline-flex justify-center items-center">
-
+                 class="h-10 w-10 text-blue-500 group-hover:stroke-white group-focus:stroke-white inline-flex justify-center items-center">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
             </svg>
           </span>
           <span class="ml-2 text-base tracking-wide truncate">Gestion RH</span>
         </a>
       </li>
-
-      {% endif %} 
+    {% endif %}
 
     <!-- ANNUAIRE -->
       <li>
@@ -245,7 +210,7 @@
 
           <!-- Log Out-->
           <li>
-            <a href="{{ path('app_logout') }}" class="flex justify-start items-center 
+            <a href="#" class="flex justify-start items-center 
                                     group 
                                     rounded                                     
                                     border-transparent 

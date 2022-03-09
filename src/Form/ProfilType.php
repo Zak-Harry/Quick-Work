@@ -10,7 +10,9 @@ use App\Entity\Role;
 use App\Entity\User;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\ChoiceList\ChoiceList;
 use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
@@ -18,25 +20,46 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Security\Core\Security;
 
 class ProfilType extends AbstractType
 {
+    private Security $security;
+
+    private bool $is_granted;
+
+    public function __construct(Security $security)
+    {
+        $this->security =  $security;
+        $user = $this->security->getUser()->getRoles()[0];
+
+        if ($user === "ROLE_RH")
+        {
+            $this->is_granted = false;
+        }
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('lastname', TextType::class, [
                 'label' => 'Nom du salarié',
                 'trim' => true,
-                'required' => true
+                'required' => true,
+                'disabled' => $this->is_granted
             ])
             ->add('firstname', TextType::class,
                 [
+                'disabled' => $this->is_granted,
                 'label' => 'Prénom du salarié',
                 'trim' => true,
                 'required' => true
             ])
-            ->add('dateOfBirth', BirthdayType::class)
+            ->add('dateOfBirth', BirthdayType::class, [
+                'disabled' => $this->is_granted,
+            ])
             ->add('picture', UrlType::class, [
+                'disabled' => $this->is_granted,
                 'label' => 'Photo du salarié',
                 'required' => false
             ])
@@ -45,6 +68,7 @@ class ProfilType extends AbstractType
                 'required' => true
             ])
             ->add('emailpro', EmailType::class, [
+                'disabled' => $this->is_granted,
                 'label' => 'Email professionnelle du salarié',
                 'required' => true
             ])
@@ -59,6 +83,7 @@ class ProfilType extends AbstractType
                 'required' => true
             ])
             ->add('phonenumberpro', TextType::class, [
+                'disabled' => $this->is_granted,
                 'label' => 'Numéro de téléphone professionnel',
                 'required' => true
             ])
@@ -78,9 +103,26 @@ class ProfilType extends AbstractType
                 'label' => 'Votre Relevé d\'identité bancaire',
                 'required' => true
             ])
-            ->add('status')
+            ->add('status', ChoiceType::class, [
+                'disabled' => $this->is_granted,
+                'choices' => [
+                    'Inactif' => 0,
+                    'Actif' => 1
+                ]
+            ])
             ->add('role', EntityType::class, [
-                'class' => Role::class
+                'class' => Role::class,
+                'disabled' => $this->is_granted,
+                'multiple' => false,
+                'expanded' => false,
+                ]
+            )
+            ->add('job', EntityType::class, [
+                'class' => Job::class,
+                'disabled' => $this->is_granted,
+                'choice_label' => 'name',
+                'multiple' => false,
+                'expanded' => false,
             ])
             /**
             ->add('createdAt', DateTimeType::class, [
@@ -90,12 +132,6 @@ class ProfilType extends AbstractType
             ->add('documentations', EntityType::class, [
                 'class' => Documentation::class
             ]*/
-            ->add('job', EntityType::class, [
-                'class' => Job::class,
-                'choice_label' => 'name',
-                'multiple' => false,
-                'expanded' => true,
-            ])
             /**
             ->add('plannedWorkDays', EntityType::class, [
                 'class' => PlannedWorkDays::class

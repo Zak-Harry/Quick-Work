@@ -41,14 +41,17 @@ class ManagementRHController extends AbstractController
      */
     public function SearchSalarie(Request $request, UserRepository $userRepository): Response
     {
-        // dd($request->request->all()["salarie"]);
+
         $salarie = $request->request->all()["salarie"];
         $username = explode(' ', $salarie);
         $firstname = $username[0];
         $lastname = $username[1];
         $user = $userRepository->findOneBy(array("firstname" => $firstname, "lastname" => $lastname));
-
-        return $this->redirectToRoute('profil_edit', [
+        if(is_null($user))
+        {
+            $user = $userRepository->findOneBy(array("firstname" => $lastname, "lastname" => $firstname));
+        }
+        return $this->redirectToRoute('profil_id', [
             'id' => $user->getId()
         ]);
 
