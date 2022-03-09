@@ -7,6 +7,8 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
+use App\Service\HoursPerWeek;
+
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
  * @ORM\Table(name="`user`")
@@ -475,4 +477,5 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         return $this->getFirstname().' '.$this->getLastname();
     }
+
 }
