@@ -17,7 +17,7 @@
     <div class="w-[75rem] mb-10">
         <!-- boutons plannif et congés-->
         <div class="m-20">
-            <a href="#" class="rounded border-transparent shadow-md font-semibold text-white bg-blue-600 focus:bg-gradient-to-r from-blue-600 via-purple-500 to-pink-600 focus:text-white relative flex-row h-11 focus:outline-none p-4">Plannification équipe</a>
+            <a href="{{ path('planned_departement')}}" class="rounded border-transparent shadow-md font-semibold text-white bg-blue-600 focus:bg-gradient-to-r from-blue-600 via-purple-500 to-pink-600 focus:text-white relative flex-row h-11 focus:outline-none p-4">Plannification équipe</a>
             <a href="#" class="rounded border-transparent shadow-md font-semibold text-white bg-blue-600 focus:bg-gradient-to-r from-blue-600 via-purple-500 to-pink-600 focus:text-white relative flex-row h-11 focus:outline-none p-4">Gestion des congés</a>
         </div>
         <!--fin boutons plannif-->
@@ -31,7 +31,7 @@
                     <img class="object-center object-cover rounded-full h-36 w-36" src="{{ user.picture }}" alt="photo">
                 </div>
                 <div class="text-center py-4">
-                    <p class="text-xl font-bold mb-2">{{ user.lastname }} {{ user.firstname }}</p>
+                    <p class="text-xl font-bold mb-2">{{ user.fullname }}  </p>
                     <p class="text-base text-gray-400 font-normal">{{ user.job.name }}</p>
                 </div>
                 <div class="grid grid-cols-3 gap-8">
