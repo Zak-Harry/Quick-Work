@@ -1,0 +1,69 @@
+{% extends 'sidebar.html.twig' %}
+
+{% block title %}Mon planning{% endblock %}
+
+{% block page_contents %}
+<!--  !PARTIE CENTRALE-->
+   
+<!-- Integration fo the new planning -->
+<div class="fixed flex flex-col ml-14 mb-10 md:ml-64 lg:ml-64 xl:ml-64 w-full h-full dark:bg-slate-800 dark:text-white overflow-auto">
+    <div class="w-[75rem]">
+        <!-- Title (accueil) -->
+        <div class="pl-10 sm:pl-24 py-14 pt-24">
+            <p class="text-4xl">Mon planning</p>   
+            <p class="text-2xl {{ color }}">{{gap}}</p>  
+        </div>
+        <!-- Start TABLE -->        
+        <div class="mx-auto">  
+            <div class="grid sm:grid-cols-1 xl:grid-cols-2"> 
+                {% for i in 0..1 %}
+                <table class="w-[22rem] sm:w-[30rem] sm:m-4 shadow-xl dark:bg-slate-900 ">
+                    <thead>    
+                        <tr class="bg-slate-500 dark:bg-opacity-20 text-center">
+                            <th colspan="2" class=" border-l border-r border-t p-4 pl-8 pr-8 text-slate-400 dark:text-slate-200">{{ header[i]}}</th>
+                        </tr>
+                    </thead>  
+                    <tbody >
+                    
+                        <tr class="hover:bg-grey-lighter">
+                        <td class="py-4 px-6 border-b border-grey-light">Début de journée</td>
+                        <td class="py-4 px-6 text-left border-b border-grey-light">
+                            {{ user.plannedWorkDays[i].startshift ? user.plannedWorkDays[i].startshift|date('H:i') : '' }}
+                        </td>
+                        </tr>
+                        <tr class="hover:bg-grey-lighter">
+                        <td class="py-4 px-6 border-b border-grey-light">Début de pause repas</td>
+                        <td class="py-4 px-6 text-left border-b border-grey-light">
+                            {{ user.plannedWorkDays[i].startlunch ? user.plannedWorkDays[i].startlunch|date('H:i') : '' }}
+                        </td>
+                        </tr>
+                        <tr class="hover:bg-grey-lighter">
+                        <td class="py-4 px-6 border-b border-grey-light">Fin de pause repas</td>
+                        <td class="py-4 px-6 text-left border-b border-grey-light">
+                            {{ user.plannedWorkDays[i].endlunch ? user.plannedWorkDays[i].endlunch|date('H:i') : '' }}
+                        </td>
+                        </tr>
+                        <tr class="hover:bg-grey-lighter">
+                        <td class="py-4 px-6 border-b border-grey-light">Fin de journée</td>
+                        <td class="py-4 px-6 text-left border-b border-grey-light">
+                            {{ user.plannedWorkDays[i].endshift ? user.plannedWorkDays[i].endshift|date('H:i') : '' }}
+                        </td>
+                        </tr>
+                        <tr class="hover:bg-grey-lighter">
+                        <td class="py-4 px-6 border-b border-grey-light">Heures par jour</td>
+                        <td class="py-4 px-6 text-left border-b border-grey-light">
+                            {{ user.plannedWorkDays[i].hoursplanned ? user.plannedWorkDays[i].hoursplanned|date('H:i') : '' }}
+                        </td>
+                        </tr>
+                    </tbody>
+                </table>
+                {% endfor %}
+            </div>
+        </div>
+        <!-- End TABLE -->
+    </div>
+</div>
+<!-- End of the new integration -->
+
+
+{% endblock %}

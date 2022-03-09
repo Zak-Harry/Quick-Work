@@ -123,4 +123,56 @@ class PlannedWorkDaysController extends AbstractController
             'planning' => $planningForm,
         ]);
     }
+
+    /**
+     * @Route("/comparatif", name="comparative_planned", methods={"GET"})
+     */
+    public function Comparative(): Response
+    {
+       // on recupère l'utilisateur connecté
+       $userLogged = $this->getUser();
+
+       $a = $userLogged->getPlannedWorkDays()[0]->getHoursplanned();
+       $b = $userLogged->getPlannedWorkDays()[1]->getHoursplanned();
+       $gap = $b->diff($a)->format('%R%Hh%i');
+       $pos = strpos($gap, '+');
+
+       if ($pos === false) {
+           $color = "text-indigo-700";
+       }else {
+           $color = "text-slate-500";
+       }
+
+       dump($pos);
+
+       dump($color);
+
+     
+/* 
+       if ($pos === false) {
+        echo "La chaîne ne se trouve pas dans la chaîne '$gap'";
+    } else {
+        echo "La chaine a été trouvée dans la chaîne '$gap'";
+        echo " et débute à la position $pos";
+    } */
+
+        
+
+       $header =['Heures prévues', 'Heures réalisées'];
+
+    
+       // Call to 'PLANNING_VIEW' from PlanningVoter
+       // A user must be logged in to be able to access this page
+       // All User Roles can access this page
+       $this->denyAccessUnlessGranted('PLANNING_VIEW', $userLogged);
+
+        return $this->render('planning/comparative.planning.html.twig', [
+            'user' => $userLogged,
+            'gap' => $gap,
+            'header' => $header,
+            'color' => $color,
+        ]);
+    }
+
+
 }
