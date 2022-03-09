@@ -20,23 +20,7 @@
     <p>Nous sommes le {{ today }}.</p>
   </div>
 
-  <!-- Pointeuse -->
- 
- {#
- {{ dump(userEffectiveWork) }}
- array:9 [▼
-  "id" => "1"
-  "user_id" => "2"
-  "startlog" => "2022-03-11 15:21:11"
-  "startlunch" => "2022-03-11 15:21:11"
-  "endlunch" => "2022-03-11 15:21:11"
-  "endlog" => "2022-03-11 15:21:11"
-  "hoursworked" => null
-  "created_at" => "2022-03-11 15:21:11"
-  "updated_at" => "2022-03-11 15:21:11"
-]
- #}
-
+<!-- Pointeuse -->
 {% if userPlannedThisDay == false %}
   <div class=" block w-2/3 text-center text-xl p-10 m-16 h-auto dark:bg-slate-900 rounded-lg border border-amber-500 ">
 
