@@ -1,32 +1,70 @@
 {% extends 'sidebar.html.twig' %}
-{% form_theme profil 'tailwind_2_layout.html.twig' %}
-{% block title %}Page de profil{% endblock %}
 
-{% block body %}
+{% block title %}Edition du profil{% endblock %}
+
+{% block page_contents %}
+
+ <!-- PARTIE CENTRALE-->
    Edition d'un profil
-
+<div class="ml-72">
     {{ form_start(profil) }}
-    firstname : {{ form_widget(profil.firstname) }}
-    lastname : {{ form_widget(profil.lastname) }}
-    dateOfBirth : {{ form_widget(profil.dateOfBirth) }}
-    picture : {{ form_widget(profil.picture) }}
+    <div class="image overflow-hidden my-4 max-w-xs ">
+        <img class="h-auto w-full mx-auto"
+             src="{{ form_row(profil.picture) }}"
+             alt="">
+    </div>
+    <div class="px-4 py-2 font-semibold">
+        <p class="inline text-sm text-gray-500 hover:text-gray-600 leading-6">Nom de famille : {{ form_widget(profil.firstname) }}</p>
+        <p class="inline text-sm text-gray-500 hover:text-gray-600 leading-6">Prénom : {{ form_widget(profil.lastname) }}</p>
+    </div>
 
-    email : {{ form_widget(profil.email) }}
-    emailpro : {{ form_widget(profil.emailpro) }}
-    rib : {{ form_widget(profil.rib) }}
+    <div class="grid grid-cols-2 border-b border-slate-200 py-2">
+        <div class="px-4 py-2 font-semibold text-center">Anniversaire</div>
+        <div class="px-4 py-2">{{ form_widget(profil.dateOfBirth) }}</div>
+    </div>
 
-    phonenumber : {{ form_widget(profil.phonenumber) }}
-    phonenumberpro : {{ form_widget(profil.phonenumberpro) }}
-    address : {{ form_widget(profil.address) }}
-    zipcode : {{ form_widget(profil.zipcode) }}
-    city : {{ form_widget(profil.city) }}
+    <div class="grid grid-cols-2 border-b border-slate-200 py-2">
+        <div class="px-4 py-2 font-semibold text-center">Email privé</div>
+        <div class="px-4 py-2">
+            <a class="text-blue-800" href="mailto:jane@example.com">{{ form_widget(profil.email) }}</a>
+        </div>
+    </div>
+    <div class="grid grid-cols-2 border-b border-slate-200 py-2">
+        <div class="px-4 py-2 font-semibold text-center">Email pro</div>
+        <div class="px-4 py-2">
+            <a class="text-blue-800" href="mailto:jane@example.com">{{ form_widget(profil.emailpro) }}</a>
+        </div>
+    </div>
+    <div class="grid grid-cols-2 border-b border-slate-200 py-2">
+        <div class="px-4 py-2 font-semibold text-center">RIB : </div>
+        <div class="px-4 py-2">{{ form_widget(profil.rib) }}</div>
+    </div>
+    <div class="grid grid-cols-2 border-b border-slate-200 py-2">
+        <div class="px-4 py-2 font-semibold text-center">Téléphone personnel</div>
+        <div class="px-4 py-2">{{ form_widget(profil.phonenumber) }}</div>
+    </div>
+    <div class="grid grid-cols-2 border-b border-slate-200 py-2">
+        <div class="px-4 py-2 font-semibold text-center">Téléphone professionnel</div>
+        <div class="px-4 py-2">{{ form_widget(profil.phonenumberpro) }}</div>
+    </div>
+
+    <div class="grid grid-cols-2 border-b border-slate-200 py-2">
+        <div class="px-4 py-2 font-semibold text-center">Adresse</div>
+        <div class="px-4 py-2">{{ form_widget(profil.address) }}</div>
+    </div>
+    <div class="grid grid-cols-2 border-b border-slate-200 py-2">
+        <div class="px-4 py-2 font-semibold text-center">Code postal et ville</div>
+        <div class="px-4 py-2">{{ form_widget(profil.zipcode) }} {{ form_widget(profil.city) }}</div>
+    </div>
 
     password : {{ form_widget(profil.password) }}
-     status : {{ form_widget(profil.status)}}
-     role : {{ form_widget(profil.role) }}
-     job : {{ form_widget(profil.job) }}
+    <div class="px-4 py-2 font-semibold">
+        <p class="inline text-sm text-gray-500 hover:text-gray-600 leading-6 text-center">Département : {{ form_widget(profil.status)}}</p>
+        <p class="inline text-sm text-gray-500 hover:text-gray-600 leading-6 text-center">Rôle : {{ form_widget(profil.role) }}</p>
+        <p class="inline text-sm text-gray-500 hover:text-gray-600 leading-6 text-center">Job : {{ form_widget(profil.job) }}</p>
+    </div>
     <a href="">Modification mot de passe </a>
     <button>Enregistrer</button>
     {{ form_end(profil) }}
-
+</div>
 {% endblock %}
