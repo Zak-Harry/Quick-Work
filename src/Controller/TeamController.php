@@ -26,9 +26,9 @@ class TeamController extends AbstractController
         
         $departementId = $userLogged->getDepartement()->getId();
         $dpt = $departement->find($departementId);
-        $departementUser = $user->findBy(['departement' => $dpt]);
+        //requête DQL pour afficher les membres de l'equipe sans le manager connecté 
+        $departementUser = $user->findByTeamDQL($departementId,$userLogged->getId());
         
-
         return $this->render('team/index.html.twig', [
             'dpt' => $dpt,
             'dptUser' => $departementUser,
