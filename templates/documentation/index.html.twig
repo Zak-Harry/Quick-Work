@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello DocsRHController!{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+<div class="example-wrapper">
+   {% for payslip in user.payslips %}
+       
+   <h1>Hello {{ payslip.link }}! ✅</h1>
+       
+   {% endfor %}
+
+    
+    {% for documentation in user.documentations %}
+       
+   <h1>Hello {{ documentation.link }}! ✅</h1>
+   
+       
+   {% endfor %}
+
+
+
+    <h1>Hello {{ user.fullname }}! ✅</h1>
+       
+
+    This friendly message is coming from:
+    <ul>
+        <li>Your controller at <code><a href="{{ '/var/www/html/QuickWork/projet-21-quick-work/src/Controller/DocsRHController.php'|file_link(0) }}">src/Controller/DocsRHController.php</a></code></li>
+        <li>Your template at <code><a href="{{ '/var/www/html/QuickWork/projet-21-quick-work/templates/docs_rh/index.html.twig'|file_link(0) }}">templates/docs_rh/index.html.twig</a></code></li>
+    </ul>
+</div>
+{% endblock %}
