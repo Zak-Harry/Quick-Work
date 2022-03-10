@@ -6,11 +6,11 @@
 
 /* Components for templates/login/index.html.twig */
 .inputLoginMail {
-    @apply mx-auto my-2 w-52 rounded-md bg-gray-100 border-transparent focus:border-gray-600 focus:bg-white focus:ring-0
+    @apply mx-auto my-2 w-64 rounded-md bg-gray-100 border-transparent focus:border-gray-600 focus:bg-white focus:ring-0 text-center
 }
 
 .inputLoginPassWord {
-    @apply my-2 w-52 rounded-md bg-gray-100 border-transparent focus:border-gray-600 focus:bg-white focus:ring-0
+    @apply my-2 w-64 rounded-md bg-gray-100 border-transparent focus:border-gray-600 focus:bg-white focus:ring-0 text-center
 }
 
 .buttonLoginValidate {
