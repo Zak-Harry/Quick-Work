@@ -110,7 +110,7 @@
       </li>
     {% endif %}
 
-    {% if is_granted('ROLE_MANAGER') %}
+    {% if is_granted('ROLE_MANAGER') and not is_granted('ROLE_RH') %}
       <!-- GESTION MANAGER -->
       <li>
         <a href="{{ path("view_team") }}" class="flex justify-start items-center
