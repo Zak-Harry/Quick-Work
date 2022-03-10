@@ -11,7 +11,9 @@
   <div class="pl-24 py-14 pt-24">
       <p class="text-4xl">Planning du département :</p>
       <p class="text-2xl indent-8">{{dpt.name}}</p>
-      <a class="ml-7 border-b-0 border-l-4 border-blue-500 rounded-t-lg text-center bg-gradient-to-br from-blue-600 max-w-max py-2 px-10" href="{{ path('planned_work_days_new')}}">Nouveau planning</a>
+  </div>
+  <div class="pl-24">
+    <a href="{{ path('planned_work_days_new')}}" class="block max-w-fit text-white bg-blue-600 font-semibold rounded-lg hover:bg-blue-900 hover:text-white focus:outline-none p-3 my-10 focus:bg-gradient-to-tl from-green-400 via-sky-600 to-indigo-900 focus:text-white">Nouveau planning</a>
   </div>
 
 
@@ -43,14 +45,18 @@
     {% for i in 0..nbUser %}
     <div class="mt-7">
     
-        <div class="ml-7 border-b-0 border-l-4 border-blue-500 rounded-t-lg text-center bg-gradient-to-br from-blue-600 max-w-max py-2 px-10">
-            <p class="font-semibold text-xl">{{ dptUser[i].firstname }} {{ dptUser[i].lastname }}</p>
-            <p class="font-semibold text-xl">Total semaine {{ hpw.hoursPerWeek(dptUser[i]) }}</p>
+    
+        <div class="ml-7 mb-2 justify-evenly">
+            <span class="font-semibold text-xl border-b-0 border-l-4 border-blue-500 rounded-t-lg text-center bg-gradient-to-br from-blue-600 max-w-max py-2 px-10">{{ dptUser[i].firstname }} {{ dptUser[i].lastname }}</span>
+            <span class="bg-transparent"></span>
+            <span class="ml-10 py-2 px-8 bg-indigo-100 text-indigo-700 rounded-full">Total semaine : {{ hpw.hoursPerWeek(dptUser[i]) }}</span>
         </div>
         
-        <table class="mb-14 border-collapse table-auto text-sm border-2 text-center">
+        
+        </div>
+        <table class="mb-14 border-collapse table-auto text-sm border-2 border-slate-500 text-center">
             <thead>    
-                <tr class="bg-slate-500 dark:bg-opacity-20 text-center">
+                <tr class="bg-blue-800 dark:bg-opacity-20 text-center">
                     <th class="h-16 border-l border-t rounded-tl-lg rounded p-4 pl-8 text-slate-400 dark:text-slate-200">Date</th>
                     <th class="border-t p-4 pl-8 text-slate-400 dark:text-slate-200">Début de journée</th>
                     <th class="border-t p-4 pl-8 text-slate-400 dark:text-slate-200">Début de pause repas</th>
