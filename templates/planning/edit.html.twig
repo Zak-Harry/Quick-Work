@@ -1,13 +1,15 @@
-{% extends 'base.html.twig' %}
+{% extends 'sidebar.html.twig' %}
 
-{% block title %}Edit PlannedWorkDays{% endblock %}
+{% block title %}Edition planning{% endblock %}
 
-{% block body %}
-    
-    {{ include('planning/_form.html.twig', {'button_label': 'Enregistrer'}) }}
+{% block page_contents %}
+<!-- PARTIE CENTRALE-->
+   Edition d'un planning
+<div class="ml-72">
+    <h1>Editer planning</h1>
+
+    {{ include('planning/_form.html.twig') }}
 
     <a href="{{ path('planned_departement') }}">retour à la liste</a>
-
+</div>
 {% endblock %}
-
-
