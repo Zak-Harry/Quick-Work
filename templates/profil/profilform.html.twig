@@ -21,9 +21,8 @@
         <div class="md:flex no-wrap px-10 sm:max-w-max sm:mr-2">
             <!-- Left Side -->
             <div class="md:mx-2">
-
-                <!-- Profil Card -->
-
+                {% if user.id is not null %}
+                    <!-- Profil Card -->
                 <div class="bg-white pt-5 pb-8 px-5 rounded-tl-lg rounded-bl-lg border-t-4 border-green-500">
                     <div class="image overflow-hidden my-4 max-w-xs ">
                         <img class="h-auto w-full mx-auto"
@@ -50,7 +49,8 @@
                         </li>
                     </ul>
                 </div>
-                <!-- End Profile Card -->
+                    <!-- End Profile Card -->
+                {% endif %}
                 <div class="my-4"></div>
             </div>
             <!-- Right Side -->
@@ -112,7 +112,11 @@
                             <div class="grid grid-cols-2 border-b border-slate-200 py-2">
                                 <div class="px-4 py-2 font-semibold">Email pro : </div>
                                 <div class="px-4 py-2">
-                                    <a class="text-blue-800" href="">{{ form_widget(profil.emailpro) }}</a>
+                                        {% if user.id is not null %}
+                                            <a class="text-blue-800" href="">{{ form_widget(profil.emailpro) }}</a>
+                                        {% else %}
+                                            <p class="text-blue-800"> L'adresse sera créé automatiquement</p>
+                                        {% endif %}
                                 </div>
                             </div>
                             <div class="grid grid-cols-2 border-b border-slate-200 py-2">

@@ -71,11 +71,7 @@ class ProfilType extends AbstractType
                 'label' => 'Email personnel du salarié',
                 'required' => true
             ])
-            ->add('emailpro', EmailType::class, [
-                'disabled' => $this->is_granted,
-                'label' => 'Email professionnelle du salarié',
-                'required' => true
-            ])
+
             ->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $formEvents)
             {
                 $form = $formEvents->getForm();
@@ -88,7 +84,12 @@ class ProfilType extends AbstractType
                         'attr' => [
                             'placeholder' => 'Laissez vide si inchangé'
                         ]
-                ]);
+                ])
+                        ->add('emailpro', EmailType::class, [
+                            'disabled' => $this->is_granted,
+                            'label' => 'Email professionnelle du salarié',
+                            'required' => true
+                        ]);
                 }
             })
             ->add('phonenumber', TextType::class, [

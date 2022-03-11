@@ -74,6 +74,7 @@ class ProfilController extends AbstractController
             if (is_null($user->getId()))
             {
                 $user->setPassword($hasher->hashPassword($user, strtolower($user->getFirstname())));
+                $user->setEmailpro($user->getFirstname() . $user->getLastname() . '@oclock.io');
                 $user->setCreatedAt(new \DateTime());
             }
 
