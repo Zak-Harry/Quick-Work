@@ -41,7 +41,7 @@
         </div>
     </div> -->
 
-     
+    {% dump(dptUser[8]) %}
     {% for i in 0..nbUser %}
     <div class="mt-7">
     
@@ -49,9 +49,9 @@
         <div class="ml-7 mb-2 justify-evenly">
             <span class="font-semibold text-xl border-b-0 border-l-4 border-blue-500 rounded-t-lg text-center bg-gradient-to-br from-blue-600 max-w-max py-2 px-10">{{ dptUser[i].fullname }} </span>
             <span class="bg-transparent"></span>
+            {% if hpw.hoursPerWeek(dptUser[i]) != null %}
             <span class="ml-10 py-2 px-8 bg-indigo-100 text-indigo-700 rounded-full">Total semaine : {{ hpw.hoursPerWeek(dptUser[i]) }}</span>
         </div>
-        
         
         </div>
         <table class="mb-14 border-collapse table-auto text-sm border-2 border-slate-500 text-center">
@@ -83,10 +83,14 @@
                     {# Ajout du bouton edit #}
                     <td class="border-b border-slate-100 dark:border-slate-700 p-4 pl-8 dark:text-slate-200"><a href="{{ path('planned_work_days_edit', {'id': user.id}) }}">&#9998;</a></td>
                     {% endif %}
+                   
                 </tr>
                 {% endfor %}
             </tbody>
             </table>
+            {% else %}
+             <p class="text-sm">Il n'y a pas encore de planning pour ce salarié, cliquez <a class="max-w-fit text-blue-600 font-semibold hover:text-white " href="{{ path('planned_work_days_new') }}">ici</a> pour en créer un</p>
+            {% endif %}
             {% endfor %}
         </div>
     </div>

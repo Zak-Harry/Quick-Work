@@ -45,7 +45,7 @@ class UserRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function findbyTeamSQL(int $departement_id, int $userLogged_id )
+    public function findByTeamSQL(int $departement_id, int $userLogged_id )
     {
         $conn = $this->getEntityManager()->getConnection();
 
@@ -62,6 +62,41 @@ class UserRepository extends ServiceEntityRepository
         return $results->fetchAllAssociative();
     }
 
+    public function findByManagerDepartementSQL(int $departement_id, int $role_id)
+    {
+        $conn = $this->getEntityManager()->getConnection();
+
+        // une requete qui renvoit un title / slug aléatoire
+        $sql = '
+        SELECT *
+        FROM `user`
+        WHERE `departement_id` = '.$departement_id. ' AND `role_id` =' .$role_id;
+            
+        // exécution de la requete
+        $results = $conn->executeQuery($sql);
+
+        // returns an array of arrays (i.e. a raw data set)
+        return $results->fetchAllAssociative();
+    }
+
+    
+    public function findByManagerDepartementDQL(int $departement_id, int $role_id)
+    {
+        $entityManager = $this->getEntityManager();
+        // une requete qui renvoit un title / slug aléatoire
+        $query =$entityManager->createQuery(
+        ' SELECT u
+        FROM App\Entity\User u
+        WHERE u.departement = '.$departement_id. ' AND u.role =' .$role_id);
+            
+        // exécution de la requete
+        $results = $query->getResult();
+
+        // returns an array of arrays (i.e. a raw data set)
+        return $results;
+    }
+    
+    
     
     // /**
     //  * @return User[] Returns an array of User objects
