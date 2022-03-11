@@ -29,23 +29,27 @@ class PlannedWorkDaysController extends AbstractController
     /**
      * @Route("/", name="planned_user", methods={"GET"})
      */
-    public function userPlanning(HoursPerWeek $hpw): Response
+    public function userPlanning(HoursPerWeek $hpw, UserRepository $users): Response
     {
-       // on recupère l'utilisateur connecté
-       $userLogged = $this->getUser();
+        // on recupère l'utilisateur connecté
+        $userLogged = $this->getUser();
         
         // la méthode hoursperWeek sert à calculer les heures d'une semaine
         // on la retrouve dans le service User
         $thw = $hpw->hoursPerWeek($userLogged);
-        
-       // Call to 'PLANNING_VIEW' from PlanningVoter
-       // A user must be logged in to be able to access this page
-       // All User Roles can access this page
+
+        $dptManager = $users->findByManagerDepartementSQL($userLogged->getDepartement()->getId(),3);
+        dump($dptManager[0]);
+            
+        // Call to 'PLANNING_VIEW' from PlanningVoter
+        // A user must be logged in to be able to access this page
+        // All User Roles can access this page
         $this->denyAccessUnlessGranted('PLANNING_VIEW', $userLogged);
 
         return $this->render('planning/user.planning.html.twig', [
             'user' => $userLogged,
             'totalHoursWeek' => $thw,
+            'dptManager' => $dptManager[0],
         ]);
     }
 
@@ -57,10 +61,10 @@ class PlannedWorkDaysController extends AbstractController
         // on recupère l'utilisateur connecté
         $userLogged = $this->getUser();
 
-       // Call to 'PLANNING_VIEWTEAM' from PlanningVoter
-       // A user must be logged in to be able to access this page
-       // Only Managers and RH Roles can access this page
-       $this->denyAccessUnlessGranted('PLANNING_VIEWTEAM', $userLogged);
+        // Call to 'PLANNING_VIEWTEAM' from PlanningVoter
+        // A user must be logged in to be able to access this page
+        // Only Managers and RH Roles can access this page
+        $this->denyAccessUnlessGranted('PLANNING_VIEWTEAM', $userLogged);
         
         $departementId = $userLogged->getDepartement()->getId();
         $dpt = $departement->find($departementId);
