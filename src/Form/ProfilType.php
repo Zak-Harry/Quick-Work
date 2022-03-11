@@ -56,6 +56,8 @@ class ProfilType extends AbstractType
                 'required' => true
             ])
             ->add('dateOfBirth', BirthdayType::class, [
+                'widget' => 'single_text',
+                'format' => 'yyyy-MM-dd',
                 'disabled' => $this->is_granted,
             ])
             /**
