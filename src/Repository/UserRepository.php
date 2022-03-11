@@ -45,7 +45,7 @@ class UserRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function test(int $departement_id, int $userLogged_id )
+    public function findbyTeamSQL(int $departement_id, int $userLogged_id )
     {
         $conn = $this->getEntityManager()->getConnection();
 
