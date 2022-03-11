@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Classes\formProfil;
 use App\Entity\User;
 use App\Form\ProfilType;
 use App\Form\SearchProfilType;
@@ -15,6 +14,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 class ProfilController extends AbstractController
@@ -49,10 +49,11 @@ class ProfilController extends AbstractController
      * @Route("/profil/edit/{id}", name="profil_edit")
      * @param EntityManagerInterface $manager
      * @param Request $request
+     * @param UserPasswordHasherInterface $hasher
      * @param User|null $user
      * @return Response
      */
-    public function formProfil(EntityManagerInterface $manager,Request $request, User $user = NULL): Response
+    public function formProfil(EntityManagerInterface $manager, Request $request, UserPasswordHasherInterface $hasher, User $user = NULL): Response
     {
         // Si pas de USER alors crée un USER, ceci pour l'ajout d'un salarié
         if(!$user)
@@ -66,8 +67,13 @@ class ProfilController extends AbstractController
         // Si utilisateur est RH ou utilisateur connecte = page de profil demandé alors il peut EDIT
         $this->denyAccessUnlessGranted('EDIT', $profilForm);
         $profilForm->handleRequest($request);
-        if($profilForm->isSubmitted() && !$profilForm->isValid())
+        if($profilForm->isSubmitted() && $profilForm->isValid())
         {
+
+            if (is_null($user))
+            {
+                $user->setPassword($hasher->hashPassword($user, strtolower($user->getFirstname())));
+            }
 
             $manager->persist($user);
             $manager->flush();
@@ -77,7 +83,8 @@ class ProfilController extends AbstractController
 
         return $this->renderForm('profil/profilform.html.twig',
             [
-                'profil' => $profilForm
+                'profil' => $profilForm,
+                'user' => $user ?? new User()
             ]);
     }
 

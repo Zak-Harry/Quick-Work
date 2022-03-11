@@ -25,15 +25,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private ?string $lastname;
+    private ?string $lastname = NULL;
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private ?string $firstname;
+    private ?string $firstname = NULL;
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private ?string $picture;
+    private ?string $picture = NULL;
     /**
      * @ORM\Column(type="string", length=255)
      */
@@ -81,11 +81,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @ORM\Column(type="boolean", options = {"default" = true})
      */
-    private ?bool $status;
+    private ?bool $status = null;
     /**
      * @ORM\Column(type="datetime")
      */
-    private ?\DateTimeInterface $createdAt;
+    private ?\DateTimeInterface $createdAt = null;
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
@@ -111,7 +111,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @ORM\ManyToOne(targetEntity=Job::class, inversedBy="users")
      */
-    private ?Job $job;
+    private ?Job $job  = NULL;
     /**
      * @ORM\OneToMany(targetEntity=Payslip::class, mappedBy="user")
      */
@@ -123,7 +123,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @ORM\ManyToOne(targetEntity=Departement::class, inversedBy="users")
      */
-    private ?Departement $departement;
+    private ?Departement $departement = null;
 
     /**
      * @ORM\ManyToMany(targetEntity=PlannedWorkDays::class, inversedBy="users")
