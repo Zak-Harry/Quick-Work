@@ -68,10 +68,10 @@ class PlannedWorkDaysController extends AbstractController
         $nbUser = (count($departementUser)-1);
 
         return $this->render('planning/departement.planning.html.twig', [
-            'dpt' => $dpt,
             'dptUser' => $departementUser,
             'nbUser' => $nbUser,
             'hpw' => $hpw,
+            'userLogged' => $userLogged,
         ]);
     }
 
