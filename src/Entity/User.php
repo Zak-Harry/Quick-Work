@@ -4,14 +4,17 @@ use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use App\Service\HoursPerWeek;
+use Symfony\Component\Validator\Constraints\Unique;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
  * @ORM\Table(name="`user`")
+ * @UniqueEntity("emailpro")
  * @method string getUserIdentifier()
  */
 class User implements UserInterface, PasswordAuthenticatedUserInterface
@@ -25,22 +28,21 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private ?string $lastname;
+    private ?string $lastname = NULL;
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private ?string $firstname;
+    private ?string $firstname = NULL;
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private ?string $picture;
+    private ?string $picture = NULL;
     /**
      * @ORM\Column(type="string", length=255)
      */
     private ?string $email;
     /**
      * @ORM\Column(type="string", length=255)
-     * @Assert\Unique(message="L'adresse mail saisie a déjà été renseigné. Merci d'en choisir une nouvelle")
      */
     private ?string $emailpro;
     /**
@@ -81,11 +83,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @ORM\Column(type="boolean", options = {"default" = true})
      */
-    private ?bool $status;
+    private ?bool $status = null;
     /**
      * @ORM\Column(type="datetime")
      */
-    private ?\DateTimeInterface $createdAt;
+    private ?\DateTimeInterface $createdAt = null;
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
@@ -111,7 +113,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @ORM\ManyToOne(targetEntity=Job::class, inversedBy="users")
      */
-    private ?Job $job;
+    private ?Job $job  = NULL;
     /**
      * @ORM\OneToMany(targetEntity=Payslip::class, mappedBy="user")
      */
@@ -123,7 +125,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @ORM\ManyToOne(targetEntity=Departement::class, inversedBy="users")
      */
-    private ?Departement $departement;
+    private ?Departement $departement = null;
 
     /**
      * @ORM\ManyToMany(targetEntity=PlannedWorkDays::class, inversedBy="users")
