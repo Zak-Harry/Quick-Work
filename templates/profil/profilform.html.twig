@@ -81,6 +81,7 @@
                                 <div class="px-4 py-2 font-semibold">Nom : </div>
                                 <div class="px-4 py-2">{{ form_widget(profil.lastname) }}</div>
                             </div>
+                            {% if user.id is not null %}
                             <div class="grid grid-cols-2 border-b border-slate-200 py-2">
                                 <div class="px-4 py-2 font-semibold">Password : </div>
                                 <div class="px-4 py-2">{{ form_widget(profil.password) }}</div>
@@ -91,6 +92,7 @@
                                     <input type="password" name="confirm_password">
                                 </div>
                             </div>
+                            {% endif %}
                             <div class="grid grid-cols-2 border-b border-slate-200 py-2">
                                 <div class="px-4 py-2 font-semibold">Photo : </div>
                                 <input class="px-4 py-2" type="file"/>
@@ -108,15 +110,15 @@
                                 <div class="px-4 py-2">{{ form_widget(profil.phonenumber) }}</div>
                             </div>
                             <div class="grid grid-cols-2 border-b border-slate-200 py-2">
-                                <div class="px-4 py-2 font-semibold">Email privé</div>
+                                <div class="px-4 py-2 font-semibold">Email pro : </div>
                                 <div class="px-4 py-2">
-                                    <a class="text-blue-800" href="mailto:jane@example.com">{{ form_widget(profil.emailpro) }}</a>
+                                    <a class="text-blue-800" href="">{{ form_widget(profil.emailpro) }}</a>
                                 </div>
                             </div>
                             <div class="grid grid-cols-2 border-b border-slate-200 py-2">
-                                <div class="px-4 py-2 font-semibold">Email pro</div>
+                                <div class="px-4 py-2 font-semibold">Email privé : </div>
                                 <div class="px-4 py-2">
-                                    <a class="text-blue-800" href="mailto:jane@example.com">{{ form_widget(profil.email) }}</a>
+                                    <a class="text-blue-800" href="">{{ form_widget(profil.email) }}</a>
                                 </div>
                             </div>
                             <div class="grid grid-cols-2 border-b border-slate-200 py-2">
@@ -159,7 +161,7 @@
                     <button class="bg-blue-500 text-white px-16 py-3 rounded-md text-1xl font-medium hover:bg-blue-700 transition duration-300">Enregistrer</button>
 
                 </div>
-
+                {{ form_errors(profil) }}
                 {{ form_end(profil) }}
                 <!-- Fin section A propos -->
                 <div class="my-4"></div>

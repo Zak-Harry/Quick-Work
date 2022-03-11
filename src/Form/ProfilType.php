@@ -86,13 +86,7 @@ class ProfilType extends AbstractType
                         'attr' => [
                             'placeholder' => 'Laissez vide si inchangé'
                         ]
-                ]); } else {
-                    $form->add('password', PasswordType::class, [
-                        'empty_data' => '',
-                        'constraints' => [
-                            new NotBlank()
-                        ]
-                    ]);
+                ]);
                 }
             })
             ->add('phonenumber', TextType::class, [

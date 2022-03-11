@@ -67,12 +67,14 @@ class ProfilController extends AbstractController
         // Si utilisateur est RH ou utilisateur connecte = page de profil demandé alors il peut EDIT
         $this->denyAccessUnlessGranted('EDIT', $profilForm);
         $profilForm->handleRequest($request);
+
         if($profilForm->isSubmitted() && $profilForm->isValid())
         {
 
-            if (is_null($user))
+            if (is_null($user->getId()))
             {
                 $user->setPassword($hasher->hashPassword($user, strtolower($user->getFirstname())));
+                $user->setCreatedAt(new \DateTime());
             }
 
             $manager->persist($user);
