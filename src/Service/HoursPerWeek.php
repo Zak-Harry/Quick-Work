@@ -13,17 +13,22 @@ Class HoursPerWeek
      */
     public function hoursPerWeek(User $user)
     {
+        if($user->getPlannedWorkDays()[0] !== null) {
         // on récupère tout les totaux d'heures par jour
         foreach($user->getPlannedWorkDays() as $user) {
             $workHours[] =$user->getHoursplanned();
         }
-
+        //dump($workHours);
         for($i = 0; $i<count($workHours); $i++) {
             $arraySecond[] = $this->hoursToSeconds($workHours[$i]->format('H:i'));
             $totalHoursWeek = $this->totalHours(array_sum($arraySecond));
         } 
 
         return $totalHoursWeek;
+        } else {
+            $totalHoursWeek = '';
+        }
+        
     }
 
     /**

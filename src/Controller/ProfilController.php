@@ -81,18 +81,4 @@ class ProfilController extends AbstractController
             ]);
     }
 
-
-
-    /**
-     * Show all profil by team user
-     * Redirige vers la page profil/profilteam.html.twig
-     * @Route("/profil/myteam", name="profil_my_team")
-     * @return void
-     */
-    public function profilByTeam(UserRepository $userRepository): Response
-    {
-        return $this->render('profil/profilteam.html.twig', [
-            'teams' => $userRepository->findByTeamDQL($this->getUser()->getDepartement()->getid())
-        ]);
-    }
 }
