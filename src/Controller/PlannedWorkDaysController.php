@@ -6,7 +6,6 @@ use App\Entity\Departement;
 use App\Entity\PlannedWorkDays;
 use App\Entity\User;
 use App\Form\PlannedWorkDaysType;
-use App\Form\NewPlannedWorkDaysType;
 use App\Repository\DepartementRepository;
 use App\Repository\PlannedWorkDaysRepository;
 use App\Repository\UserRepository;
@@ -106,7 +105,7 @@ class PlannedWorkDaysController extends AbstractController
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $plannedWorkDay = new PlannedWorkDays();
-        $planningForm = $this->createForm(NewPlannedWorkDaysType::class, $plannedWorkDay);
+        $planningForm = $this->createForm(PlannedWorkDaysType::class, $plannedWorkDay);
         $planningForm->handleRequest($request);
 
         if ($planningForm->isSubmitted() && $planningForm->isValid()) {
@@ -116,7 +115,7 @@ class PlannedWorkDaysController extends AbstractController
             return $this->redirectToRoute('planned_departement', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('planning/_form.html.twig', [
+        return $this->renderForm('planning/new.html.twig', [
             'planned_work_day' => $plannedWorkDay,
             'planning' => $planningForm,
         ]);
