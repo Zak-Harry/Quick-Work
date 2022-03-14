@@ -42,9 +42,9 @@ class HomeController extends AbstractController
 
         //! ON RECUPERE LE PLANNING DU USER AVEC LA DATE RECHERCHEE
         //si pas de planning trouvé retourne FALSE
-        $userPlannedThisDay = $plannedRepo->findOneUserPlanning($user->getId() , "2022-03-14");
+        $userPlannedThisDay = $plannedRepo->findOneUserPlanning($user->getId() , $dateTimeToday);
         $userEffectiveWork = $effectiverepo->findEffectiveWorkUser($user->getId() , $dateTimeToday);
-        //dd($userEffectiveWork);
+        //dd($userPlannedThisDay);
 
         //! Si utilisateur planifié ce jour alors j'affiche sur l'index les pointages
         if(is_array($userPlannedThisDay)){
@@ -59,6 +59,7 @@ class HomeController extends AbstractController
                         'user' => $user,
                         'today' => $today,
                         'dateTimeToday' => $dateTimeToday,
+                        'userPlannedThisDay' => $userPlannedThisDay,
                         'userEffectiveWork' => $userEffectiveWork
                         ]);
                 }
@@ -68,6 +69,7 @@ class HomeController extends AbstractController
                 'user' => $user,
                 'today' => $today,
                 'dateTimeToday' => $dateTimeToday,
+                'userPlannedThisDay' => $userPlannedThisDay,
                 'userEffectiveWork' => $userEffectiveWork
                 ]);
         }
