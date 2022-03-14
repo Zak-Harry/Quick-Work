@@ -14,6 +14,9 @@
             <p class="text-4xl">Mon planning</p>
 
             <p class="text-2xl indent-8">Total semaine {{ totalHoursWeek }}</p> 
+        <div class="pl-10">
+            <a href="{{ path('comparative_planned')}}" class="block max-w-fit text-white bg-blue-600 font-semibold rounded-lg hover:bg-blue-900 hover:text-white focus:outline-none p-3 mt-5 focus:bg-gradient-to-tl from-green-400 via-sky-600 to-indigo-900 focus:text-white">Comparaison planning</a>
+        </div>
         {% else %}
             <p class="text-4xl">Vous n'avez pas encore de planning, veuillez vous rapprochez de votre <a class="max-w-fit text-blue-600 font-semibold hover:text-white " href="{{ path('profil_id', {'id' : dptManager['id']}) }}">responsable</a></p>
         {% endif %}
