@@ -6,7 +6,6 @@ use App\Entity\Departement;
 use App\Entity\PlannedWorkDays;
 use App\Entity\User;
 use App\Form\PlannedWorkDaysType;
-use App\Form\NewPlannedWorkDaysType;
 use App\Repository\DepartementRepository;
 use App\Repository\PlannedWorkDaysRepository;
 use App\Repository\UserRepository;
@@ -29,23 +28,27 @@ class PlannedWorkDaysController extends AbstractController
     /**
      * @Route("/", name="planned_user", methods={"GET"})
      */
-    public function userPlanning(HoursPerWeek $hpw): Response
+    public function userPlanning(HoursPerWeek $hpw, UserRepository $users): Response
     {
-       // on recupère l'utilisateur connecté
-       $userLogged = $this->getUser();
+        // on recupère l'utilisateur connecté
+        $userLogged = $this->getUser();
         
         // la méthode hoursperWeek sert à calculer les heures d'une semaine
         // on la retrouve dans le service User
         $thw = $hpw->hoursPerWeek($userLogged);
-        
-       // Call to 'PLANNING_VIEW' from PlanningVoter
-       // A user must be logged in to be able to access this page
-       // All User Roles can access this page
+
+        $dptManager = $users->findByManagerDepartementSQL($userLogged->getDepartement()->getId(),3);
+        dump($dptManager[0]);
+            
+        // Call to 'PLANNING_VIEW' from PlanningVoter
+        // A user must be logged in to be able to access this page
+        // All User Roles can access this page
         $this->denyAccessUnlessGranted('PLANNING_VIEW', $userLogged);
 
         return $this->render('planning/user.planning.html.twig', [
             'user' => $userLogged,
             'totalHoursWeek' => $thw,
+            'dptManager' => $dptManager[0],
         ]);
     }
 
@@ -57,10 +60,10 @@ class PlannedWorkDaysController extends AbstractController
         // on recupère l'utilisateur connecté
         $userLogged = $this->getUser();
 
-       // Call to 'PLANNING_VIEWTEAM' from PlanningVoter
-       // A user must be logged in to be able to access this page
-       // Only Managers and RH Roles can access this page
-       $this->denyAccessUnlessGranted('PLANNING_VIEWTEAM', $userLogged);
+        // Call to 'PLANNING_VIEWTEAM' from PlanningVoter
+        // A user must be logged in to be able to access this page
+        // Only Managers and RH Roles can access this page
+        $this->denyAccessUnlessGranted('PLANNING_VIEWTEAM', $userLogged);
         
         $departementId = $userLogged->getDepartement()->getId();
         $dpt = $departement->find($departementId);
@@ -68,10 +71,10 @@ class PlannedWorkDaysController extends AbstractController
         $nbUser = (count($departementUser)-1);
 
         return $this->render('planning/departement.planning.html.twig', [
-            'dpt' => $dpt,
             'dptUser' => $departementUser,
             'nbUser' => $nbUser,
             'hpw' => $hpw,
+            'userLogged' => $userLogged,
         ]);
     }
 
@@ -81,10 +84,10 @@ class PlannedWorkDaysController extends AbstractController
     public function edit(Request $request, PlannedWorkDays $plannedWorkDay, EntityManagerInterface $entityManager): Response
     {
     
-        $form = $this->createForm(PlannedWorkDaysType::class, $plannedWorkDay);
-        $form->handleRequest($request);
+        $planningForm = $this->createForm(PlannedWorkDaysType::class, $plannedWorkDay);
+        $planningForm->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($planningForm->isSubmitted() && $planningForm->isValid()) {
             $entityManager->flush();
 
             return $this->redirectToRoute('planned_departement', [], Response::HTTP_SEE_OTHER);
@@ -92,7 +95,7 @@ class PlannedWorkDaysController extends AbstractController
 
         return $this->renderForm('planning/edit.html.twig', [
             'planned_work_day' => $plannedWorkDay,
-            'form' => $form,
+            'planning' => $planningForm,
         ]);
     }
 
@@ -102,10 +105,10 @@ class PlannedWorkDaysController extends AbstractController
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $plannedWorkDay = new PlannedWorkDays();
-        $form = $this->createForm(NewPlannedWorkDaysType::class, $plannedWorkDay);
-        $form->handleRequest($request);
+        $planningForm = $this->createForm(PlannedWorkDaysType::class, $plannedWorkDay);
+        $planningForm->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($planningForm->isSubmitted() && $planningForm->isValid()) {
             $entityManager->persist($plannedWorkDay);
             $entityManager->flush();
 
@@ -114,7 +117,7 @@ class PlannedWorkDaysController extends AbstractController
 
         return $this->renderForm('planning/new.html.twig', [
             'planned_work_day' => $plannedWorkDay,
-            'form' => $form,
+            'planning' => $planningForm,
         ]);
     }
 }

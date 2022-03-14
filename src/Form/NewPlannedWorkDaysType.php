@@ -8,10 +8,14 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Security\Core\Security;
 
 class NewPlannedWorkDaysType extends AbstractType
 {
+
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -27,13 +31,26 @@ class NewPlannedWorkDaysType extends AbstractType
             ->add('endshift', DateTimeType::class, [
                 'label' => 'Fin de journée ',
             ])
-            ->add('users', EntityType::class, [
-                'class' => User::class,
-                'label' => 'Salarié(es)',
-                'choice_label' => 'getfullname',
-                'multiple' => true,
-                'expanded' => true,
-            ])
+
+            ->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $formEvents)
+            {
+                $form = $formEvents->getForm();
+                $user = $formEvents->getData();
+                dump($user);
+
+                if($user->getId() == null)
+                {
+                    $form->add('users', EntityType::class, [
+                        'class' => User::class,
+                        'label' => 'Salarié(es)',
+                        'choice_label' => 'getfullname',
+                        'multiple' => true,
+                        'expanded' => true,
+                    ]); 
+                }
+            })
+            
+            
         ;
     }
 

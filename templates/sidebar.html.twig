@@ -4,10 +4,16 @@
     
 <!-- !Sidebar responsive TEST-->
 <div class="fixed flex flex-col w-14 hover:w-64 md:w-64  bg-slate-200 h-full  transition-all duration-300 border-none z-10 sidebar dark:bg-slate-900 dark:text-white">
-    
-  <div class="xl:flex justify-start p-10 items-center space-x-3 ">
-    <p class="text-2xl leading-6 ">QuickWork</p>
+
+  <!-- Title -->
+  <div class="flex justify-start p-10 items-center space-x-3 -ml-12 md:m-auto">
+        <a href="{{ path('home') }}" class="md:text-4xl text-base text-white font-bold z-20 mx-auto flex flex-col text-center"> Quick
+            <span class="before:block before:absolute before:-inset-y-1 before:-inset-x-0 before:-skew-y-3 before:bg-blue-900 relative inline-block z-10 md:m-2 m-1">
+                <span class="relative text-white p-2.5">Work</span>
+            </span>
+        </p>
   </div>
+  
 
   <!-- Liste des liens de navigation -->
   <div class="px-2 w-full">  
@@ -62,7 +68,7 @@
 
     <!-- DOCUMENTATION RH -->
       <li>
-        <a href="#" class="flex justify-start items-center 
+        <a href="{{ path("documentation") }}" class="flex justify-start items-center 
                                 group                             
                                 rounded                                     
                                 border-transparent 
@@ -80,7 +86,7 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
             </svg>
           </span>
-          <span class="ml-2 text-base tracking-wide truncate">Documentation RH</span>
+          <span class="ml-2 text-base tracking-wide truncate">Mes Documents</span>
         </a>
       </li>
 
@@ -100,9 +106,9 @@
                                 relative flex-row h-11 focus:outline-none
                                 py-4">
           <span class="inline-flex justify-center items-center">
-            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"
+            <svg fill="none" viewBox="0 0 22 22" stroke="currentColor"
                  class="h-10 w-10 text-blue-500 group-hover:stroke-white group-focus:stroke-white inline-flex justify-center items-center">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0m-5 8a2 2 0 100-4 2 2 0 000 4zm0 0c1.306 0 2.417.835 2.83 2M9 14a3.001 3.001 0 00-2.83 2M15 11h3m-3 4h2" />
             </svg>
           </span>
           <span class="ml-2 text-base tracking-wide truncate">Gestion RH</span>
@@ -126,9 +132,9 @@
                                 relative flex-row h-11 focus:outline-none
                                 py-4">
           <span class="inline-flex justify-center items-center">
-            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"
+            <svg fill="none" viewBox="0 0 20 20" stroke="currentColor"
                  class="h-10 w-10 text-blue-500 group-hover:stroke-white group-focus:stroke-white inline-flex justify-center items-center">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v3h-3zM4.75 12.094A5.973 5.973 0 004 15v3H1v-3a3 3 0 013.75-2.906z" />
             </svg>
           </span>
           <span class="ml-2 text-base tracking-wide truncate">Gestion Equipe</span>
@@ -200,7 +206,7 @@
       <ul class="flex flex-col py-4 space-y-2">
           <!-- Firstname / Lastname -->
           <li>
-            <p class="ml-2 text-lg font-semibold tracking-wide truncate">{{app.user.lastname}} {{app.user.firstname}}</p>
+            <p class="ml-2 text-lg font-semibold tracking-wide truncate">{{app.user.fullname}} </p>
           </li>
 
           <!-- Info user (email ? job / departement ?)-->
