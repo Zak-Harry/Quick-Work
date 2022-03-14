@@ -140,12 +140,8 @@ class PlannedWorkDaysController extends AbstractController
        if ($pos === false) {
            $color = "text-indigo-700";
        }else {
-           $color = "text-slate-500";
+           $color = "text-green-500";
        }
-
-       dump($pos);
-
-       dump($color);
 
        $header =['Heures prévues', 'Heures réalisées'];
 
