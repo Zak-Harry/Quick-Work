@@ -36,33 +36,55 @@
   "updated_at" => "2022-03-11 15:21:11"
 ]
  #}
-  
+{{ dump(userEffectiveWork) }}
 
-  <div class="grid md:grid-cols-2 md:w-[40rem] lg:grid-cols-2 lg:w-[40rem] xl:grid-cols-4 xl:w-[60rem] p-4 gap-4 m-16">
-    {% if userEffectiveWork == false %}
-      <button id="startLog" class="bg-blue-500 shadow-lg rounded-md flex items-center p-3 border-b-4 border-blue-600  text-white font-medium animate-pulse w-50">
-        Début de journée
-      </button>
+<div class="grid md:grid-cols-2 md:w-[40rem] lg:grid-cols-2 lg:w-[40rem] xl:grid-cols-4 xl:w-[60rem] p-4 gap-4 m-16">
+
+  <div id="startLog">
+    {% if userEffectiveWork.startlog is not defined %}
+      <div class="buttonPointageAnimated">
+        Début de journée 
+      </div>
     {% else %}
-    <div class="bg-gradient-to-tl from-green-400 to-indigo-900 shadow-lg rounded-md flex items-center p-3 border-b-4 border-green-600  text-white font-medium w-50">
-        Début de journée
+    <div class="buttonPointageLocked">
+        Début de journée 
           {{ userEffectiveWork.startlog ? userEffectiveWork.startlog|date('H:i') : '' }}
     </div>
     {% endif %}
+  </div>
+ 
+  <div id="startLunch">  
+    {#Si debut de journée vide alors bouton grisé#}
+    {% if (userEffectiveWork.startlunch is not defined) and (userEffectiveWork.startlog is not defined) %}
+      <div class="buttonPointageDisabled">
+        Début de pause repas 
+      </div>
+    {#Sinon si pause repas vide et debut de journée déclaré alors bouton animé#}
+    {%  elseif (userEffectiveWork.startlunch is null) and (userEffectiveWork.startlog is not null) %}
+      <div class="buttonPointageAnimated">
+        Début de pause repas 
+      </div>
+    {#Sinon bouton vert avec heure de début de pause repas#}
+    {% else %}
+    <div class="buttonPointageLocked">
+        Début de pause repas 
+          {{ userEffectiveWork.startlunch ? userEffectiveWork.startlunch|date('H:i') : '' }}
+    </div>
+    {% endif %}
+  </div>
 
-
-    <button href="#" id="startLunch" class="bg-blue-500 shadow-lg rounded-md flex items-center p-3 border-b-4 border-blue-600  text-white font-medium animate-pulse w-50">
-        <p>Début de pause repas </p>
-    </button>
-
-    <a href="#" id="endLunch" class="bg-slate-300 shadow-lg rounded-md flex items-center  p-3 border-b-4 border-slate-400  text-white font-medium group w-50">
+  <div id="endLunch"> 
+    <a href="#" class="buttonPointageDisabled">
         <p>Fin de pause repas</p>
     </a>
+  </div>
 
-    <a href="#" id="endLog" class="bg-blue-500 shadow-lg rounded-md flex items-center p-3 border-b-4 border-blue-600  text-white font-medium group w-50">
+  <div id="endLog"> 
+    <a href="#" class="buttonPointageDisabled">
         <p>Fin de journée</p>
     </a>
   </div>
+</div>
 
   <!-- Zone d'espacement-->
   <div class="h-full bg-transparent">

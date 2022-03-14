@@ -18,6 +18,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class HomeController extends AbstractController
 {
+    
     /**
      * @Route("/", name="home")
      * @return Response
@@ -33,29 +34,7 @@ class HomeController extends AbstractController
         
         // Envoie de la date du jour en français
         setlocale (LC_TIME, 'fr_FR.utf8','fra'); 
-        $today = strftime("%A %d %B %Y"); 
-               
-        // Récupère le pointage du user connecté
-        $effectiveWorkUser = $effectiverepo->findBy([ 'user' => $user->getId() ]);
-        //dd($effectiveWorkUser);
-
-            /*
-            array:1 [▼
-            0 => App\Entity\EffectiveWorkDays {#187 ▼
-                -id: 211
-                -startlog: DateTime @1646924914 {#878 ▶}
-                -startlunch: null
-                -endlunch: null
-                -endlog: null
-                -hoursworked: null
-                -createdAt: null
-                -updatedAt: null
-            */
-            //($effectiveWorkUser[0]->getStartlog());
-
-        
-            // Stocke l'objet datetime au format Y-m-d
-        
+        $today = strftime("%A %d %B %Y");                   
         
         //! ON STOCKE LE JOUR MOI ANNEE
         $dateTimeToday = new DateTime('now', new DateTimeZone('Europe/Paris'));
@@ -137,6 +116,51 @@ class HomeController extends AbstractController
                     200
                 );
             }
+    }
+
+    /**
+     * Méthode pour ajout en BDD de l'évènement cliqué début de pause reoas
+     * 
+     * @Route("/log/startlunch" , name="startlunch", methods={"POST"})
+     * @return void
+     */
+    public function startLunch(Request $request, EntityManagerInterface $doctrine, EffectiveWorkDaysRepository $effectiverepo): Response
+    {
+        $user = $this->getUser();
+    
+        // Stocke la date et l'heure 
+        $shift = new DateTime('now', new DateTimeZone('Europe/Paris'));
+           
+        // Formate le datetime en année / mois / jour 
+        $dateTimeToday = $shift->format('Y-m-d');
+
+        // Récupère le pointage (si existant) du user connecté
+        $userEffectiveWork = $effectiverepo->findEffectiveWorkUser($user->getId() , $dateTimeToday);
+        
+        //! Si user n'a pas cliqué sur début de pause repas alors je l'enregistre en BDD
+        if ( $userEffectiveWork && $userEffectiveWork['startlunch'] === null)
+        {
+                $effectiveWorkModel = $effectiverepo->find($userEffectiveWork['id']);
+                $effectiveWorkModel->setStartlunch($shift);
+                $effectiveWorkModel->setUpdatedAt($shift);
+
+                $doctrine->persist($effectiveWorkModel->setUser($user));
+                $doctrine->flush();
+
+                return $this->json(
+                    json_encode($effectiveWorkModel),
+                    200
+                );
         }
+
+        //! Sinon si user a déjà un startLog je ne rentre rien en BDD
+        else {
+                return $this->json(
+                    json_encode('debut de pause repas deja fait'),
+                    200
+                );
+        }
+        
+    }
     
 }

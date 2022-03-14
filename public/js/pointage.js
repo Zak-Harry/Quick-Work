@@ -20,10 +20,9 @@ const app = {
     },
     
     // handle START Log
-    handleStartLog: function(evt) {
+    handleStartLog: function() {
 
         console.log('bouton cliqué - début journée');
-        const startLogElement = document.getElementById('startLog');
 
         const httpHeaders = new Headers();
         httpHeaders.append("Content-Type", "application/json");
@@ -40,8 +39,9 @@ const app = {
         .then(
             function(response) {
                
-                // Si HTTP status code à 200 => OK
-                if (response.status == 200) {        
+                // Si HTTP status code à 200 => OK avec reload de page
+                if (response.status == 200) {     
+                    location.reload();
                     return response;                    
                 }
                 else {
@@ -52,13 +52,9 @@ const app = {
     },
 
      // handle START LUNCH
-     handleStartLunch: function(evt) {
+     handleStartLunch: function() {
 
         console.log('bouton cliqué - début repas');
-
-        const d = new Date();
-        let hour = d.getUTCHours();
-        let minutes = d.getUTCMinutes();
 
         const httpHeaders = new Headers();
         httpHeaders.append("Content-Type", "application/json");
@@ -68,17 +64,16 @@ const app = {
             mode: 'cors',
             cache: 'no-cache',
             headers: httpHeaders,
-            body: 'startLunch'
+            body: ''
         };
 
         fetch(app.apiRootUrl + 'log/startlunch' , fetchOptions)
         .then(
             function(response) {
                
-                // Si HTTP status code à 200 => OK
-                if (response.status == 200) {        
-                    // On modifie le texte du <button> avec la date
-                    startLunchElement.textContent = hour + 'h' + minutes; 
+                // Si HTTP status code à 200 => OK avec reload de page
+                if (response.status == 200) {     
+                    location.reload();
                     return response;                    
                 }
                 else {
