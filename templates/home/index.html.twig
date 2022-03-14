@@ -73,10 +73,24 @@
     {% endif %}
   </div>
 
-  <div id="endLunch"> 
-    <a href="#" class="buttonPointageDisabled">
-        <p>Fin de pause repas</p>
-    </a>
+  <div id="endLunch">  
+    {#Si debut de journée vide alors bouton grisé#}
+    {% if (userEffectiveWork.startlunch is not defined) and (userEffectiveWork.endlunch is not defined) %}
+      <div class="buttonPointageDisabled">
+        Fin de pause repas 
+      </div>
+    {#Sinon si pause repas vide et debut de journée déclaré alors bouton animé#}
+    {%  elseif (userEffectiveWork.endlunch is null) and (userEffectiveWork.startlunch is not null) %}
+      <div class="buttonPointageAnimated">
+        Fin de pause repas 
+      </div>
+    {#Sinon bouton vert avec heure de début de pause repas#}
+    {% else %}
+    <div class="buttonPointageLocked">
+        Fin de pause repas 
+          {{ userEffectiveWork.endlunch ? userEffectiveWork.endlunch|date('H:i') : '' }}
+    </div>
+    {% endif %}
   </div>
 
   <div id="endLog"> 

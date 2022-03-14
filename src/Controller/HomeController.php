@@ -119,7 +119,7 @@ class HomeController extends AbstractController
     }
 
     /**
-     * Méthode pour ajout en BDD de l'évènement cliqué début de pause reoas
+     * Méthode pour ajout en BDD de l'évènement cliqué début de pause repas
      * 
      * @Route("/log/startlunch" , name="startlunch", methods={"POST"})
      * @return void
@@ -142,6 +142,51 @@ class HomeController extends AbstractController
         {
                 $effectiveWorkModel = $effectiverepo->find($userEffectiveWork['id']);
                 $effectiveWorkModel->setStartlunch($shift);
+                $effectiveWorkModel->setUpdatedAt($shift);
+
+                $doctrine->persist($effectiveWorkModel->setUser($user));
+                $doctrine->flush();
+
+                return $this->json(
+                    json_encode($effectiveWorkModel),
+                    200
+                );
+        }
+
+        //! Sinon si user a déjà un startLog je ne rentre rien en BDD
+        else {
+                return $this->json(
+                    json_encode('debut de pause repas deja fait'),
+                    200
+                );
+        }
+        
+    }
+
+    /**
+     * Méthode pour ajout en BDD de l'évènement cliqué fin de pause repas
+     * 
+     * @Route("/log/endlunch" , name="startlunch", methods={"POST"})
+     * @return void
+     */
+    public function endLunch(Request $request, EntityManagerInterface $doctrine, EffectiveWorkDaysRepository $effectiverepo): Response
+    {
+        $user = $this->getUser();
+    
+        // Stocke la date et l'heure 
+        $shift = new DateTime('now', new DateTimeZone('Europe/Paris'));
+           
+        // Formate le datetime en année / mois / jour 
+        $dateTimeToday = $shift->format('Y-m-d');
+
+        // Récupère le pointage (si existant) du user connecté
+        $userEffectiveWork = $effectiverepo->findEffectiveWorkUser($user->getId() , $dateTimeToday);
+        
+        //! Si user n'a pas cliqué sur fin de pause repas alors je l'enregistre en BDD
+        if ( $userEffectiveWork && $userEffectiveWork['endlunch'] === null)
+        {
+                $effectiveWorkModel = $effectiverepo->find($userEffectiveWork['id']);
+                $effectiveWorkModel->setEndlunch($shift);
                 $effectiveWorkModel->setUpdatedAt($shift);
 
                 $doctrine->persist($effectiveWorkModel->setUser($user));

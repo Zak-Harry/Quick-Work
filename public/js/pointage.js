@@ -84,13 +84,9 @@ const app = {
     },
 
      // handle END LUNCH
-     handleEndLunch: function(evt) {
+     handleEndLunch: function() {
 
         console.log('bouton cliqué - fin repas');
-
-        const d = new Date();
-        let hour = d.getUTCHours();
-        let minutes = d.getUTCMinutes();
 
         const httpHeaders = new Headers();
         httpHeaders.append("Content-Type", "application/json");
@@ -100,17 +96,16 @@ const app = {
             mode: 'cors',
             cache: 'no-cache',
             headers: httpHeaders,
-            body: 'endLunch'
+            body: ''
         };
 
         fetch(app.apiRootUrl + 'log/endlunch' , fetchOptions)
         .then(
             function(response) {
                
-                // Si HTTP status code à 200 => OK
-                if (response.status == 200) {        
-                    // On modifie le texte du <button> avec la date
-                    endLunchElement.textContent = hour + 'h' + minutes; 
+                // Si HTTP status code à 200 => OK avec reload de page
+                if (response.status == 200) {     
+                    location.reload();
                     return response;                    
                 }
                 else {
