@@ -48,9 +48,7 @@ class PlannedWorkDaysType extends AbstractType
                         'expanded' => true,
                     ]); 
                 }
-            })
-            
-            
+            })    
         ;
     }
 
