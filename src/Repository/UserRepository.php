@@ -23,11 +23,13 @@ class UserRepository extends ServiceEntityRepository
      * @param int $departement_id
      * @return float|int|mixed|string
      */
-    public function findByTeamDQL(int $departement_id)
+    public function findByTeamDQL(int $departement_id, int $userLogged_id)
     {
         return $this->createQueryBuilder('u')
             ->where('u.departement = ?1')
+            ->where('u.id != ?1')
             ->setParameter(1, $departement_id)
+            ->setParameter(1, $userLogged_id)
             ->getQuery()
             ->getResult();
     }
@@ -43,8 +45,59 @@ class UserRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    public function findByTeamSQL(int $departement_id, int $userLogged_id )
+    {
+        $conn = $this->getEntityManager()->getConnection();
 
+        // une requete qui renvoit un title / slug aléatoire
+        $sql = '
+        SELECT *
+        FROM `user`
+        WHERE `departement_id` = '.$departement_id. ' AND `id` =' .$userLogged_id;
+            
+        // exécution de la requete
+        $results = $conn->executeQuery($sql);
 
+        // returns an array of arrays (i.e. a raw data set)
+        return $results->fetchAllAssociative();
+    }
+
+    public function findByManagerDepartementSQL(int $departement_id, int $role_id)
+    {
+        $conn = $this->getEntityManager()->getConnection();
+
+        // une requete qui renvoit un title / slug aléatoire
+        $sql = '
+        SELECT *
+        FROM `user`
+        WHERE `departement_id` = '.$departement_id. ' AND `role_id` =' .$role_id;
+            
+        // exécution de la requete
+        $results = $conn->executeQuery($sql);
+
+        // returns an array of arrays (i.e. a raw data set)
+        return $results->fetchAllAssociative();
+    }
+
+    
+    public function findByManagerDepartementDQL(int $departement_id, int $role_id)
+    {
+        $entityManager = $this->getEntityManager();
+        // une requete qui renvoit un title / slug aléatoire
+        $query =$entityManager->createQuery(
+        ' SELECT u
+        FROM App\Entity\User u
+        WHERE u.departement = '.$departement_id. ' AND u.role =' .$role_id);
+            
+        // exécution de la requete
+        $results = $query->getResult();
+
+        // returns an array of arrays (i.e. a raw data set)
+        return $results;
+    }
+    
+    
+    
     // /**
     //  * @return User[] Returns an array of User objects
     //  */
