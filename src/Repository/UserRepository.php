@@ -27,9 +27,9 @@ class UserRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('u')
             ->where('u.departement = ?1')
-            ->where('u.id != ?1')
+            ->where('u.id != ?2')
             ->setParameter(1, $departement_id)
-            ->setParameter(1, $userLogged_id)
+            ->setParameter(2, $userLogged_id)
             ->getQuery()
             ->getResult();
     }
@@ -49,7 +49,6 @@ class UserRepository extends ServiceEntityRepository
     {
         $conn = $this->getEntityManager()->getConnection();
 
-        // une requete qui renvoit un title / slug aléatoire
         $sql = '
         SELECT *
         FROM `user`
@@ -66,7 +65,6 @@ class UserRepository extends ServiceEntityRepository
     {
         $conn = $this->getEntityManager()->getConnection();
 
-        // une requete qui renvoit un title / slug aléatoire
         $sql = '
         SELECT *
         FROM `user`
@@ -83,7 +81,6 @@ class UserRepository extends ServiceEntityRepository
     public function findByManagerDepartementDQL(int $departement_id, int $role_id)
     {
         $entityManager = $this->getEntityManager();
-        // une requete qui renvoit un title / slug aléatoire
         $query =$entityManager->createQuery(
         ' SELECT u
         FROM App\Entity\User u
