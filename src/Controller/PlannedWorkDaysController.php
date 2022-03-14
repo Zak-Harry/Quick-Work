@@ -137,12 +137,6 @@ class PlannedWorkDaysController extends AbstractController
        $gap = $b->diff($a)->format('%R%Hh%i');
        $pos = strpos($gap, '+');
 
-       if ($pos === false) {
-           $color = "text-indigo-700";
-       }else {
-           $color = "text-green-500";
-       }
-
        $header =['Heures prévues', 'Heures réalisées'];
 
        // Call to 'PLANNING_VIEW' from PlanningVoter
@@ -154,7 +148,7 @@ class PlannedWorkDaysController extends AbstractController
             'user' => $userLogged,
             'gap' => $gap,
             'header' => $header,
-            'color' => $color,
+            'pos' => $pos,
         ]);
     }
 

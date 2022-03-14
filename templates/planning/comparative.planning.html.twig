@@ -10,9 +10,14 @@
     <div class="w-[75rem]">
         <!-- Title (accueil) -->
         <div class="pl-10 sm:pl-24 py-14 pt-24">
-            <p class="text-4xl">Mon planning</p>   
-            <p class="text-2xl {{ color }}">{{gap}}</p>  
+            <p class="text-4xl">Mon planning</p>  
+            {% if pos is same as false %}
+           <p class="text-2xl text-amber-600">{{gap}}</p>
+            {% else %}
+           <p class="text-2xl text-green-600">{{gap}}</p>
+           {% endif %}   
         </div>
+        
         <!-- Start TABLE -->        
         <div class="mx-auto">  
             <div class="grid sm:grid-cols-1 xl:grid-cols-2"> 
