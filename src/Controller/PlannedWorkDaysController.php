@@ -147,20 +147,8 @@ class PlannedWorkDaysController extends AbstractController
 
        dump($color);
 
-     
-/* 
-       if ($pos === false) {
-        echo "La chaîne ne se trouve pas dans la chaîne '$gap'";
-    } else {
-        echo "La chaine a été trouvée dans la chaîne '$gap'";
-        echo " et débute à la position $pos";
-    } */
-
-        
-
        $header =['Heures prévues', 'Heures réalisées'];
 
-    
        // Call to 'PLANNING_VIEW' from PlanningVoter
        // A user must be logged in to be able to access this page
        // All User Roles can access this page

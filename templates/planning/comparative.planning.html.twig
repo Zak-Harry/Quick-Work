@@ -20,38 +20,38 @@
                 <table class="w-[22rem] sm:w-[30rem] sm:m-4 shadow-xl dark:bg-slate-900 ">
                     <thead>    
                         <tr class="bg-slate-500 dark:bg-opacity-20 text-center">
-                            <th colspan="2" class=" border-l border-r border-t p-4 pl-8 pr-8 text-slate-400 dark:text-slate-200">{{ header[i]}}</th>
+                            <th colspan="2" class=" bg-blue-800 border-l border-r border-t p-4 pl-8 pr-8 text-slate-400 dark:text-slate-200">{{ header[i]}}</th>
                         </tr>
                     </thead>  
                     <tbody >
                     
                         <tr class="hover:bg-grey-lighter">
-                        <td class="py-4 px-6 border-b border-grey-light">Début de journée</td>
-                        <td class="py-4 px-6 text-left border-b border-grey-light">
+                        <td class="py-4 px-6 border border-grey-light">Début de journée</td>
+                        <td class="py-4 px-6 text-center border border-grey-light ">
                             {{ user.plannedWorkDays[i].startshift ? user.plannedWorkDays[i].startshift|date('H:i') : '' }}
                         </td>
                         </tr>
                         <tr class="hover:bg-grey-lighter">
-                        <td class="py-4 px-6 border-b border-grey-light">Début de pause repas</td>
-                        <td class="py-4 px-6 text-left border-b border-grey-light">
+                        <td class="py-4 px-6 border border-grey-light">Début de pause repas</td>
+                        <td class="py-4 px-6 text-center border border-grey-light">
                             {{ user.plannedWorkDays[i].startlunch ? user.plannedWorkDays[i].startlunch|date('H:i') : '' }}
                         </td>
                         </tr>
                         <tr class="hover:bg-grey-lighter">
-                        <td class="py-4 px-6 border-b border-grey-light">Fin de pause repas</td>
-                        <td class="py-4 px-6 text-left border-b border-grey-light">
+                        <td class="py-4 px-6 border border-grey-light">Fin de pause repas</td>
+                        <td class="py-4 px-6 text-center border border-grey-light">
                             {{ user.plannedWorkDays[i].endlunch ? user.plannedWorkDays[i].endlunch|date('H:i') : '' }}
                         </td>
                         </tr>
                         <tr class="hover:bg-grey-lighter">
-                        <td class="py-4 px-6 border-b border-grey-light">Fin de journée</td>
-                        <td class="py-4 px-6 text-left border-b border-grey-light">
+                        <td class="py-4 px-6 border border-grey-light">Fin de journée</td>
+                        <td class="py-4 px-6 text-center border border-grey-light">
                             {{ user.plannedWorkDays[i].endshift ? user.plannedWorkDays[i].endshift|date('H:i') : '' }}
                         </td>
                         </tr>
                         <tr class="hover:bg-grey-lighter">
-                        <td class="py-4 px-6 border-b border-grey-light">Heures par jour</td>
-                        <td class="py-4 px-6 text-left border-b border-grey-light">
+                        <td class="py-4 px-6 border border-grey-light">Heures par jour</td>
+                        <td class="py-4 px-6 text-center border border-grey-light">
                             {{ user.plannedWorkDays[i].hoursplanned ? user.plannedWorkDays[i].hoursplanned|date('H:i') : '' }}
                         </td>
                         </tr>
