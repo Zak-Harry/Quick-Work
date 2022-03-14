@@ -27,9 +27,9 @@ class UserRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('u')
             ->where('u.departement = ?1')
-            ->where('u.id != ?2')
+            ->where('u.id != ?1')
             ->setParameter(1, $departement_id)
-            ->setParameter(2, $userLogged_id)
+            ->setParameter(1, $userLogged_id)
             ->getQuery()
             ->getResult();
     }
