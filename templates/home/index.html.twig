@@ -20,7 +20,6 @@
     <p>Nous sommes le {{ today }}.</p>
   </div>
 
-<<<<<<< HEAD
 <!-- Pointeuse -->
 {% if userPlannedThisDay == false %}
   <div class=" block w-2/3 text-center text-xl p-10 m-16 h-auto dark:bg-slate-900 rounded-lg border border-amber-500 ">
@@ -37,25 +36,6 @@
     <p>Vous ne pouvez pas déclarer votre journée en raison d'un manque de plannification ce jour.</p>
     <p>Veuillez vous rapprocher de votre responsable.</p>
     </div>
-=======
-  <!-- Pointeuse -->
-  <div class="grid md:grid-cols-2 md:w-[40rem] lg:grid-cols-2 lg:w-[40rem] xl:grid-cols-4 xl:w-[60rem] p-4 gap-4 m-16">
-    <a href="#" id="startShift" class="bg-gradient-to-tl from-green-400 to-indigo-900 shadow-lg rounded-md flex items-center p-3 border-b-4 border-green-600  text-white font-medium w-50">
-        <p>Début de journée</p>
-    </a>
-
-    <a href="#" id="startLunch" class="bg-blue-500 shadow-lg rounded-md flex items-center p-3 border-b-4 border-blue-600  text-white font-medium animate-pulse w-50">
-        <p>Début de pause repas</p>
-    </a>
-
-    <a href="#" id="endLunch" class="bg-slate-300 shadow-lg rounded-md flex items-center  p-3 border-b-4 border-slate-400  text-white font-medium group w-50">
-        <p>Fin de pause repas</p>
-    </a>
-
-    <a href="#" id="endShift" class="bg-blue-500 shadow-lg rounded-md flex items-center p-3 border-b-4 border-blue-600  text-white font-medium group w-50">
-        <p>Fin de journée</p>
-    </a>
->>>>>>> e294f9bc07fef81c00f98c21087c14e8dfcf5392
   </div>
 
 {% else %}
