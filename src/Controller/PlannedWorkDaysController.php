@@ -6,7 +6,6 @@ use App\Entity\Departement;
 use App\Entity\PlannedWorkDays;
 use App\Entity\User;
 use App\Form\PlannedWorkDaysType;
-use App\Form\NewPlannedWorkDaysType;
 use App\Repository\DepartementRepository;
 use App\Repository\PlannedWorkDaysRepository;
 use App\Repository\UserRepository;
@@ -85,10 +84,10 @@ class PlannedWorkDaysController extends AbstractController
     public function edit(Request $request, PlannedWorkDays $plannedWorkDay, EntityManagerInterface $entityManager): Response
     {
     
-        $form = $this->createForm(PlannedWorkDaysType::class, $plannedWorkDay);
-        $form->handleRequest($request);
+        $planningForm = $this->createForm(PlannedWorkDaysType::class, $plannedWorkDay);
+        $planningForm->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($planningForm->isSubmitted() && $planningForm->isValid()) {
             $entityManager->flush();
 
             return $this->redirectToRoute('planned_departement', [], Response::HTTP_SEE_OTHER);
@@ -96,7 +95,7 @@ class PlannedWorkDaysController extends AbstractController
 
         return $this->renderForm('planning/edit.html.twig', [
             'planned_work_day' => $plannedWorkDay,
-            'form' => $form,
+            'planning' => $planningForm,
         ]);
     }
 
@@ -106,10 +105,10 @@ class PlannedWorkDaysController extends AbstractController
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $plannedWorkDay = new PlannedWorkDays();
-        $form = $this->createForm(NewPlannedWorkDaysType::class, $plannedWorkDay);
-        $form->handleRequest($request);
+        $planningForm = $this->createForm(PlannedWorkDaysType::class, $plannedWorkDay);
+        $planningForm->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($planningForm->isSubmitted() && $planningForm->isValid()) {
             $entityManager->persist($plannedWorkDay);
             $entityManager->flush();
 
@@ -118,7 +117,7 @@ class PlannedWorkDaysController extends AbstractController
 
         return $this->renderForm('planning/new.html.twig', [
             'planned_work_day' => $plannedWorkDay,
-            'form' => $form,
+            'planning' => $planningForm,
         ]);
     }
 }
