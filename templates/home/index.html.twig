@@ -36,7 +36,6 @@
   "updated_at" => "2022-03-11 15:21:11"
 ]
  #}
-{{ dump(userEffectiveWork) }}
 
 <div class="grid md:grid-cols-2 md:w-[40rem] lg:grid-cols-2 lg:w-[40rem] xl:grid-cols-4 xl:w-[60rem] p-4 gap-4 m-16">
 
@@ -55,7 +54,10 @@
  
   <div id="startLunch">  
     {#Si debut de journée vide alors bouton grisé#}
-    {% if (userEffectiveWork.startlunch is not defined) and (userEffectiveWork.startlog is not defined) %}
+    {% if (
+      (userEffectiveWork.startlunch is not defined) and (userEffectiveWork.startlog is not defined) 
+      or (userEffectiveWork.startlunch is  null) and (userEffectiveWork.startlog is null)
+    ) %}
       <div class="buttonPointageDisabled">
         Début de pause repas 
       </div>
@@ -74,8 +76,11 @@
   </div>
 
   <div id="endLunch">  
-    {#Si debut de journée vide alors bouton grisé#}
-    {% if (userEffectiveWork.startlunch is not defined) and (userEffectiveWork.endlunch is not defined) %}
+    {#Si debut de repas vide alors bouton grisé#}    
+    {% if (
+      (userEffectiveWork.endlunch is not defined) and (userEffectiveWork.startlunch is not defined) 
+      or (userEffectiveWork.endlunch is  null) and (userEffectiveWork.startlunch is null)
+    ) %}
       <div class="buttonPointageDisabled">
         Fin de pause repas 
       </div>
@@ -84,7 +89,7 @@
       <div class="buttonPointageAnimated">
         Fin de pause repas 
       </div>
-    {#Sinon bouton vert avec heure de début de pause repas#}
+    {#Sinon bouton vert avec heure de fin de pause repas#}
     {% else %}
     <div class="buttonPointageLocked">
         Fin de pause repas 
@@ -93,11 +98,29 @@
     {% endif %}
   </div>
 
-  <div id="endLog"> 
-    <a href="#" class="buttonPointageDisabled">
-        <p>Fin de journée</p>
-    </a>
+  <div id="endLog">  
+    {#Si fin de repas vide alors bouton grisé#}
+    {% if (
+      (userEffectiveWork.endlunch is not defined) and (userEffectiveWork.endlog is not defined) 
+      or (userEffectiveWork.endlunch is  null) and (userEffectiveWork.endlog is null)
+    ) %}
+      <div class="buttonPointageDisabled">
+        Fin de journée 
+      </div>
+    {#Sinon si fin journée vide et fin de repas déclaré alors bouton animé#}
+    {%  elseif (userEffectiveWork.endlog is null) and (userEffectiveWork.endlunch is not null) %}
+      <div class="buttonPointageAnimated">
+        Fin de journée 
+      </div>
+    {#Sinon bouton vert avec heure de fin de journée#}
+    {% else %}
+    <div class="buttonPointageLocked">
+        Fin de journée 
+          {{ userEffectiveWork.endlog ? userEffectiveWork.endlog|date('H:i') : '' }}
+    </div>
+    {% endif %}
   </div>
+
 </div>
 
   <!-- Zone d'espacement-->
