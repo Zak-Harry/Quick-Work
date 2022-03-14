@@ -5,8 +5,8 @@ const app = {
      */
     init: function() {
         console.log("init");
-        const startShiftElement = document.getElementById('startShift');
-        startShiftElement.addEventListener('click', app.handleStartShift);
+        const startLogElement = document.getElementById('startLog');
+        startLogElement.addEventListener('click', app.handleStartLog);
 
         const startLunchElement = document.getElementById('startLunch');
         startLunchElement.addEventListener('click', app.handleStartLunch);
@@ -14,19 +14,16 @@ const app = {
         const endLunchElement = document.getElementById('endLunch');
         endLunchElement.addEventListener('click', app.handleEndLunch);
 
-        const endShiftElement = document.getElementById('endShift');
-        endShiftElement.addEventListener('click', app.handleEndShift);
+        const endLogElement = document.getElementById('endLog');
+        endLogElement.addEventListener('click', app.handleEndLog);
         
     },
     
-    // handle START SHIFT
-    handleStartShift: function(evt) {
+    // handle START Log
+    handleStartLog: function(evt) {
 
         console.log('bouton cliqué - début journée');
-
-        const d = new Date();
-        let hour = d.getUTCHours();
-        let minutes = d.getUTCMinutes();
+        const startLogElement = document.getElementById('startLog');
 
         const httpHeaders = new Headers();
         httpHeaders.append("Content-Type", "application/json");
@@ -36,17 +33,15 @@ const app = {
             mode: 'cors',
             cache: 'no-cache',
             headers: httpHeaders,
-            body: 'startShift'
+            body: ''
         };
 
-        fetch(app.apiRootUrl + 'log/startshift' , fetchOptions)
+        fetch(app.apiRootUrl + 'log/startlog' , fetchOptions)
         .then(
             function(response) {
                
                 // Si HTTP status code à 200 => OK
                 if (response.status == 200) {        
-                    // On modifie le texte du <button> avec la date
-                    startShiftElement.textContent = hour + 'h' + minutes; 
                     return response;                    
                 }
                 else {
@@ -130,8 +125,8 @@ const app = {
         )
     },
 
-     // handle END SHIFT
-     handleEndShift: function(evt) {
+     // handle END Log
+     handleEndLog: function(evt) {
 
         console.log('bouton cliqué - fin journée');
 
@@ -147,17 +142,17 @@ const app = {
             mode: 'cors',
             cache: 'no-cache',
             headers: httpHeaders,
-            body: 'endShift'
+            body: 'endLog'
         };
 
-        fetch(app.apiRootUrl + 'log/endshift' , fetchOptions)
+        fetch(app.apiRootUrl + 'log/endLog' , fetchOptions)
         .then(
             function(response) {
                
                 // Si HTTP status code à 200 => OK
                 if (response.status == 200) {        
                     // On modifie le texte du <button> avec la date
-                    endShiftElement.textContent = hour + 'h' + minutes; 
+                    endLogElement.textContent = hour + 'h' + minutes; 
                     return response;                    
                 }
                 else {

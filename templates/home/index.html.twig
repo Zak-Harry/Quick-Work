@@ -21,20 +21,45 @@
   </div>
 
   <!-- Pointeuse -->
-  <div class="grid md:grid-cols-2 md:w-[40rem] lg:grid-cols-2 lg:w-[40rem] xl:grid-cols-4 xl:w-[60rem] p-4 gap-4 m-16">
-    <a href="#" id="startShift" class="bg-gradient-to-tl from-green-400 to-indigo-900 shadow-lg rounded-md flex items-center p-3 border-b-4 border-green-600  text-white font-medium w-50">
-        <p>Début de journée</p>
-    </a>
+ 
+ {#
+ {{ dump(userEffectiveWork) }}
+ array:9 [▼
+  "id" => "1"
+  "user_id" => "2"
+  "startlog" => "2022-03-11 15:21:11"
+  "startlunch" => "2022-03-11 15:21:11"
+  "endlunch" => "2022-03-11 15:21:11"
+  "endlog" => "2022-03-11 15:21:11"
+  "hoursworked" => null
+  "created_at" => "2022-03-11 15:21:11"
+  "updated_at" => "2022-03-11 15:21:11"
+]
+ #}
+  
 
-    <a href="#" id="startLunch" class="bg-blue-500 shadow-lg rounded-md flex items-center p-3 border-b-4 border-blue-600  text-white font-medium animate-pulse w-50">
-        <p>Début de pause repas</p>
-    </a>
+  <div class="grid md:grid-cols-2 md:w-[40rem] lg:grid-cols-2 lg:w-[40rem] xl:grid-cols-4 xl:w-[60rem] p-4 gap-4 m-16">
+    {% if userEffectiveWork == false %}
+      <button id="startLog" class="bg-blue-500 shadow-lg rounded-md flex items-center p-3 border-b-4 border-blue-600  text-white font-medium animate-pulse w-50">
+        Début de journée
+      </button>
+    {% else %}
+    <div class="bg-gradient-to-tl from-green-400 to-indigo-900 shadow-lg rounded-md flex items-center p-3 border-b-4 border-green-600  text-white font-medium w-50">
+        Début de journée
+          {{ userEffectiveWork.startlog ? userEffectiveWork.startlog|date('H:i') : '' }}
+    </div>
+    {% endif %}
+
+
+    <button href="#" id="startLunch" class="bg-blue-500 shadow-lg rounded-md flex items-center p-3 border-b-4 border-blue-600  text-white font-medium animate-pulse w-50">
+        <p>Début de pause repas </p>
+    </button>
 
     <a href="#" id="endLunch" class="bg-slate-300 shadow-lg rounded-md flex items-center  p-3 border-b-4 border-slate-400  text-white font-medium group w-50">
         <p>Fin de pause repas</p>
     </a>
 
-    <a href="#" id="endShift" class="bg-blue-500 shadow-lg rounded-md flex items-center p-3 border-b-4 border-blue-600  text-white font-medium group w-50">
+    <a href="#" id="endLog" class="bg-blue-500 shadow-lg rounded-md flex items-center p-3 border-b-4 border-blue-600  text-white font-medium group w-50">
         <p>Fin de journée</p>
     </a>
   </div>
@@ -60,4 +85,5 @@
   </div>
 
 </div>
+
 {% endblock %}
