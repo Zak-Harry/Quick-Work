@@ -17,8 +17,24 @@
         <div class="pl-10">
             <a href="{{ path('comparative_planned')}}" class="block max-w-fit text-white bg-blue-600 font-semibold rounded-lg hover:bg-blue-900 hover:text-white focus:outline-none p-3 mt-5 focus:bg-gradient-to-tl from-green-400 via-sky-600 to-indigo-900 focus:text-white">Comparaison planning</a>
         </div>
+        
         {% else %}
-            <p class="text-4xl">Vous n'avez pas encore de planning, veuillez vous rapprochez de votre <a class="max-w-fit text-blue-600 font-semibold hover:text-white " href="{{ path('profil_id', {'id' : dptManager['id']}) }}">responsable</a></p>
+
+        <div class=" block w-2/3 text-center text-xl p-10 m-16 h-auto dark:bg-slate-900 rounded-lg border border-amber-500 ">
+
+        <div class="flex absolute h-10 w-10 m-2">
+            <span class="animate-ping absolute inline-flex h-full w-full rounded-full ">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                </svg>
+            </span>
+            <span class="relative inline-flex rounded-full h-4 w-4 "></span>
+        </div>
+            <div class="m-2">
+                <p>Vous ne pouvez pas déclarer votre journée en raison d'un manque de plannification ce jour.</p>
+                <p>Veuillez vous rapprocher de votre <a class="max-w-fit text-blue-600 font-semibold hover:text-white " href="{{ path('profil_id', {'id' : dptManager['id']}) }}">responsable</a></p>
+        </div>
+        </div>
         {% endif %}
 
         </div>
