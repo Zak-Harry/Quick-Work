@@ -27,7 +27,7 @@
 }
 
 .buttonPointageDisabled {
-    @apply bg-slate-300 shadow-lg rounded-md flex items-center  p-3 border-b-4 border-slate-400  text-white font-medium
+    @apply bg-slate-400 shadow-lg rounded-md flex items-center  p-3 border-b-4 border-slate-500  text-white font-medium
 }
 
 /* Components for templates/documentation/index.html.twig */
