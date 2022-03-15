@@ -20,22 +20,22 @@ class Payslip
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $link;
+    private ?string $link;
 
     /**
      * @ORM\Column(type="datetime")
      */
-    private $createdAt;
+    private ?\DateTimeInterface $createdAt;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
-    private $updatedAt;
+    private ?\DateTimeInterface $updatedAt;
 
     /**
-     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="payslips")
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="payslips", cascade={"persist"})
      */
-    private $user;
+    private ?User $user;
 
     public function getId(): ?int
     {

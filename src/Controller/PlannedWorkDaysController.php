@@ -38,7 +38,7 @@ class PlannedWorkDaysController extends AbstractController
         $thw = $hpw->hoursPerWeek($userLogged);
 
         $dptManager = $users->findByManagerDepartementSQL($userLogged->getDepartement()->getId(),3);
-        dump($dptManager[0]);
+        // dump($dptManager);
             
         // Call to 'PLANNING_VIEW' from PlanningVoter
         // A user must be logged in to be able to access this page

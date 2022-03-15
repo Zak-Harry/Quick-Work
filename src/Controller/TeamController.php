@@ -25,10 +25,11 @@ class TeamController extends AbstractController
        $this->denyAccessUnlessGranted('PLANNING_VIEWTEAM', $userLogged);
         
         $departementId = $userLogged->getDepartement()->getId();
+
         $dpt = $departement->find($departementId);
         //requête DQL pour afficher les membres de l'equipe sans le manager connecté 
-        $departementUser = $user->findByTeamDQL($departementId,$userLogged->getId());
-        
+        $departementUser = $user->findByTeamDQL($departementId, $userLogged->getid());
+
         return $this->render('team/index.html.twig', [
             'dpt' => $dpt,
             'dptUser' => $departementUser,

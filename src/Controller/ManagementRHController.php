@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Form\SearchProfilType;
 use App\Repository\DepartementRepository;
 use App\Repository\RoleRepository;
 use App\Repository\UserRepository;
