@@ -37,7 +37,7 @@ Class HoursPerWeek
      * @param [type] $duration
      * @return void
      */
-    private function hoursToSeconds($duration){
+    public function hoursToSeconds($duration){
         $array_duration=explode(":",$duration);
         $seconds=3600*$array_duration[0]+60*$array_duration[1];
         return $seconds;
@@ -49,7 +49,7 @@ Class HoursPerWeek
      * @param [type] $seconds
      * @return void
      */
-    private function totalHours($seconds){
+    public function totalHours($seconds){
         $s=$seconds % 60; //reste de la division en minutes => secondes
         $m1=($seconds-$s) / 60; //minutes totales
         $m=$m1 % 60;//reste de la division en heures => minutes

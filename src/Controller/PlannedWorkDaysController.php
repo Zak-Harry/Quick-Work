@@ -7,6 +7,7 @@ use App\Entity\PlannedWorkDays;
 use App\Entity\User;
 use App\Form\PlannedWorkDaysType;
 use App\Repository\DepartementRepository;
+use App\Repository\EffectiveWorkDaysRepository;
 use App\Repository\PlannedWorkDaysRepository;
 use App\Repository\UserRepository;
 use App\Service\HoursPerWeek;
@@ -32,6 +33,11 @@ class PlannedWorkDaysController extends AbstractController
     {
         // on recupère l'utilisateur connecté
         $userLogged = $this->getUser();
+
+        // Call to 'PLANNING_VIEWTEAM' from PlanningVoter
+        // A user must be logged in to be able to access this page
+        // Only Managers and RH Roles can access this page
+        $this->denyAccessUnlessGranted('PLANNING_VIEWTEAM', $userLogged);
         
         // la méthode hoursperWeek sert à calculer les heures d'une semaine
         // on la retrouve dans le service User
@@ -87,6 +93,15 @@ class PlannedWorkDaysController extends AbstractController
     public function edit(Request $request, PlannedWorkDays $plannedWorkDay, EntityManagerInterface $entityManager): Response
     {
     
+        // on recupère l'utilisateur connecté
+        $userLogged = $this->getUser();
+
+        // Call to 'PLANNING_VIEWTEAM' from PlanningVoter
+        // A user must be logged in to be able to access this page
+        // Only Managers and RH Roles can access this page
+        $this->denyAccessUnlessGranted('PLANNING_VIEWTEAM', $userLogged);
+        
+ 
         $planningForm = $this->createForm(PlannedWorkDaysType::class, $plannedWorkDay);
         $planningForm->handleRequest($request);
 
@@ -107,6 +122,16 @@ class PlannedWorkDaysController extends AbstractController
      */
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
+        
+        // on recupère l'utilisateur connecté
+        $userLogged = $this->getUser();
+
+        // Call to 'PLANNING_VIEWTEAM' from PlanningVoter
+        // A user must be logged in to be able to access this page
+        // Only Managers and RH Roles can access this page
+        $this->denyAccessUnlessGranted('PLANNING_VIEWTEAM', $userLogged);
+        
+    
         $plannedWorkDay = new PlannedWorkDays();
         $planningForm = $this->createForm(PlannedWorkDaysType::class, $plannedWorkDay);
         $planningForm->handleRequest($request);
@@ -123,4 +148,48 @@ class PlannedWorkDaysController extends AbstractController
             'planning' => $planningForm,
         ]);
     }
+
+    /**
+     * @Route("/comparatif", name="comparative_planned", methods={"GET"})
+     */
+    public function Comparative(PlannedWorkDaysRepository $plannedRepo, EffectiveWorkDaysRepository $effectiveRepo): Response
+    {
+        // on recupère l'utilisateur connecté
+        $userLogged = $this->getUser();
+
+        // Call to 'PLANNING_VIEWTEAM' from PlanningVoter
+        // A user must be logged in to be able to access this page
+        // Only Managers and RH Roles can access this page
+        $this->denyAccessUnlessGranted('PLANNING_VIEWTEAM', $userLogged);
+
+        // ON STOCKE LE JOUR MOI ANNEE
+        $dateTimeToday = new DateTime('now', new DateTimeZone('Europe/Paris'));
+        $dateTimeToday = $dateTimeToday->format('Y-m-d');
+
+       
+        // ON RECUPERE LE PLANNING DU USER AVEC LA DATE RECHERCHEE
+        //si pas de planning trouvé retourne FALSE
+        $userPlanned = $plannedRepo->findOneUserPlanning($userLogged->getId() , $dateTimeToday);
+        $userEffective = $effectiveRepo->findEffectiveWorkUser($userLogged->getId() , $dateTimeToday);
+
+        if ($userEffective !== false) {
+            $hoursPlanned = new DateTime($userPlanned['hoursplanned']);
+            $hoursWorked = new DateTime($userEffective['hoursworked']);
+
+            $gap = $hoursPlanned->diff($hoursWorked)->format('%R%Hh%i');
+            $pos = strpos($gap, '+');
+        } else {
+            $gap ='';
+            $pos='';
+        }
+
+        return $this->render('planning/comparative.planning.html.twig', [
+            'user' => $userLogged,
+            'gap' => $gap,
+            'pos' => $pos,
+            'plannedWorkDay' => $userPlanned,
+            'effectiveWorkDay' => $userEffective,
+        ]);
+    }
+
 }
