@@ -9,5 +9,6 @@ module.exports = {
   variants: {
     fill: ['hover', 'focus'],
   },
+  darkMode: 'class',
   plugins: [require('@tailwindcss/forms')],
 }
