@@ -33,6 +33,11 @@ class PlannedWorkDaysController extends AbstractController
     {
         // on recupère l'utilisateur connecté
         $userLogged = $this->getUser();
+
+        // Call to 'PLANNING_VIEWTEAM' from PlanningVoter
+        // A user must be logged in to be able to access this page
+        // Only Managers and RH Roles can access this page
+        $this->denyAccessUnlessGranted('PLANNING_VIEWTEAM', $userLogged);
         
         // la méthode hoursperWeek sert à calculer les heures d'une semaine
         // on la retrouve dans le service User
