@@ -18,7 +18,7 @@ Class HoursPerWeek
         foreach($user->getPlannedWorkDays() as $user) {
             $workHours[] =$user->getHoursplanned();
         }
-        //dump($workHours);
+        
         for($i = 0; $i<count($workHours); $i++) {
             $arraySecond[] = $this->hoursToSeconds($workHours[$i]->format('H:i'));
             $totalHoursWeek = $this->totalHours(array_sum($arraySecond));

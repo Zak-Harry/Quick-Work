@@ -36,7 +36,6 @@ class PlannedWorkDaysType extends AbstractType
             {
                 $form = $formEvents->getForm();
                 $user = $formEvents->getData();
-                dump($user);
 
                 if($user->getId() == null)
                 {
