@@ -25,7 +25,8 @@
         <!-- cards manager-->
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 ml-10 max-w-max">
 
-            {% for user in dptUser %} 
+            {% for user in dptUser %}
+
             <div class="max-w-max dark:bg-slate-900 dark:text-white rounded-lg flex flex-col justify-center items-center px-10 py-5">
                 <div class="mb-8">
                     <img class="object-center object-cover rounded-full h-36 w-36" src="{{ user.picture }}" alt="photo">
@@ -53,7 +54,7 @@
                     </a>
                 </div>
             </div>
-             {% endfor %} 
+             {% endfor %}
 
         <!-- fin cards manager-->
         </div>

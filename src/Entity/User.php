@@ -113,7 +113,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @ORM\ManyToOne(targetEntity=Job::class, inversedBy="users")
      */
-    private ?Job $job  = NULL;
+    private ?Job $job;
     /**
      * @ORM\OneToMany(targetEntity=Payslip::class, mappedBy="user")
      */
@@ -125,7 +125,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @ORM\ManyToOne(targetEntity=Departement::class, inversedBy="users")
      */
-    private ?Departement $departement = null;
+    private ?Departement $departement;
 
     /**
      * @ORM\ManyToMany(targetEntity=PlannedWorkDays::class, inversedBy="users")

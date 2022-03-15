@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\DBAL\Exception;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -21,15 +22,16 @@ class UserRepository extends ServiceEntityRepository
 
     /**
      * @param int $departement_id
+     * @param int $userLogged_id
      * @return float|int|mixed|string
      */
     public function findByTeamDQL(int $departement_id, int $userLogged_id)
     {
         return $this->createQueryBuilder('u')
-            ->where('u.departement = ?1')
-            ->where('u.id != ?1')
-            ->setParameter(1, $departement_id)
-            ->setParameter(1, $userLogged_id)
+            ->where('u.departement = :dpt')
+            ->andWhere('u.id != :id')
+            ->setParameter('dpt', $departement_id)
+            ->setParameter('id', $userLogged_id)
             ->getQuery()
             ->getResult();
     }
@@ -45,14 +47,14 @@ class UserRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function findByTeamSQL(int $departement_id, int $userLogged_id )
+    public function findByTeamSQL(int $departement_id, int $userLogged_id ): array
     {
         $conn = $this->getEntityManager()->getConnection();
 
         $sql = '
         SELECT *
         FROM `user`
-        WHERE `departement_id` = '.$departement_id. ' AND `id` =' .$userLogged_id;
+        WHERE `departement_id` = '.$departement_id. ' AND `id` !=' .$userLogged_id;
             
         // exécution de la requete
         $results = $conn->executeQuery($sql);
@@ -61,7 +63,10 @@ class UserRepository extends ServiceEntityRepository
         return $results->fetchAllAssociative();
     }
 
-    public function findByManagerDepartementSQL(int $departement_id, int $role_id)
+    /**
+     * @throws Exception
+     */
+    public function findByManagerDepartementSQL(int $departement_id, int $role_id): array
     {
         $conn = $this->getEntityManager()->getConnection();
 
@@ -87,14 +92,11 @@ class UserRepository extends ServiceEntityRepository
         WHERE u.departement = '.$departement_id. ' AND u.role =' .$role_id);
             
         // exécution de la requete
-        $results = $query->getResult();
-
         // returns an array of arrays (i.e. a raw data set)
-        return $results;
+        return $query->getResult();
     }
     
-    
-    
+
     // /**
     //  * @return User[] Returns an array of User objects
     //  */
