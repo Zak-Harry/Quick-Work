@@ -173,7 +173,7 @@ class PlannedWorkDaysController extends AbstractController
             $hoursPlanned = new DateTime($userPlanned['hoursplanned']);
             $hoursWorked = new DateTime($userEffective['hoursworked']);
 
-            $gap = $hoursPlanned->diff($hoursWorked)->format('%R%Hh%i');
+            $gap = $hoursPlanned->diff($hoursWorked)->format('%R%Hh%I');
             $pos = strpos($gap, '+');
         } else {
             $gap ='';
