@@ -152,5 +152,4 @@ class PlannedWorkDaysController extends AbstractController
         ]);
     }
 
-
 }
