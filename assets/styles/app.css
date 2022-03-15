@@ -29,3 +29,21 @@
 .buttonPointageDisabled {
     @apply bg-slate-300 shadow-lg rounded-md flex items-center  p-3 border-b-4 border-slate-400  text-white font-medium
 }
+
+/* Components for templates/documentation/index.html.twig */
+
+.buttonSectionDocumentation {
+    @apply cursor-pointer sm:w-[40rem] w-[24rem] mb-6
+}
+
+.divListDocumentations {
+    @apply flex flex-col pl-10 pb-5
+}
+
+.divListDocumentationsHidden {
+    @apply hidden
+}
+
+.linkDocumentations {
+    @apply bg-slate-300 m-2 p-4 rounded-md max-w-max hover:ring-2 transform transition hover:-translate-y-2 dark:text-white dark:bg-slate-900 ml-8
+}
