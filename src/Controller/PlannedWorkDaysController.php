@@ -37,7 +37,7 @@ class PlannedWorkDaysController extends AbstractController
         // Call to 'PLANNING_VIEWTEAM' from PlanningVoter
         // A user must be logged in to be able to access this page
         // Only Managers and RH Roles can access this page
-        $this->denyAccessUnlessGranted('PLANNING_VIEWTEAM', $userLogged);
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         
         // la méthode hoursperWeek sert à calculer les heures d'une semaine
         // on la retrouve dans le service User
@@ -50,11 +50,6 @@ class PlannedWorkDaysController extends AbstractController
         } else {
             $manager = '';
         }
-
-        // Call to 'PLANNING_VIEW' from PlanningVoter
-        // A user must be logged in to be able to access this page
-        // All User Roles can access this page
-        $this->denyAccessUnlessGranted('PLANNING_VIEW', $userLogged);
 
         return $this->render('planning/user.planning.html.twig', [
             'user' => $userLogged,
@@ -162,7 +157,7 @@ class PlannedWorkDaysController extends AbstractController
         // Call to 'PLANNING_VIEWTEAM' from PlanningVoter
         // A user must be logged in to be able to access this page
         // Only Managers and RH Roles can access this page
-        $this->denyAccessUnlessGranted('PLANNING_VIEWTEAM', $userLogged);
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
         // ON STOCKE LE JOUR MOI ANNEE
         $dateTimeToday = new DateTime('now', new DateTimeZone('Europe/Paris'));
