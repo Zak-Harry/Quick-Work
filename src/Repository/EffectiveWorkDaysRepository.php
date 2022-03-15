@@ -47,4 +47,28 @@ class EffectiveWorkDaysRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    /**
+     * Méthode permettant de trouver un user avec une date spécifique 
+     *
+     * @param integer $value
+     * @param string $date
+     * @return void
+     */
+    public function findEffectiveWorkUser (int $value, string $date){
+
+        $conn = $this->getEntityManager()->getConnection();
+
+        // on utilise le système d'alias pour représenter notre Entity
+        // Dnas le select on dit que l'on veut TOUTE l'entité en utilisant l'alias
+        $sql = "SELECT * 
+            FROM effective_work_days 
+            WHERE user_id=".$value." AND effective_work_days.startlog  
+            LIKE '".$date."%';";
+
+        $results = $conn->executeQuery($sql);
+
+        // returns an array (i.e. a raw data set)
+        return $results->fetchAssociative();
+    }
 }

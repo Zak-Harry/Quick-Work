@@ -5,25 +5,45 @@
 {% block page_contents %}
 
 <!-- Partie centrale -->
-<div class="fixed flex flex-col h-full ml-14 mb-10 md:ml-64 bg-slate-100 dark:bg-slate-800 dark:text-white w-full pl-24 py-14 pt-24">
+<div class="fixed flex flex-col h-full ml-14 mb-10 md:ml-64 bg-slate-100 dark:bg-slate-800 dark:text-white w-full pl-24 py-14 pt-24 pr-14">
 
-
-    <p class="text-4xl py-2 ">Mes Documents</p>
+     
+  <p class="text-4xl py-2 ">Mes Documents</p>
+  
     
-    <p class="text-2xl py-2 ">Fiches de paie</p>
+   <div class= "flex flex-row items-center">
+     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="LimeGreen">
+  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.736 6.979C9.208 6.193 9.696 6 10 6c.304 0 .792.193 1.264.979a1 1 0 001.715-1.029C12.279 4.784 11.232 4 10 4s-2.279.784-2.979 1.95c-.285.475-.507 1-.67 1.55H6a1 1 0 000 2h.013a9.358 9.358 0 000 1H6a1 1 0 100 2h.351c.163.55.385 1.075.67 1.55C7.721 15.216 8.768 16 10 16s2.279-.784 2.979-1.95a1 1 0 10-1.715-1.029c-.472.786-.96.979-1.264.979-.304 0-.792-.193-1.264-.979a4.265 4.265 0 01-.264-.521H10a1 1 0 100-2H8.017a7.36 7.36 0 010-1H10a1 1 0 100-2H8.472c.08-.185.167-.36.264-.521z" clip-rule="evenodd" />
+</svg>
+
+      <p class="text-2xl py-2  ">Fiches de paie</p>
+
+  </div>
+
      {% for payslip in user.payslips %}
      <a href="{{ payslip.link }}" download> Fiche de Paie {{payslip.createdAt|format_datetime('short', 'none', locale='fr')}}</a>
     {% endfor %}
 
-    
+   <div class= "flex flex-row items-center">
+     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="LimeGreen">
+     <path fill-rule="evenodd" d="M6 2a2 2 0 00-2 2v12a2 2 0 002 2h8a2 2 0 002-2V7.414A2 2 0 0015.414 6L12 2.586A2 2 0 0010.586 2H6zm2 10a1 1 0 10-2 0v3a1 1 0 102 0v-3zm2-3a1 1 0 011 1v5a1 1 0 11-2 0v-5a1 1 0 011-1zm4-1a1 1 0 10-2 0v7a1 1 0 102 0V8z" clip-rule="evenodd" />
+    </svg>
       <p class="text-2xl py-2">Documentation de l'entreprise</p>
+      </div>
+     
       {% for documentation in user.documentations %}
      <a href="{{ documentation.link }}" download> Document Interne {{documentation.createdAt|format_datetime('short', 'none', locale='fr')}}</a>
         {% endfor %}
 
      
+      
+      
+      <div class= "flex flex-row items-center">
+     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="LimeGreen">
+  <path d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838L7.667 9.088l1.94.831a1 1 0 00.787 0l7-3a1 1 0 000-1.838l-7-3zM3.31 9.397L5 10.12v4.102a8.969 8.969 0 00-1.05-.174 1 1 0 01-.89-.89 11.115 11.115 0 01.25-3.762zM9.3 16.573A9.026 9.026 0 007 14.935v-3.957l1.818.78a3 3 0 002.364 0l5.508-2.361a11.026 11.026 0 01.25 3.762 1 1 0 01-.89.89 8.968 8.968 0 00-5.35 2.524 1 1 0 01-1.4 0zM6 18a1 1 0 001-1v-2.065a8.935 8.935 0 00-2-.712V17a1 1 0 001 1z" />
+</svg>
       <p class="text-2xl py-2">Réglement Intérieur</p>
-     
+     </div>
      
       <div class= "flex flex-row items-center">
       <a href="{{asset ('r__glement_int__rieur_quickwork.pdf')}}">Réglement Intérieur 2022</a>
@@ -47,8 +67,15 @@
     </div>
 
  
-     
+      <div class= "flex flex-row items-center">
+     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="LimeGreen">
+  <path fill-rule="evenodd" d="M6 6V5a3 3 0 013-3h2a3 3 0 013 3v1h2a2 2 0 012 2v3.57A22.952 22.952 0 0110 13a22.95 22.95 0 01-8-1.43V8a2 2 0 012-2h2zm2-1a1 1 0 011-1h2a1 1 0 011 1v1H8V5zm1 5a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1z" clip-rule="evenodd" />
+  <path d="M2 13.692V16a2 2 0 002 2h12a2 2 0 002-2v-2.308A24.974 24.974 0 0110 15c-2.796 0-5.487-.46-8-1.308z" />
+</svg>
     <p class="text-2xl py-2">Contrat</p>
+       </div>
+      
+      
       {% for contrat in user.contracts %}
      <a href="{{ contrat.link }}" download> Contrat {{contrat.createdAt|format_datetime('short', 'none', locale='fr')}}</a>
         {% endfor %}

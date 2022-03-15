@@ -47,4 +47,30 @@ class PlannedWorkDaysRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    /**
+     * Méthode qui permet de retrouver un user ainsi qu'un jour spécifique
+     *
+     * @param integer $value
+     * @param string $date
+     * @return void
+     */
+    public function findOneUserPlanning (int $value, string $date){
+
+        $conn = $this->getEntityManager()->getConnection();
+
+        // on utilise le système d'alias pour représenter notre Entity
+        // Dnas le select on dit que l'on veut TOUTE l'entité en utilisant l'alias
+        $sql = "SELECT * 
+            FROM user_planned_work_days 
+            JOIN planned_work_days 
+            ON planned_work_days.id = user_planned_work_days.planned_work_days_id 
+            WHERE user_id ='.$value.' AND planned_work_days.startshift 
+            LIKE '".$date."%';";
+
+        $results = $conn->executeQuery($sql);
+
+        // returns an array (i.e. a raw data set)
+        return $results->fetchAssociative();
+    }
 }
