@@ -50,9 +50,19 @@ class ManagementRHController extends AbstractController
         {
             $user = $userRepository->findOneBy(array("firstname" => $lastname, "lastname" => $firstname));
         }
-        return $this->redirectToRoute('profil_id', [
-            'id' => $user->getId()
-        ]);
+
+        if(is_null($user))
+        {
+            $this->addFlash(
+                'no_user', "Pas d'employé trouvé"
+            );
+            return $this->redirectToRoute('managementrh');
+        } else {
+            return $this->redirectToRoute('profil_id', [
+                'id' => $user->getId()
+            ]);
+        }
+
 
     }
 }
