@@ -3,5 +3,47 @@
 {% block title %}QuickWork - Événements{% endblock %}
 
 {% block page_contents %}
+	<div class="fixed flex flex-col h-full w-full ml-14 mb-10 md:ml-64 bg-slate-100 dark:bg-slate-800 dark:text-white overflow-auto">
+
+		<!-- Title (gestion rh) -->
+		<div class="pl-24 pt-24 pb-24">
+			<p class="text-4xl">Gestion des évènement</p>
+		</div>
+
+		<!-- Title (Gestion évènement) -->
+		<div class="bg-sky-900 p-4 shadow-sm rounded-tr-lg rounded-br-lg border-t-4 border-green-500">
+			<div class="text-white">
+				<div class="grid md:grid-cols-2 text-sm">
+					{{ form_start(event) }}
+					<div class="grid grid-cols-2 border-b border-slate-200 py-2 ">
+						<div class="px-4 py-2 font-semibold">Type : </div>
+						<div class="px-4 py-2 text-black">{{ form_widget(event.type) }}</div>
+					</div>
+					<div class="grid grid-cols-2 border-b border-slate-200 py-2 ">
+						<div class="px-4 py-2 font-semibold">Debut : </div>
+						<div class="px-4 py-2 text-black">{{ form_widget(event.startEvent) }}</div>
+					</div>
+					<div class="grid grid-cols-2 border-b border-slate-200 py-2 ">
+						<div class="px-4 py-2 font-semibold">Fin : </div>
+						<div class="px-4 py-2 text-black">{{ form_widget(event.endEvent) }}</div>
+					</div>
+					<div class="grid grid-cols-2 border-b border-slate-200 py-2 ">
+						<div class="px-4 py-2 font-semibold">Status : </div>
+						<div class="px-4 py-2 text-black">{{ form_widget(event.status) }}</div>
+					</div>
+					<div class="grid grid-cols-2 border-b border-slate-200 py-2 ">
+						<div class="px-4 py-2 font-semibold">Message : </div>
+						<div class="px-4 py-2 text-black">{{ form_widget(event.message) }}</div>
+					</div>
+					<div class="grid grid-cols-2 border-b border-slate-200 py-2 ">
+						<div class="px-4 py-2 font-semibold">Salarié : </div>
+						<div class="px-4 py-2 text-black">{{ form_widget(event.user) }}</div>
+					</div>
+					<button class="bg-blue-500 text-white px-16 py-3 rounded-md text-1xl font-medium hover:bg-blue-700 transition duration-300">Enregistrer</button>
+					{{ form_end(event) }}
+				</div>
+			</div>
+		</div>
+	</div
 
 {% endblock %}
