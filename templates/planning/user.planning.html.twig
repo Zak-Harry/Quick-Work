@@ -18,13 +18,10 @@
         </div>
 
 
-    <!-- Start TABLE -->    
-
-        {% if totalHoursWeek != null %}
+        
         <!-- Total hours -->
-
-        <p class="text-2xl indent-8 mt-12 mb-8">Total semaine : {{ totalHoursWeek }}</p> 
-        {% else %}
+        {% if totalHoursWeek == null %}
+        
         <div class=" block w-2/3 text-center text-xl p-10 m-16 h-auto dark:bg-slate-900 rounded-lg border border-amber-500 ">
             <div class="flex absolute h-10 w-10 m-2">
                 <span class="animate-ping absolute inline-flex h-full w-full rounded-full ">
@@ -41,15 +38,14 @@
         </div>
         {% endif %}
 
-
+        <!-- Start TABLE -->
         <div class="mx-auto">  
-            <div class="grid sm:grid-cols-1 xl:grid-cols-2"> 
-                {% set weekDay = ['lundi 21/03/22', 'mardi 22/03/22', 'mercredi 23/03/22', 'jeudi 24/03/22', 'vendredi 25/03/22'] %}
+            <div class="grid grid-cols-1 "> 
                 {% for user in user.plannedWorkDays %} 
-                <table class="tableDayPlanning">
+                <table class="tableDayPlanning cursor-pointer">
                     <thead>
                     <tr>
-                        <th colspan="2" class="py-4 px-6 bg-blue-800 hover:bg-blue-700 font-bold uppercase text-sm text-white border-b border-grey-light">{{ cycle(weekDay, loop.index -1 )}}</th>
+                        <th colspan="2" class="py-4 px-6 bg-blue-800 hover:bg-blue-700 font-bold uppercase text-sm text-white border-b border-grey-light">{{ user.startShiftFR }}</th>
                     </thead>
                     <tbody class="tbodyPlanningHidden">
                         <tr class="hover:bg-slate-50 dark:hover:bg-slate-800">

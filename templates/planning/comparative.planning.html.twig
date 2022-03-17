@@ -15,71 +15,78 @@
 
         <!-- Title (accueil) -->
         <div class="pl-10 sm:pl-24 py-14 pt-24">
-            <p class="text-4xl">Comparatif planning du {{ plannedWorkDay['startshift'] ? plannedWorkDay['startshift']|date('d/m/Y') : ''}} </p>  
-            {% if pos is same as false %}
-           <p class="text-2xl text-amber-600">{{gap}}</p>
-            {% else %}
-           <p class="text-2xl text-green-600">{{gap}}</p>
-           {% endif %}   
+            <p class="text-4xl">Comparatif planning du : {{ plannedWorkDay['startshift'] ? plannedWorkDay['startshift']|date('d/m/Y') : ''}} </p> 
         </div>
+
+        <!-- table effective hours vs planning -->
+        <div class="ml-10 sm:ml-24 mt-14 mb-8 py-6 px-4 dark:bg-slate-900 bg-slate-100 rounded-lg shadow-md max-w-max ">
+            <span class="text-xl text-left">Heures réalisées : </span>
+            {% if pos is same as false %}
+            <span class="text-lg text-center text-bold text-amber-600">{{gap}}</span>
+            {% else %}
+            <span class="text-lg text-center text-bold text-green-400">{{gap}}</span>
+            {% endif %}
+        </div>
+       
         
         <!-- Start TABLE -->        
         <div class="mx-auto">  
             <div class="grid sm:grid-cols-1 xl:grid-cols-2"> 
-                <table class="w-[22rem] sm:w-[30rem] sm:m-4 shadow-xl dark:bg-slate-900 ">
+
+                <table class="tableCompPlanning">
                     <thead>    
-                        <tr class="bg-slate-500 dark:bg-opacity-20 text-center">
-                            <th colspan="1" class=" bg-blue-800 border-l border-t p-4 pl-8 pr-8 text-slate-400 dark:text-slate-200">{{ plannedWorkDay['startshift'] ? plannedWorkDay['startshift']|date('d/m/Y') : ''}}</th>
-                            <th colspan="1" class=" bg-blue-800 border-t p-4 pl-8 pr-8 text-slate-400 dark:text-slate-200">Heures prévues</th>
-                            <th colspan="1" class=" bg-blue-800 border-r border-t p-4 pl-8 pr-8 text-slate-400 dark:text-slate-200">Heures réalisées</th>
+                        <tr class="bg-slate-500 dark:bg-opacity-20 text-center text-lg">
+                            <th class="py-4 px-6 bg-blue-800 font-bold text-white border-b border-grey-light">{{ plannedWorkDay['startshift'] ? plannedWorkDay['startshift']|date('d/m/Y') : ''}}</th>
+                            <th class="py-4 px-6 bg-blue-800 font-bold text-white border-b border-grey-light">Heures prévues</th>
+                            <th  class="py-4 px-6 bg-blue-800 font-bold text-white border-b border-grey-light">Heures réalisées</th>
                         </tr>
                     </thead>  
-                    <tbody >
+                    <tbody class="tbodyCompPlanning text-center">
                     
-                        <tr class="hover:bg-grey-lighter">
-                        <td class="py-4 px-6 border-t border-l border-grey-light">Début de journée</td>
-                        <td class="py-4 px-6 text-center border-t border-grey-light ">
-                            {{ plannedWorkDay['startshift'] ? plannedWorkDay['startshift']|date('H:i') : '' }}
-                        </td>
-                        <td class="py-4 px-6 text-center border-t border-r border-grey-light ">
-                            {{ effectiveWorkDay['startlog'] ? effectiveWorkDay['startlog']|date('H:i') : '' }}
-                        </td>
+                        <tr class="hover:bg-slate-50 dark:hover:bg-slate-800">
+                            <td class="py-4 px-6 border-b border-slate-300">Début de journée</td>
+                            <td class="py-4 px-6 border-b border-slate-300">
+                                {{ plannedWorkDay['startshift'] ? plannedWorkDay['startshift']|date('H:i') : '' }}
+                            </td>
+                            <td class="py-4 px-6 border-b border-slate-300">
+                                {{ effectiveWorkDay['startlog'] ? effectiveWorkDay['startlog']|date('H:i') : '' }}
+                            </td>
                         </tr>
-                        <tr class="hover:bg-grey-lighter">
-                        <td class="py-4 px-6 border-l border-t border-grey-light">Début de pause repas</td>
-                        <td class="py-4 px-6 text-center border-t border-grey-light">
-                            {{ plannedWorkDay['startlunch'] ? plannedWorkDay['startlunch']|date('H:i') : '' }}
-                        </td>
-                        <td class="py-4 px-6 text-center border-t border-r border-grey-light">
-                            {{ effectiveWorkDay['startlunch'] ? effectiveWorkDay['startlunch']|date('H:i') : '' }}
-                        </td>
+                        <tr class="hover:bg-slate-50 dark:hover:bg-slate-800">
+                            <td class="py-4 px-6   border-b border-slate-300">Début de pause repas</td>
+                            <td class="py-4 px-6   border-b border-slate-300">
+                                {{ plannedWorkDay['startlunch'] ? plannedWorkDay['startlunch']|date('H:i') : '' }}
+                            </td>
+                            <td class="py-4 px-6   border-b border-slate-300">
+                                {{ effectiveWorkDay['startlunch'] ? effectiveWorkDay['startlunch']|date('H:i') : '' }}
+                            </td>
                         </tr>
-                        <tr class="hover:bg-grey-lighter">
-                        <td class="py-4 px-6 border-t border-l border-grey-light">Fin de pause repas</td>
-                        <td class="py-4 px-6 text-center border-t border-grey-light">
-                            {{ plannedWorkDay['endlunch'] ? plannedWorkDay['endlunch']|date('H:i') : '' }}
-                        </td>
-                        <td class="py-4 px-6 text-center border-t border-r border-grey-light">
-                            {{ effectiveWorkDay['endlunch'] ? effectiveWorkDay['endlunch']|date('H:i') : '' }}
-                        </td>
+                        <tr class="hover:bg-slate-50 dark:hover:bg-slate-800">
+                            <td class="py-4 px-6   border-b border-slate-300">Fin de pause repas</td>
+                            <td class="py-4 px-6   border-b border-slate-300">
+                                {{ plannedWorkDay['endlunch'] ? plannedWorkDay['endlunch']|date('H:i') : '' }}
+                            </td>
+                            <td class="py-4 px-6   border-b border-slate-300">
+                                {{ effectiveWorkDay['endlunch'] ? effectiveWorkDay['endlunch']|date('H:i') : '' }}
+                            </td>
                         </tr>
-                        <tr class="hover:bg-grey-lighter">
-                        <td class="py-4 px-6 border-l border-t border-grey-light">Fin de journée</td>
-                        <td class="py-4 px-6 text-center border-t border-grey-light">
-                            {{ plannedWorkDay['endshift'] ? plannedWorkDay['endshift']|date('H:i') : '' }}
-                        </td>
-                        <td class="py-4 px-6 text-center border-t border-r border-grey-light">
-                            {{ effectiveWorkDay['endlog'] ? effectiveWorkDay['endlog']|date('H:i') : '' }}
-                        </td>
+                        <tr class="hover:bg-slate-50 dark:hover:bg-slate-800">
+                            <td class="py-4 px-6   border-b border-slate-300">Fin de journée</td>
+                            <td class="py-4 px-6   border-b border-slate-300">
+                                {{ plannedWorkDay['endshift'] ? plannedWorkDay['endshift']|date('H:i') : '' }}
+                            </td>
+                            <td class="py-4 px-6   border-b border-slate-300">
+                                {{ effectiveWorkDay['endlog'] ? effectiveWorkDay['endlog']|date('H:i') : '' }}
+                            </td>
                         </tr>
-                        <tr class="hover:bg-grey-lighter">
-                        <td class="py-4 px-6 border-l border-b border-t border-grey-light">Heures par jour</td>
-                        <td class="py-4 px-6 text-center border-b border-t border-grey-light">
-                            {{ plannedWorkDay['hoursplanned'] ? plannedWorkDay['hoursplanned']|date('H:i') : '' }}
-                        </td>
-                        <td class="py-4 px-6 text-center border-b border-r border-t border-grey-light">
-                            {{ effectiveWorkDay['hoursworked'] ? effectiveWorkDay['hoursworked']|date('H:i') : '' }}
-                        </td>
+                        <tr class="hover:bg-slate-50 dark:hover:bg-slate-800">
+                            <td class="py-4 px-6   border-b border-slate-300">Heures par jour</td>
+                            <td class="py-4 px-6   border-b border-slate-300">
+                                {{ plannedWorkDay['hoursplanned'] ? plannedWorkDay['hoursplanned']|date('H:i') : '' }}
+                            </td>
+                            <td class="py-4 px-6   border-b border-slate-300">
+                                {{ effectiveWorkDay['hoursworked'] ? effectiveWorkDay['hoursworked']|date('H:i') : '' }}
+                            </td>
                         </tr>
                     </tbody>
                 </table>

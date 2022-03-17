@@ -14,10 +14,10 @@
     </div>
 
     <!-- Recherche -->
-    <div class="bg-slate-900 ml-2 sm:ml-24 mt-20 max-w-fit rounded-lg">
+    <div class="dark:bg-slate-900 bg-slate-100 ml-2 sm:ml-24 mt-20 max-w-fit rounded-lg">
         <form method="post" action="{{ path('managementrh_search') }}" class="flex flex-wrap p-5">
             <label class="my-4 font-semibold ">Recherche d'un salarié :
-                <input name="salarie" type="text" class="inputLoginMail text-black" placeholder="Entrer nom et prénom" required>
+                <input name="salarie" type="text" class="mx-auto my-2 w-64 rounded-md bg-white dark:text-black border-transparent focus:border-gray-600 focus:bg-white focus:ring-0 text-center" placeholder="Entrer nom et prénom" required>
             </label>
             <button type="submit" class="my-auto mx-5 max-w-fit text-white bg-blue-600 font-semibold rounded-lg hover:bg-blue-900 hover:text-white focus:outline-none p-3 focus:bg-gradient-to-tl from-green-400 via-sky-600 to-indigo-900 focus:text-white">Rechercher</button>
         </form>
@@ -29,11 +29,11 @@
     </div>
 
     <!-- Cards Departement -->
-    <div class="grid grid-cols-2 gap-6 m-4 max-w-max ml-24">
+    <div class="grid grid-cols-2 gap-8 m-4 max-w-max ml-24">
 
             {# Affiche de tous les départements et du manager (nom/prenom) par département #}
             {% for user in users %}
-            <div class="max-w-max dark:bg-slate-900 dark:text-white rounded-lg flex flex-col justify-center items-center px-10 py-5 w-96">
+            <div class="max-w-max dark:bg-slate-900 dark:text-white bg-slate-100 rounded-lg flex flex-col justify-center items-center px-10 py-5 w-96 shadow-md">
                 
                 <div class="text-center py-4">
                     <p class="text-xl font-bold mb-2">Nom de département {{ user.departement.name }} </p>

@@ -78,6 +78,14 @@ class PlannedWorkDays
         return $this->startshift;
     }
 
+    public function getStartshiftFR(): string
+    {
+        $date = $this->startshift->format('Y-m-d');
+        setlocale (LC_TIME, 'fr_FR.utf8','fra');
+        $this->startshiftFR = strftime("%A %d %B %Y", strtotime($date));
+        return $this->startshiftFR;
+    } 
+
     public function setStartshift(\DateTimeInterface $startshift): self
     {
         $this->startshift = $startshift;
@@ -88,6 +96,14 @@ class PlannedWorkDays
     public function getEndshift(): ?\DateTimeInterface
     {
         return $this->endshift;
+    }
+
+    public function getEndshiftFR(): string
+    {
+    $date = $this->getEndshift()->format('Y-m-d');
+    setlocale (LC_TIME, 'fr_FR.utf8','fra');
+    $this->getEndshiftFR = strftime("%A %d %B %Y", strtotime($date));
+    return $this->getEndshiftFR;
     }
 
     public function setEndshift(\DateTimeInterface $endshift): self
@@ -102,6 +118,14 @@ class PlannedWorkDays
         return $this->startlunch;
     }
 
+    public function getStartlunchFR(): string
+    {
+    $date = $this->getStartlunch()->format('Y-m-d');
+    setlocale (LC_TIME, 'fr_FR.utf8','fra');
+    $this->getStartlunchFR = strftime("%A %d %B %Y", strtotime($date));
+    return $this->getStartlunchFR;
+    }
+
     public function setStartlunch(\DateTimeInterface $startlunch): self
     {
         $this->startlunch = $startlunch;
@@ -112,6 +136,14 @@ class PlannedWorkDays
     public function getEndlunch(): ?\DateTimeInterface
     {
         return $this->endlunch;
+    }
+
+    public function getEndlunchFR(): string
+    {
+    $date = $this->getEndlunch()->format('Y-m-d');
+    setlocale (LC_TIME, 'fr_FR.utf8','fra');
+    $this->getEndlunchFR = strftime("%A %d %B %Y", strtotime($date));
+    return $this->getEndlunchFR;
     }
 
     public function setEndlunch(\DateTimeInterface $endlunch): self
