@@ -47,3 +47,19 @@
 .linkDocumentations {
     @apply bg-slate-300 m-2 p-4 rounded-md max-w-max hover:ring-2 transform transition hover:-translate-y-2 dark:text-white dark:bg-slate-900 ml-8
 }
+
+/* Components for templates/sidebar.html.twig */
+
+.linkSidebar {
+    @apply flex justify-start items-center 
+    rounded                                     
+    border-transparent 
+    hover:shadow-md
+    hover:font-semibold
+    hover:text-white
+    hover:bg-blue-600
+    focus:bg-gradient-to-tl from-green-400 via-sky-600 to-indigo-900
+    focus:text-white
+    relative flex-row h-11 focus:outline-none
+    py-4
+}
