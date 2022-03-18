@@ -36,7 +36,7 @@
       <!-- Liste des docs -->
       <div class="divListDocumentationsHidden">
           {% for payslip in user.payslips %}
-            <a href="{{ payslip.link }}" class="linkDocumentations" download> Fiche de Paie {{payslip.createdAt|format_datetime('short', 'none', locale='fr')}}</a>
+            <a href="{{ payslip.link }}" class="linkDocumentations" download> Fiche de Paie {{payslip.createdAt|date('d/m/Y')}}</a>
           {% endfor %}
       </div>
     </div>
@@ -60,7 +60,7 @@
       <!-- Liste des docs -->
       <div class="divListDocumentationsHidden">
           {% for documentation in user.documentations %}
-            <a href="{{ documentation.link }}" class="linkDocumentations" download> Document Interne {{documentation.createdAt|format_datetime('short', 'none', locale='fr')}}</a>
+            <a href="{{ documentation.link }}" class="linkDocumentations" download> Document Interne {{documentation.createdAt|date('d/m/Y')}}</a>
           {% endfor %}
       </div>
     </div>
@@ -106,7 +106,7 @@
       <!-- Liste des docs -->
       <div class="divListDocumentationsHidden">
         {% for contrat in user.contracts %}
-          <a href="{{ contrat.link }}" class="linkDocumentations" download> Contrat {{contrat.createdAt|format_datetime('short', 'none', locale='fr')}}</a>
+          <a href="{{ contrat.link }}" class="linkDocumentations" download> Contrat {{contrat.createdAt|date('d/m/Y')}}</a>
         {% endfor %}
       </div>
     </div>

@@ -160,12 +160,12 @@ class AppFixtures extends Fixture
         $hoursElunch = ['13:15', '13:30', '13:45'];
         $hoursEnd = ['17:00', '17:30', '18:00'];
         $allPlanned = [];
-        for ($i = 1; $i<= 200; $i++) {
+        for ($i = 4; $i<= 8; $i++) {
             $newPlanned = new PlannedWorkDays;
-            $newPlanned->setStartshift(new DateTime($hoursStart[rand(0,2)]));
-            $newPlanned->setStartlunch(new DateTime($hoursSlunch[rand(0,2)]));
-            $newPlanned->setEndlunch(new DateTime($hoursElunch[rand(0,2)]));
-            $newPlanned->setEndshift(new DateTime($hoursEnd[rand(0,2)]));
+            $newPlanned->setStartshift((new DateTime($hoursStart[rand(0,1)]))->modify('+'. $i . ' day'));
+            $newPlanned->setStartlunch((new DateTime($hoursSlunch[rand(0,1)]))->modify('+'. $i . ' day'));
+            $newPlanned->setEndlunch((new DateTime($hoursElunch[rand(0,1)]))->modify('+'. $i . ' day'));
+            $newPlanned->setEndshift((new DateTime($hoursEnd[rand(0,1)]))->modify('+'. $i . ' day'));
             // calcul de la pause déjeuner
             $lunchBreak = new DateTime($newPlanned->getStartlunch()->diff($newPlanned->getEndlunch())->format('%h:%i'));
             //calcul de la journée de travail
