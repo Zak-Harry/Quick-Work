@@ -156,10 +156,10 @@ class AppFixtures extends Fixture
 
          
         /************* PlannedWorkDays *************/
-        $hoursStart = ['08:00', '10:00'];
-        $hoursSlunch = ['12:00', '14:00'];
-        $hoursElunch = ['13:00', '15:00'];
-        $hoursEnd = ['16:00', '18:00'];
+        $hoursStart = ['08:00', '9:30'];
+        $hoursSlunch = ['12:00', '12:45'];
+        $hoursElunch = ['13:15', '13:45'];
+        $hoursEnd = ['16:30', '18:00'];
         $allPlanned = [];
         for ($i = 3; $i<= 7; $i++) {
             $newPlanned = new PlannedWorkDays;
