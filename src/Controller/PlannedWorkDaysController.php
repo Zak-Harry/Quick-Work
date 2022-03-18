@@ -73,7 +73,8 @@ class PlannedWorkDaysController extends AbstractController
         
         $departementId = $userLogged->getDepartement()->getId();
         $dpt = $departement->find($departementId);
-        $departementUser = $user->findBy(['departement' => $dpt]);
+        //requête DQL pour afficher les membres de l'equipe sans le manager connecté 
+        $departementUser = $user->findByTeamDQL($departementId, $userLogged->getid());
         $nbUser = (count($departementUser)-1);
 
         return $this->render('planning/departement.planning.html.twig', [
