@@ -93,3 +93,13 @@
 .tbodyCompPlanning {
     @apply bg-slate-100 dark:bg-slate-900
 }
+
+/* Components for templates/planning/departement.planning.html.twig */
+
+.tableDepPlanning {
+    @apply shadow-xl dark:bg-slate-900  dark:focus:bg-slate-600
+}
+
+.tbodyDepPlanning {
+    @apply bg-slate-100 dark:bg-slate-900
+}
