@@ -161,7 +161,7 @@ class AppFixtures extends Fixture
         $hoursElunch = ['13:00', '15:00'];
         $hoursEnd = ['16:00', '18:00'];
         $allPlanned = [];
-        for ($i = 4; $i<= 8; $i++) {
+        for ($i = 3; $i<= 7; $i++) {
             $newPlanned = new PlannedWorkDays;
             $newPlanned->setStartshift((new DateTime($hoursStart[rand(0,1)]))->modify('+'. $i . ' day'));
             $newPlanned->setStartlunch((new DateTime($hoursSlunch[rand(0,1)]))->modify('+'. $i . ' day'));
